@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+/* Conecta o Tailwind v4 à estratégia de classe do next-themes. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------
+   Tokens — o modo claro é o contrato base; .dark apenas redefine.
+   Nenhuma cor pode existir somente dentro de .dark.
+---------------------------------------------------------------- */
+:root {
+  --color-background: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-surface-muted: #eef1f5;
+  --color-foreground: #0b1220;
+  --color-muted: #56637a;
+  --color-border: #dde3ec;
+
+  --color-brand: #0e7490;
+  --color-brand-strong: #155e75;
+  --color-brand-foreground: #ffffff;
+  --color-accent: #b45309;
+
+  --glass-bg: rgb(255 255 255 / 0.62);
+  --glass-border: rgb(255 255 255 / 0.75);
+  --glass-shadow: 0 12px 40px -12px rgb(11 18 32 / 0.22);
+
+  --grid-line: rgb(11 18 32 / 0.05);
+}
+
+.dark {
+  --color-background: #070b14;
+  --color-surface: #0e1526;
+  --color-surface-muted: #131c31;
+  --color-foreground: #e8eef8;
+  --color-muted: #94a3bd;
+  --color-border: #22304b;
+
+  --color-brand: #22d3ee;
+  --color-brand-strong: #67e8f9;
+  --color-brand-foreground: #041016;
+  --color-accent: #fbbf24;
+
+  --glass-bg: rgb(18 27 46 / 0.55);
+  --glass-border: rgb(255 255 255 / 0.10);
+  --glass-shadow: 0 16px 48px -16px rgb(0 0 0 / 0.65);
+
+  --grid-line: rgb(255 255 255 / 0.05);
+}
+
+@theme inline {
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-surface-muted: var(--color-surface-muted);
+  --color-foreground: var(--color-foreground);
+  --color-muted: var(--color-muted);
+  --color-border: var(--color-border);
+  --color-brand: var(--color-brand);
+  --color-brand-strong: var(--color-brand-strong);
+  --color-brand-foreground: var(--color-brand-foreground);
+  --color-accent: var(--color-accent);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Superfície de vidro — apenas para elementos elevados (cards, header). */
+  .glass {
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    .glass {
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+    }
+  }
+
+  /* Fallback: sem backdrop-filter a superfície precisa ser opaca. */
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass {
+      background-color: var(--color-surface);
+    }
+  }
+
+  /* Malha de telemetria usada como fundo das seções de destaque. */
+  .grid-backdrop {
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

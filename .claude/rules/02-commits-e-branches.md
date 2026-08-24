@@ -32,16 +32,24 @@ docs: documenta o fluxo de assinatura em .claude/rules/05-stripe.md
 
 ## Proibição de assinatura de IA (regra dura)
 
-Nenhum commit deste repositório pode conter referência a IA, assistente, Claude, Cursor,
-Copilot ou Codex — **em nenhum lugar**: autor, committer, `Co-Authored-By`, `Signed-off-by`,
-trailers, corpo ou título. A autoria pertence exclusivamente aos desenvolvedores humanos.
+Nenhum commit pode **atribuir autoria** a IA, assistente, Claude, Cursor, Copilot ou
+Codex. A proibição vale para: autor, committer, `Co-Authored-By`, `Signed-off-by`,
+qualquer outro trailer e qualquer assinatura no fim da mensagem. A autoria pertence
+exclusivamente aos desenvolvedores humanos.
 
-Checagem antes de commitar:
+O que **não** é violação: citar `.claude/`, `.cursor` ou `.codex` no corpo quando se está
+descrevendo pastas do projeto ou a própria regra. A pasta de diretrizes deste repositório
+se chama `.claude/` — mencioná-la é inevitável e não é atribuição de autoria.
+
+Checagem antes de commitar (inspeciona campos de autoria e trailers, não o texto livre):
 
 ```bash
-git log -1 --pretty='%an <%ae>%n%cn <%ce>%n%B' | grep -iE 'claude|cursor|copilot|codex|\bAI\b|anthropic' \
-  && echo "BLOQUEADO: metadado de IA no commit" || echo "OK"
+git log -1 --pretty='%an <%ae>%n%cn <%ce>%n%(trailers)' \
+  | grep -iE 'claude|cursor|copilot|codex|anthropic|generated with|\bAI\b' \
+  && echo "BLOQUEADO: autoria de IA no commit" || echo "OK"
 ```
+
+Para auditar o histórico inteiro, troque `log -1` por `log`.
 
 ## Branches
 

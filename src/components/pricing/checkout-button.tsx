@@ -63,7 +63,7 @@ export function CheckoutButton({
         {pending ? "Redirecionando…" : label}
       </Button>
       {error ? (
-        <p role="alert" className="mt-2 text-sm text-accent">
+        <p role="alert" className="text-danger mt-2 text-sm">
           {error}
         </p>
       ) : null}

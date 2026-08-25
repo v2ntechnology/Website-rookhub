@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { ButtonLink } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
+import { OrganicGlow } from "@/components/ui/glow";
 import { Container, Section } from "@/components/ui/section";
 
 export const metadata: Metadata = {
@@ -16,22 +17,20 @@ export default async function CheckoutSuccessPage({
   const { session_id: sessionId } = await searchParams;
 
   return (
-    <Section className="grid-backdrop">
-      <Container className="max-w-xl">
-        <GlassCard className="p-10 text-center">
-          <p className="text-sm font-semibold tracking-widest text-brand uppercase">
-            Tudo certo
-          </p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight">
-            Assinatura confirmada
-          </h1>
-          <p className="mt-4 text-muted text-pretty">
+    <Section className="grid-backdrop relative overflow-hidden">
+      <OrganicGlow className="-top-24 left-1/3 size-[30rem]" />
+
+      <Container className="relative max-w-xl">
+        <GlassCard elevated className="p-10 text-center">
+          <p className="type-label-md text-accent uppercase">Tudo certo</p>
+          <h1 className="type-headline-lg mt-3">Assinatura confirmada</h1>
+          <p className="type-body-lg mt-4 text-muted text-pretty">
             Recebemos seu pagamento. A liberação do acesso é concluída assim que
             o Stripe confirmar a assinatura pelo webhook — você receberá um
             e-mail com as credenciais em instantes.
           </p>
           {typeof sessionId === "string" ? (
-            <p className="mt-6 font-mono text-xs break-all text-muted">
+            <p className="tabular mt-6 text-xs break-all text-muted">
               Referência: {sessionId}
             </p>
           ) : null}

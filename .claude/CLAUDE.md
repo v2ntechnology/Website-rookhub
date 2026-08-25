@@ -27,6 +27,7 @@ Escopo atual do repositório:
 | [rules/02-commits-e-branches.md](rules/02-commits-e-branches.md) | Conventional Commits, branches, PRs |
 | [rules/03-arquitetura.md](rules/03-arquitetura.md) | Estrutura de pastas, Server/Client Components, TS |
 | [rules/04-design-system.md](rules/04-design-system.md) | Tokens, Dark/Light Mode, Glassmorphism |
+| [design/DESIGN.md](design/DESIGN.md) | Especificação de origem do design system (normativa) |
 | [rules/05-stripe.md](rules/05-stripe.md) | Checkout, Portal, Webhooks, segurança |
 | [rules/06-seo-performance.md](rules/06-seo-performance.md) | Metadata, Core Web Vitals, acessibilidade |
 

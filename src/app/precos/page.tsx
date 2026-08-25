@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { PricingTable } from "@/components/pricing/pricing-table";
+import { OrganicGlow } from "@/components/ui/glow";
 import { Container, Section, SectionHeading } from "@/components/ui/section";
 
 export const metadata: Metadata = {
@@ -37,8 +38,11 @@ const faq = [
 export default function PricingPage() {
   return (
     <>
-      <Section className="grid-backdrop pb-8">
-        <Container>
+      <Section className="grid-backdrop relative overflow-hidden pb-8">
+        <OrganicGlow className="-top-32 left-1/4 size-[34rem]" />
+        <OrganicGlow tone="accent" className="-top-24 right-0 size-[28rem]" />
+
+        <Container className="relative">
           <SectionHeading
             eyebrow="Planos"
             title="Preço por porte de frota, sem surpresa"
@@ -50,13 +54,11 @@ export default function PricingPage() {
 
       <Section className="pt-8">
         <Container className="max-w-3xl">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            Perguntas frequentes
-          </h2>
+          <h2 className="type-headline-lg">Perguntas frequentes</h2>
           <dl className="mt-8 divide-y divide-border border-y border-border">
             {faq.map((item) => (
               <div key={item.question} className="py-6">
-                <dt className="font-medium">{item.question}</dt>
+                <dt className="font-display font-semibold">{item.question}</dt>
                 <dd className="mt-2 text-sm leading-relaxed text-muted">
                   {item.answer}
                 </dd>

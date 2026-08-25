@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { BrandLogo } from "@/components/layout/brand-logo";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { ButtonLink } from "@/components/ui/button";
 
@@ -15,15 +16,10 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center gap-6 px-4 sm:px-6">
         <Link
           href="/"
-          className="font-display flex items-center gap-2 text-lg font-semibold tracking-tight"
+          aria-label="RookHub — página inicial"
+          className="shrink-0"
         >
-          <span
-            className="bg-brand text-brand-foreground grid size-8 place-items-center rounded-[var(--radius-control)] text-sm font-bold"
-            aria-hidden="true"
-          >
-            R
-          </span>
-          RookHub
+          <BrandLogo className="h-7 w-auto" />
         </Link>
 
         <nav aria-label="Principal" className="ml-auto hidden gap-1 md:flex">

@@ -19,8 +19,9 @@ export default function CheckoutCanceledPage() {
         <GlassCard elevated className="p-10 text-center">
           <h1 className="type-headline-lg">Checkout cancelado</h1>
           <p className="type-body-lg mt-4 text-muted text-pretty">
-            Nenhuma cobrança foi realizada. Você pode retomar a assinatura quando
-            quiser — ou falar com o time se ficou alguma dúvida sobre os planos.
+            Nenhuma cobrança foi realizada. Você pode retomar a assinatura
+            quando quiser — ou falar com o time se ficou alguma dúvida sobre os
+            planos.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <ButtonLink href="/precos" size="lg">

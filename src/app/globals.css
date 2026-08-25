@@ -44,6 +44,20 @@
   --glow-brand: rgb(99 102 241 / 0.15);
   --glow-accent: rgb(6 182 212 / 0.15);
   --grid-line: rgb(11 18 32 / 0.05);
+
+  /* Gradiente de marca, extraído de public/imgs/logoCompletaColorida.svg.
+     Uso decorativo apenas: a ponta clara (#358ee3) dá 3.43:1 com texto
+     branco e reprova AA, então ele não preenche controle que carregue texto.
+     Ver "Pendências" na regra 04 — o DESIGN.md fala em 7 stops, o asset tem 6. */
+  --gradient-spectrum: linear-gradient(
+    135deg,
+    #358ee3 24.3%,
+    #5176eb 38.8%,
+    #6366f1 44.8%,
+    #4145a0 69.7%,
+    #2e3474 80.4%,
+    #0b1220 96.7%
+  );
 }
 
 .dark {
@@ -77,6 +91,20 @@
   --glow-brand: rgb(99 102 241 / 0.15);
   --glow-accent: rgb(6 182 212 / 0.15);
   --grid-line: rgb(255 255 255 / 0.05);
+
+  /* Gradiente de marca, extraído de public/imgs/logoCompletaColorida.svg.
+     Uso decorativo apenas: a ponta clara (#358ee3) dá 3.43:1 com texto
+     branco e reprova AA, então ele não preenche controle que carregue texto.
+     Ver "Pendências" na regra 04 — o DESIGN.md fala em 7 stops, o asset tem 6. */
+  --gradient-spectrum: linear-gradient(
+    135deg,
+    #358ee3 24.3%,
+    #5176eb 38.8%,
+    #6366f1 44.8%,
+    #4145a0 69.7%,
+    #2e3474 80.4%,
+    #0b1220 96.7%
+  );
 }
 
 @theme inline {
@@ -263,6 +291,21 @@
 
   .organic-glow-accent {
     background-color: var(--glow-accent);
+  }
+
+  /* "Light leak" do DESIGN.md: fio do gradiente de marca na borda da seção. */
+  .spectrum-edge {
+    position: relative;
+  }
+
+  .spectrum-edge::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: var(--gradient-spectrum);
+    pointer-events: none;
   }
 
   .grid-backdrop {

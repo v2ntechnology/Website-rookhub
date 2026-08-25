@@ -32,7 +32,8 @@ export function Hero() {
 
           <p className="type-body-lg mt-6 max-w-xl text-muted text-pretty">
             O RookHub conecta rastreamento, manutenção preventiva e custo por
-            quilômetro para você decidir com dados — e não com planilha atrasada.
+            quilômetro para você decidir com dados — e não com planilha
+            atrasada.
           </p>
 
           <div className="mt-9 flex flex-wrap gap-3">

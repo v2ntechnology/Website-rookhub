@@ -4,13 +4,18 @@ import { cn } from "@/lib/utils";
 
 export function Section({ className, ...props }: ComponentProps<"section">) {
   return (
-    <section className={cn("px-4 py-20 sm:px-6 sm:py-28", className)} {...props} />
+    <section
+      className={cn("px-4 py-20 sm:px-6 sm:py-28", className)}
+      {...props}
+    />
   );
 }
 
 /** Margem de 24px no desktop e 16px no mobile, conforme o grid fluido. */
 export function Container({ className, ...props }: ComponentProps<"div">) {
-  return <div className={cn("mx-auto w-full max-w-6xl", className)} {...props} />;
+  return (
+    <div className={cn("mx-auto w-full max-w-6xl", className)} {...props} />
+  );
 }
 
 export function SectionHeading({
@@ -31,7 +36,9 @@ export function SectionHeading({
       ) : null}
       <h2 className="type-headline-lg mt-3 text-balance">{title}</h2>
       {description ? (
-        <p className="type-body-lg mt-4 text-muted text-pretty">{description}</p>
+        <p className="type-body-lg mt-4 text-muted text-pretty">
+          {description}
+        </p>
       ) : null}
     </div>
   );

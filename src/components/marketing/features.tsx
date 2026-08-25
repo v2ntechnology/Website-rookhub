@@ -59,7 +59,7 @@ const steps = [
 export function Features() {
   return (
     <>
-      <Section id="recursos" className="relative overflow-hidden border-t border-border">
+      <Section id="recursos" className="spectrum-edge relative overflow-hidden">
         <OrganicGlow className="top-1/4 -left-40 size-[30rem]" />
 
         <Container className="relative">

@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <img src="public/imgs/logoCompletaColorida.svg#gh-light-mode-only" alt="RookHub" width="360">
+  <img src="public/imgs/logoCompletaBranca.svg#gh-dark-mode-only" alt="RookHub" width="360">
+  <p><strong>Gestão inteligente de frotas de caminhões</strong></p>
+</div>
 
-## Getting Started
+---
 
-First, run the development server:
+Site institucional e plataforma de assinaturas do **RookHub** — um SaaS B2B que reúne
+telemetria, manutenção preventiva e custo por quilômetro em um único painel para
+transportadoras.
+
+Este repositório contém hoje o site público (landing page e planos) e o fluxo completo de
+assinatura recorrente via Stripe. A plataforma autenticada de gestão de frota ainda não faz
+parte deste código.
+
+## Stack
+
+| Camada     | Escolha                                                         |
+| ---------- | --------------------------------------------------------------- |
+| Framework  | Next.js 16 · App Router · Server Components · Turbopack         |
+| Linguagem  | TypeScript em modo estrito                                      |
+| UI         | React 19                                                        |
+| Estilos    | TailwindCSS 4 (configuração em CSS, sem `tailwind.config.js`)   |
+| Tipografia | Sora (títulos) + Inter (corpo), auto-hospedadas via `next/font` |
+| Tema       | `next-themes`, estratégia de classe, claro e escuro             |
+| Pagamentos | Stripe — Checkout Sessions, Customer Portal e Webhooks          |
+
+## Começando
+
+Requisitos: **Node.js 20+** e npm.
 
 ```bash
+npm install
+cp .env.example .env.local   # preencha as chaves
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicação sobe em <http://localhost:3000>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Variáveis de ambiente
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variável                                       | Escopo   | Descrição                                         |
+| ---------------------------------------------- | -------- | ------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`                         | público  | URL absoluta; base das URLs de retorno do Stripe  |
+| `STRIPE_SECRET_KEY`                            | servidor | chave secreta (`sk_…`) — nunca exposta ao browser |
+| `STRIPE_WEBHOOK_SECRET`                        | servidor | segredo de verificação do webhook (`whsec_…`)     |
+| `NEXT_PUBLIC_STRIPE_PRICE_<PLANO>_<INTERVALO>` | público  | ID do Price recorrente de cada plano              |
 
-## Learn More
+São seis Price IDs: `STARTER`, `PRO` e `ENTERPRISE`, cada um em `MONTHLY` e `YEARLY`.
+Sem eles, `/api/stripe/checkout` responde `503` — é o comportamento esperado, não um bug.
 
-To learn more about Next.js, take a look at the following resources:
+`.env.local` nunca é commitado. Mudou o contrato de variáveis? Atualize o `.env.example`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev        # desenvolvimento
+npm run build      # build de produção
+npm run start      # servidor de produção
+npm run lint       # ESLint
+npm run typecheck  # tsc --noEmit
+```
 
-## Deploy on Vercel
+Os três últimos precisam passar antes de qualquer PR.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Estrutura
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+.claude/                 # regras do projeto — leia antes de contribuir
+├── CLAUDE.md            # índice e regras inegociáveis
+├── design/DESIGN.md     # especificação do design system (normativa)
+└── rules/               # stack, commits, arquitetura, design, Stripe, SEO
+src/
+├── app/                 # App Router: rotas e composição
+│   ├── precos/          # tabela de planos
+│   ├── checkout/        # páginas de retorno do Stripe
+│   └── api/stripe/      # checkout, portal e webhook
+├── components/          # layout, marketing, pricing, theme, ui
+├── lib/                 # env, utils e integração Stripe
+└── types/               # tipos de domínio
+public/imgs/             # logotipos
+```
+
+## Fluxo de assinatura
+
+1. O visitante escolhe plano e intervalo em `/precos`.
+2. O client chama `POST /api/stripe/checkout` enviando **apenas** `{ planId, interval }`.
+3. O servidor resolve o `priceId` correspondente e cria a Checkout Session.
+4. O Stripe redireciona para `/checkout/sucesso` ou `/checkout/cancelado`.
+5. O provisionamento acontece **exclusivamente pelo webhook**, nunca na página de sucesso.
+
+> **Por que o client não envia o `priceId`:** aceitar um preço vindo do browser permitiria a
+> qualquer visitante assinar qualquer Price da conta Stripe, inclusive um de R$ 0. O
+> identificador do plano é traduzido para preço no servidor, em `src/lib/stripe/plans.ts`.
+
+### Testando webhooks localmente
+
+```bash
+stripe login
+stripe listen --forward-to localhost:3000/api/stripe/webhook
+stripe trigger checkout.session.completed
+```
+
+Use sempre chaves de **test mode** em desenvolvimento. Cartão de teste: `4242 4242 4242 4242`.
+
+## Design system
+
+A especificação vive em [`.claude/design/DESIGN.md`](.claude/design/DESIGN.md) e as decisões
+de implementação em [`.claude/rules/04-design-system.md`](.claude/rules/04-design-system.md).
+
+A direção visual é **Total Glassmorphism**: painéis translúcidos sobre um fundo escuro com
+glows orgânicos. Dois pontos que costumam pegar quem chega agora:
+
+- O indigo de preenchimento é `#5457EE`, e não o `#6366F1` da especificação — o original
+  reprova AA com texto branco (4.47:1). O `#6366F1` segue vivo em `--color-brand-bright`,
+  para glows e indicadores, onde nunca há texto por cima.
+- Superfície de vidro tem orçamento: `backdrop-filter` recompõe a cada frame. Em grades
+  repetidas use `<GlassCard flat>`, que mantém raio e borda mas dispensa o blur.
+
+## Contribuindo
+
+As regras completas estão em [`.claude/`](.claude/) — essa pasta é a **fonte única** de
+diretrizes do projeto. Não crie `.cursor/`, `.codex/` ou equivalentes.
+
+O essencial:
+
+- **Conventional Commits** obrigatório: `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`…
+- **Nunca commite direto na `main`.** Trabalhe em `feat/*` ou `fix/*` e abra PR.
+- Nenhum commit pode atribuir autoria a IA — sem `Co-Authored-By` de assistente, sem
+  assinatura de ferramenta. A autoria é dos desenvolvedores.
+- `lint`, `typecheck` e `build` verdes antes de pedir review.
+- Revise a mudança nos **dois temas** e em viewport móvel.

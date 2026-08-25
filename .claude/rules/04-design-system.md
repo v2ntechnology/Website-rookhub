@@ -169,10 +169,27 @@ Estes limites **prevalecem sobre a estética** quando houver conflito. O design 
 
 ## Pendências que bloqueiam implementação fiel
 
-- **Spectrum Gradient não existe.** O `DESIGN.md` o chama de "signature brand element" e o
-  aplica em botão primário, sidebar e light leak, mas **não define nenhum dos 7 stops**.
-  Não invente a assinatura da marca: enquanto o designer não entregar os valores, o botão
-  primário usa preenchimento `--color-brand` sólido.
+- **Spectrum Gradient: 6 stops no asset, 7 no texto.** O `DESIGN.md` chama o gradiente de
+  "signature brand element" mas não lista os stops. Eles foram extraídos do logotipo real
+  (`public/imgs/logoCompletaColorida.svg`) e vivem em `--gradient-spectrum`:
+
+  | Offset | Cor |
+  | --- | --- |
+  | 24.3% | `#358EE3` |
+  | 38.8% | `#5176EB` |
+  | 44.8% | `#6366F1` |
+  | 69.7% | `#4145A0` |
+  | 80.4% | `#2E3474` |
+  | 96.7% | `#0B1220` |
+
+  São **6**, não os 7 que o documento anuncia — confirme com o designer se falta um stop
+  (o cyan `#06B6D4` aparece no SVG, mas fora deste gradiente).
+
+  **Uso decorativo apenas.** A ponta clara dá 3.43:1 com texto branco, então o gradiente
+  não preenche controle que carregue texto: o botão primário continua sólido em
+  `--color-brand`. Vale para *light leak* (`.spectrum-edge`), fundos de sidebar e detalhes
+  sem texto por cima.
+
 - **Ícones Phosphor Duotone** são exigidos pelo documento e implicam a dependência
   `@phosphor-icons/react`. A regra 01 exige justificativa para nova dependência — esta é
   mandatada pelo design system, e esta linha é o registro dela.

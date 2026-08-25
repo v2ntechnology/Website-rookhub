@@ -41,7 +41,9 @@ export function PricingTable() {
             >
               {option.label}
               {option.value === "year" ? (
-                <span className={cn("ml-2 text-xs", !active && "text-brand-text")}>
+                <span
+                  className={cn("ml-2 text-xs", !active && "text-brand-text")}
+                >
                   2 meses grátis
                 </span>
               ) : null}
@@ -84,7 +86,9 @@ export function PricingTable() {
                   : "Cobrança mensal recorrente"}
               </p>
 
-              <p className="text-brand-text mt-4 text-sm font-medium">{plan.fleet}</p>
+              <p className="text-brand-text mt-4 text-sm font-medium">
+                {plan.fleet}
+              </p>
 
               <ul className="mt-6 space-y-3 text-sm">
                 {plan.features.map((feature) => (

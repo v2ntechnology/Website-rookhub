@@ -1,4 +1,5 @@
 import { GlassCard } from "@/components/ui/glass-card";
+import { OrganicGlow } from "@/components/ui/glow";
 import { Container, Section, SectionHeading } from "@/components/ui/section";
 
 const features = [
@@ -58,8 +59,10 @@ const steps = [
 export function Features() {
   return (
     <>
-      <Section id="recursos" className="border-t border-border">
-        <Container>
+      <Section id="recursos" className="spectrum-edge relative overflow-hidden">
+        <OrganicGlow className="top-1/4 -left-40 size-[30rem]" />
+
+        <Container className="relative">
           <SectionHeading
             eyebrow="Plataforma"
             title="Tudo que a operação precisa, sem planilha paralela"
@@ -69,10 +72,8 @@ export function Features() {
           <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
               <li key={feature.title}>
-                <GlassCard className="h-full p-6">
-                  <h3 className="text-lg font-semibold tracking-tight">
-                    {feature.title}
-                  </h3>
+                <GlassCard flat className="h-full p-6">
+                  <h3 className="type-headline-md">{feature.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted">
                     {feature.description}
                   </p>
@@ -83,7 +84,9 @@ export function Features() {
         </Container>
       </Section>
 
-      <Section id="como-funciona" className="bg-surface-muted">
+      {/* Sem vidro de propósito: mantém o orçamento de backdrop-filter da
+          landing dentro do teto definido na regra 04. */}
+      <Section id="como-funciona" className="bg-surface-container">
         <Container>
           <SectionHeading
             eyebrow="Como funciona"
@@ -92,13 +95,11 @@ export function Features() {
 
           <ol className="mt-14 grid gap-8 md:grid-cols-3">
             {steps.map((item) => (
-              <li key={item.step} className="border-t-2 border-brand pt-5">
-                <span className="font-mono text-sm font-semibold text-brand">
+              <li key={item.step} className="border-brand border-t-2 pt-5">
+                <span className="type-label-md tabular text-brand-text">
                   {item.step}
                 </span>
-                <h3 className="mt-2 text-lg font-semibold tracking-tight">
-                  {item.title}
-                </h3>
+                <h3 className="type-headline-md mt-2">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   {item.description}
                 </p>

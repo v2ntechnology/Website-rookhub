@@ -18,10 +18,7 @@ export const dynamic = "force-dynamic";
 export async function POST(request: NextRequest) {
   const signature = request.headers.get("stripe-signature");
   if (!signature) {
-    return NextResponse.json(
-      { error: "Assinatura ausente." },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: "Assinatura ausente." }, { status: 400 });
   }
 
   const rawBody = await request.text();
@@ -35,7 +32,10 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     console.error("[stripe] assinatura de webhook inválida:", error);
-    return NextResponse.json({ error: "Assinatura inválida." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Assinatura inválida." },
+      { status: 400 },
+    );
   }
 
   if (await alreadyProcessed(event.id)) {

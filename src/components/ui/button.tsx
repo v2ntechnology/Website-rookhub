@@ -3,19 +3,24 @@ import type { ComponentProps } from "react";
 
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "tertiary";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-xl font-medium " +
-  "transition-colors disabled:pointer-events-none disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] " +
+  "font-medium transition-colors disabled:pointer-events-none disabled:opacity-60";
 
+/**
+ * As três variantes do DESIGN.md.
+ *
+ * O primário deveria usar o Spectrum Gradient, mas o documento não define
+ * nenhum dos 7 stops — enquanto isso não chegar, usa preenchimento sólido
+ * `--color-brand`. Ver "Pendências" na regra 04.
+ */
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-brand text-brand-foreground hover:bg-brand-strong hover:text-brand-foreground",
-  secondary:
-    "border border-border bg-surface text-foreground hover:bg-surface-muted",
-  ghost: "text-muted hover:text-foreground hover:bg-surface-muted",
+  primary: "bg-brand text-brand-foreground hover:bg-brand-bright",
+  secondary: "glass glass-elevated text-brand-text hover:text-foreground",
+  tertiary: "text-brand-text hover:bg-surface-container",
 };
 
 const sizes: Record<Size, string> = {
@@ -59,5 +64,7 @@ export function ButtonLink({
   className,
   ...props
 }: ButtonLinkProps) {
-  return <Link className={buttonClasses(variant, size, className)} {...props} />;
+  return (
+    <Link className={buttonClasses(variant, size, className)} {...props} />
+  );
 }

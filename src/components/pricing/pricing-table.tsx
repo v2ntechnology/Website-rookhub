@@ -21,7 +21,7 @@ export function PricingTable() {
       <div
         role="radiogroup"
         aria-label="Intervalo de cobrança"
-        className="mx-auto mt-10 flex w-fit items-center gap-1 rounded-xl border border-border bg-surface p-1"
+        className="glass mx-auto mt-10 flex w-fit items-center gap-1 rounded-[var(--radius-control)] p-1"
       >
         {intervals.map((option) => {
           const active = interval === option.value;
@@ -33,7 +33,7 @@ export function PricingTable() {
               aria-checked={active}
               onClick={() => setInterval(option.value)}
               className={cn(
-                "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+                "rounded-[calc(var(--radius-control)-2px)] px-4 py-2 text-sm font-medium transition-colors",
                 active
                   ? "bg-brand text-brand-foreground"
                   : "text-muted hover:text-foreground",
@@ -41,7 +41,7 @@ export function PricingTable() {
             >
               {option.label}
               {option.value === "year" ? (
-                <span className={cn("ml-2 text-xs", !active && "text-brand")}>
+                <span className={cn("ml-2 text-xs", !active && "text-brand-text")}>
                   2 meses grátis
                 </span>
               ) : null}
@@ -56,20 +56,20 @@ export function PricingTable() {
             <GlassCard
               className={cn(
                 "flex h-full flex-col p-7",
-                plan.highlighted && "ring-2 ring-brand lg:-my-4 lg:py-11",
+                plan.highlighted && "ring-brand ring-2 lg:-my-4 lg:py-11",
               )}
             >
               {plan.highlighted ? (
-                <p className="mb-4 w-fit rounded-full bg-brand px-3 py-1 text-xs font-semibold text-brand-foreground">
+                <p className="type-label-md bg-brand text-brand-foreground mb-4 w-fit rounded-full px-3 py-1">
                   Mais escolhido
                 </p>
               ) : null}
 
-              <h3 className="text-xl font-semibold tracking-tight">{plan.name}</h3>
+              <h3 className="type-headline-md">{plan.name}</h3>
               <p className="mt-2 text-sm text-muted">{plan.tagline}</p>
 
               <p className="mt-6 flex items-baseline gap-1">
-                <span className="text-4xl font-semibold tracking-tight">
+                <span className="font-display tabular text-4xl font-bold tracking-tight">
                   {formatBRL(
                     interval === "year"
                       ? plan.price.year / MONTHS_IN_YEAR
@@ -84,14 +84,14 @@ export function PricingTable() {
                   : "Cobrança mensal recorrente"}
               </p>
 
-              <p className="mt-4 text-sm font-medium text-brand">{plan.fleet}</p>
+              <p className="text-brand-text mt-4 text-sm font-medium">{plan.fleet}</p>
 
               <ul className="mt-6 space-y-3 text-sm">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex gap-3">
                     <svg
                       viewBox="0 0 20 20"
-                      className="mt-0.5 size-4 shrink-0 text-brand"
+                      className="text-accent mt-0.5 size-4 shrink-0"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth={2}

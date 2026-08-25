@@ -3,64 +3,113 @@
 /* Conecta o Tailwind v4 à estratégia de classe do next-themes. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ---------------------------------------------------------------
-   Tokens — o modo claro é o contrato base; .dark apenas redefine.
-   Nenhuma cor pode existir somente dentro de .dark.
----------------------------------------------------------------- */
+/* ===============================================================
+   Tokens — .claude/rules/04-design-system.md
+   O tema escuro é o canônico (é o que o DESIGN.md especifica);
+   o claro é derivado. Todo token existe nos dois blocos.
+================================================================ */
 :root {
-  --color-background: #f6f7f9;
+  --color-background: #f5f7fb;
   --color-surface: #ffffff;
-  --color-surface-muted: #eef1f5;
+  --color-surface-container: #eef2f8;
   --color-foreground: #0b1220;
-  --color-muted: #56637a;
-  --color-border: #dde3ec;
+  --color-muted: #4a5568;
+  --color-border: #d9e0ec;
 
-  --color-brand: #0e7490;
-  --color-brand-strong: #155e75;
+  /* Preenchimento de controle. Ver decisão 3 da regra 04: o #6366f1 da
+     especificação reprova AA com texto branco (4.47:1). */
+  --color-brand: #5457ee;
+  --color-brand-bright: #6366f1;
+  --color-brand-text: #4338ca;
   --color-brand-foreground: #ffffff;
-  --color-accent: #b45309;
 
-  --glass-bg: rgb(255 255 255 / 0.62);
-  --glass-border: rgb(255 255 255 / 0.75);
-  --glass-shadow: 0 12px 40px -12px rgb(11 18 32 / 0.22);
+  --color-accent: #0e7490;
+  --color-accent-bright: #06b6d4;
+  --color-accent-foreground: #ffffff;
 
+  --color-danger: #b3261e;
+
+  /* Vidro: no tema claro a receita do documento (branco a 0.04) desaparece,
+     então o vidro claro é branco de alta opacidade com a mesma estrutura. */
+  --glass-bg: rgb(255 255 255 / 0.72);
+  --glass-bg-elevated: rgb(255 255 255 / 0.86);
+  --glass-edge: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.9),
+    rgb(11 18 32 / 0.12)
+  );
+  --glass-blur: 16px;
+  --glass-blur-elevated: 24px;
+
+  --glow-brand: rgb(99 102 241 / 0.15);
+  --glow-accent: rgb(6 182 212 / 0.15);
   --grid-line: rgb(11 18 32 / 0.05);
 }
 
 .dark {
-  --color-background: #070b14;
-  --color-surface: #0e1526;
-  --color-surface-muted: #131c31;
-  --color-foreground: #e8eef8;
-  --color-muted: #94a3bd;
-  --color-border: #22304b;
+  --color-background: #0b1220;
+  --color-surface: #101828;
+  --color-surface-container: #151e30;
+  --color-foreground: #e8ecf5;
+  --color-muted: #a8b2c6;
+  --color-border: #2a3448;
 
-  --color-brand: #22d3ee;
-  --color-brand-strong: #67e8f9;
-  --color-brand-foreground: #041016;
-  --color-accent: #fbbf24;
+  --color-brand: #5457ee;
+  --color-brand-bright: #6366f1;
+  --color-brand-text: #a5b4fc;
+  --color-brand-foreground: #ffffff;
 
-  --glass-bg: rgb(18 27 46 / 0.55);
-  --glass-border: rgb(255 255 255 / 0.10);
-  --glass-shadow: 0 16px 48px -16px rgb(0 0 0 / 0.65);
+  --color-accent: #06b6d4;
+  --color-accent-bright: #06b6d4;
+  --color-accent-foreground: #052f38;
 
+  --color-danger: #ffb4ab;
+
+  /* Receita canônica do DESIGN.md. */
+  --glass-bg: rgb(255 255 255 / 0.04);
+  --glass-bg-elevated: rgb(255 255 255 / 0.08);
+  --glass-edge: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.15),
+    rgb(255 255 255 / 0.05)
+  );
+
+  --glow-brand: rgb(99 102 241 / 0.15);
+  --glow-accent: rgb(6 182 212 / 0.15);
   --grid-line: rgb(255 255 255 / 0.05);
 }
 
 @theme inline {
   --color-background: var(--color-background);
   --color-surface: var(--color-surface);
-  --color-surface-muted: var(--color-surface-muted);
+  --color-surface-container: var(--color-surface-container);
   --color-foreground: var(--color-foreground);
   --color-muted: var(--color-muted);
   --color-border: var(--color-border);
   --color-brand: var(--color-brand);
-  --color-brand-strong: var(--color-brand-strong);
+  --color-brand-bright: var(--color-brand-bright);
+  --color-brand-text: var(--color-brand-text);
   --color-brand-foreground: var(--color-brand-foreground);
   --color-accent: var(--color-accent);
+  --color-accent-bright: var(--color-accent-bright);
+  --color-accent-foreground: var(--color-accent-foreground);
+  --color-danger: var(--color-danger);
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-sora);
+  --font-sans: var(--font-inter);
+
+  /* Raios: valem os números do DESIGN.md, não os nomes de classe.
+     Ver decisão 4 da regra 04 — "20px = rounded-lg" está errado. */
+  --radius-card: 20px;
+  --radius-control: 12px;
+
+  /* Espaçamento do design system. */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-gutter: 20px;
 }
 
 @layer base {
@@ -68,37 +117,154 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-brand);
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
   }
 }
 
 @layer components {
-  /* Superfície de vidro — apenas para elementos elevados (cards, header). */
+  /* ---------- Escala tipográfica do DESIGN.md ---------- */
+  .type-display-lg {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 56px;
+    letter-spacing: -0.02em;
+  }
+
+  .type-headline-lg {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 40px;
+  }
+
+  /* headline-lg-mobile do frontmatter. */
+  @media (max-width: 640px) {
+    .type-headline-lg {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    .type-display-lg {
+      font-size: 34px;
+      line-height: 42px;
+    }
+  }
+
+  .type-headline-md {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
+  }
+
+  .type-body-lg {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .type-body-md {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .type-label-md {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Telemetria e tabelas: números alinham verticalmente. */
+  .tabular {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* ---------- Vidro ----------
+     Profundidade por translucidez e refração, nunca por sombra.
+     Teto de ~6 superfícies simultâneas no viewport (regra 04). */
+  /* `.glass` e `.panel` não definem raio: quem consome escolhe (card 20px,
+     controle 12px) e a borda herda via `border-radius: inherit`. */
   .glass {
+    position: relative;
     background-color: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+  }
+
+  /* Painel opaco com a mesma linguagem de borda, sem backdrop-filter.
+     Usado onde a contagem de vidro estouraria o teto de performance. */
+  .panel {
+    position: relative;
+    background-color: var(--color-surface-container);
+  }
+
+  /* A borda é um gradiente 135deg, exigência do DESIGN.md. Um simples
+     `border-color` não produz gradiente, daí a máscara no pseudoelemento. */
+  .glass::before,
+  .panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: var(--glass-edge);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .glass-elevated {
+    background-color: var(--glass-bg-elevated);
   }
 
   @supports (backdrop-filter: blur(1px)) {
     .glass {
-      backdrop-filter: blur(16px) saturate(140%);
-      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+    }
+
+    .glass-elevated {
+      backdrop-filter: blur(var(--glass-blur-elevated));
+      -webkit-backdrop-filter: blur(var(--glass-blur-elevated));
     }
   }
 
-  /* Fallback: sem backdrop-filter a superfície precisa ser opaca. */
+  /* Sem backdrop-filter o vidro fica ilegível: cai para superfície opaca. */
   @supports not (backdrop-filter: blur(1px)) {
-    .glass {
+    .glass,
+    .glass-elevated {
       background-color: var(--color-surface);
     }
   }
 
-  /* Malha de telemetria usada como fundo das seções de destaque. */
+  /* ---------- Profundidade do fundo ----------
+     Vidro precisa de fundo com variação para refratar. */
+  .organic-glow {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(100px);
+    pointer-events: none;
+  }
+
+  .organic-glow-brand {
+    background-color: var(--glow-brand);
+  }
+
+  .organic-glow-accent {
+    background-color: var(--glow-accent);
+  }
+
   .grid-backdrop {
     background-image:
       linear-gradient(to right, var(--grid-line) 1px, transparent 1px),

@@ -1,0 +1,12 @@
+{
+  // Deploy do site institucional como export estático (Cloudflare Workers Assets).
+  // Build: `npm run build:static` (gera `out/`) — veja docs/deploy-cloudflare.md.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "rookhub-site",
+  "compatibility_date": "2026-08-28",
+  "assets": {
+    "directory": "./out",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

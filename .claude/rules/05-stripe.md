@@ -1,5 +1,10 @@
 # 05 — Integração Stripe (Assinaturas Recorrentes)
 
+> **Estado atual:** o site em produção é um export estático na Cloudflare e **não expõe as
+> rotas `/api/stripe/*`** — o fluxo de assinatura só funciona no build completo
+> (`npm run build` / `npm run dev`). O código abaixo continua válido e é o alvo quando o
+> app voltar a rodar com servidor. Os handlers vivem em `route.api.ts` (ver regra 03).
+
 ## Modelo comercial
 
 Um **Product** por plano (Starter, Pro, Enterprise) e dois **Prices** recorrentes por plano

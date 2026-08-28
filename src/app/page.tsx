@@ -1,6 +1,9 @@
 import { CallToAction } from "@/components/marketing/cta";
-import { Features } from "@/components/marketing/features";
 import { Hero } from "@/components/marketing/hero";
+import { Pillars } from "@/components/marketing/pillars";
+import { PlansPreview } from "@/components/marketing/plans-preview";
+import { ProblemSolution } from "@/components/marketing/problem-solution";
+import { Profiles } from "@/components/marketing/profiles";
 import { siteUrl } from "@/lib/env";
 
 const jsonLd = {
@@ -11,7 +14,7 @@ const jsonLd = {
   operatingSystem: "Web",
   url: siteUrl,
   description:
-    "SaaS de gestão inteligente de frotas de caminhões para transportadoras: telemetria, manutenção preventiva e custo por quilômetro.",
+    "Plataforma de gestão inteligente de frotas de veículos terrestres: assistente de IA, checklist digital offline, segurança na estrada e custo por quilômetro.",
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "BRL",
@@ -29,7 +32,10 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Hero />
-      <Features />
+      <ProblemSolution />
+      <Pillars />
+      <Profiles />
+      <PlansPreview />
       <CallToAction />
     </>
   );

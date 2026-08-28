@@ -6,6 +6,30 @@ aquele documento em decisões implementáveis e registra os conflitos já resolv
 
 Mudou o `DESIGN.md`? Atualize esta regra na mesma branch. Os dois não podem divergir.
 
+## Estado atual: fase de wireframe (grayscale)
+
+> **Esta regra está SUSPENSA no código.** Em 27/08/2026 o site institucional foi reduzido a um
+> protótipo de baixa fidelidade em escala de cinza, por decisão de produto: o objetivo da fase é
+> validar estrutura de seções, hierarquia e copy sem que a estética interfira na leitura.
+>
+> O que vale hoje em `src/`:
+>
+> - Paleta: apenas preto, branco e cinzas — `#F8FAFC`, `#FFFFFF`, `#E5E7EB`, `#D1D5DB`,
+>   `#6B7280`, `#374151`, `#111827` (mais o espelho escuro em `.dark`).
+> - **Nenhuma cor cromática pode entrar** enquanto o protótipo estiver em validação:
+>   sem Indigo, sem Cyan, sem Spectrum Gradient, sem glassmorphism, sem organic glow.
+>   Exceção única e registrada: o `--color-brand` (`#6366F1`) que colore o "hub" da
+>   assinatura de rodapé. Qualquer outro uso de cor precisa de nova decisão aqui.
+> - Raio único de `6px`; superfícies são caixas delimitadoras com borda de `1px`.
+> - Preservados do design system: a estratégia de duas famílias (Sora/Inter), a escala
+>   tipográfica, `tabular-nums`, o alvo de toque de 44px e o respeito a `prefers-reduced-motion`.
+>
+> O design system descrito no restante deste documento continua **normativo para a reaplicação
+> da marca**, que acontece depois da validação de conteúdo. A implementação anterior — tokens,
+> `glass-card`, `glow`, `spectrum-edge` — está recuperável no commit `4105812`.
+>
+> Os assets de logotipo seguem em `public/imgs/`; o wireframe usa wordmark textual.
+
 ## Identidade
 
 **Total Glassmorphism.** A informação vive em painéis translúcidos flutuando sobre um vazio

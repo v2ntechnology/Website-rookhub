@@ -51,7 +51,7 @@ export function CheckoutButton({
   }
 
   return (
-    <div className="mt-8">
+    <div>
       <Button
         variant={variant}
         size="lg"

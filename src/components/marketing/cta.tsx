@@ -1,39 +1,71 @@
 import { ButtonLink } from "@/components/ui/button";
-import { GlassCard } from "@/components/ui/glass-card";
-import { OrganicGlow } from "@/components/ui/glow";
+import { Reveal } from "@/components/ui/reveal";
 import { Container, Section } from "@/components/ui/section";
+import { SectionIntro } from "@/components/ui/section-intro";
+
+const steps = [
+  {
+    term: "Semana 1",
+    text: "Importamos sua frota e seu histórico por planilha, com validação linha a linha, e conectamos os sistemas que você já usa.",
+  },
+  {
+    term: "Primeiras descobertas",
+    text: "O primeiro desvio costuma aparecer ainda na primeira semana — sem consultoria e sem projeto de seis meses.",
+  },
+  {
+    term: "Até 30 dias",
+    text: "Você tem em tela o número que hoje não existe: custo por quilômetro por veículo, por motorista e por composição.",
+  },
+];
 
 export function CallToAction() {
   return (
-    <Section className="grid-backdrop relative overflow-hidden">
-      <OrganicGlow className="bottom-0 left-1/4 size-[32rem] translate-y-1/3" />
-      <OrganicGlow
-        tone="accent"
-        className="right-1/4 bottom-0 size-[26rem] translate-y-1/3"
-      />
+    <Section id="contato" className="surface-black border-b-0">
+      <Container>
+        <Reveal>
+          <SectionIntro
+            eyebrow="Chamada final"
+            ghost="Começar"
+            title={
+              <>
+                Em 30 dias você tem o primeiro número que hoje{" "}
+                <span className="text-brand">não existe</span>.
+              </>
+            }
+            description={
+              <>
+                <p>
+                  Demonstração de 30 minutos, com um veículo real da sua frota
+                  na tela — não um ambiente de exemplo.
+                </p>
 
-      <Container className="relative">
-        <GlassCard elevated className="px-8 py-14 text-center">
-          <h2 className="type-headline-lg text-balance">
-            Pronto para enxergar sua frota de verdade?
-          </h2>
-          <p className="type-body-lg mx-auto mt-4 max-w-xl text-muted text-pretty">
-            Escolha um plano e comece hoje. A assinatura é mensal ou anual, com
-            gestão pelo portal do cliente.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <ButtonLink href="/precos" size="lg">
-              Ver planos e preços
-            </ButtonLink>
-            <ButtonLink
-              href="mailto:contato@rookhub.com.br"
-              variant="secondary"
-              size="lg"
-            >
-              Falar com um especialista
-            </ButtonLink>
-          </div>
-        </GlassCard>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <ButtonLink href="/precos" size="lg">
+                    Ver planos e começar
+                  </ButtonLink>
+                  <ButtonLink
+                    href="mailto:contato@rookhub.com.br"
+                    variant="secondary"
+                    size="lg"
+                  >
+                    Agendar uma demonstração
+                  </ButtonLink>
+                </div>
+              </>
+            }
+          />
+        </Reveal>
+
+        <div className="border-b border-border">
+          {steps.map((step, index) => (
+            <Reveal key={step.term} delay={index * 90}>
+              <div className="editorial-row">
+                <h3 className="editorial-term">{step.term}</h3>
+                <p className="editorial-item">{step.text}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </Container>
     </Section>
   );

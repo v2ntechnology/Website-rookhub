@@ -1,34 +1,21 @@
-import Image from "next/image";
-
 import { cn } from "@/lib/utils";
 
 /**
- * Logotipo RookHub. O asset colorido tem texto em Midnight (`#0B1220`) e o
- * branco tem texto em `#F8FAFC`, então cada tema usa o seu.
+ * Wordmark textual do wireframe.
  *
- * A troca é feita por CSS, e não pelo tema resolvido em JS: assim o logo certo
- * já vem no HTML do servidor, sem flash nem custo de hidratação.
+ * Os SVGs coloridos (`logoCompletaColorida.svg` / `logoCompletaBranca.svg`)
+ * continuam em `public/imgs/` e voltam quando a marca for reaplicada — nesta
+ * fase o logotipo é texto para não introduzir cor no protótipo.
  */
 export function BrandLogo({ className }: { className?: string }) {
   return (
-    <>
-      <Image
-        src="/imgs/logoCompletaColorida.svg"
-        alt="RookHub"
-        width={556}
-        height={120}
-        priority
-        className={cn("dark:hidden", className)}
-      />
-      <Image
-        src="/imgs/logoCompletaBranca.svg"
-        alt="RookHub"
-        width={556}
-        height={120}
-        priority
-        aria-hidden="true"
-        className={cn("hidden dark:block", className)}
-      />
-    </>
+    <span
+      className={cn(
+        "font-display text-lg font-bold tracking-[-0.02em] text-foreground",
+        className,
+      )}
+    >
+      RookHub
+    </span>
   );
 }

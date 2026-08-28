@@ -4,20 +4,35 @@ import type { BillingInterval, Plan, PlanId } from "@/types/billing";
 /**
  * Catálogo comercial do RookHub — fonte de verdade da copy e do mapeamento
  * `plano + intervalo → priceId`. Preços em centavos (BRL).
+ *
+ * As features vêm do PRD (`docs/prd_RookHub.md`). A versão anterior deste
+ * catálogo vendia "roteirização inteligente", "gestão de jornada" e "previsão
+ * de falhas com modelos preditivos" — os três estão em Fase 2 ou fora de
+ * escopo (§2.2 e §2.3 do PRD); roteirização está fora de escopo em definitivo.
+ *
+ * O eixo comercial é `RN-016`: usuários ilimitados em todos os planos, receita
+ * atrelada a veículo ativo. O que muda entre planos é o porte da frota e
+ * quais módulos entram — `RN-006` reserva Segurança na Estrada e Pergunte à
+ * Sua Frota para os planos superiores.
+ *
+ * Os valores em reais ainda NÃO foram validados comercialmente: são os do
+ * catálogo anterior, mantidos para dar forma ao card.
  */
 export const PLANS: readonly Plan[] = [
   {
     id: "starter",
-    name: "Starter",
-    tagline: "Para transportadoras que estão saindo da planilha.",
+    name: "Básico",
+    tagline:
+      "Para quem está saindo da planilha e quer o custo por km funcionando.",
     price: { month: 24900, year: 249000 },
-    fleet: "Até 10 caminhões",
+    fleet: "Até 10 veículos ativos · usuários ilimitados",
     features: [
-      "Rastreamento de posição em tempo real",
-      "Checklist digital de viagem",
-      "Controle de abastecimento e consumo",
-      "Alertas de manutenção preventiva",
-      "Relatórios mensais de frota",
+      "Cadastro de veículos, implementos, motoristas e oficinas",
+      "Checklist digital de saída e devolução, com fotos e modo offline",
+      "Controle de abastecimento e consumo (km/l entre tanques completos)",
+      "Custo variável por quilômetro",
+      "Manutenção preventiva com catálogo por marca e modelo",
+      "Central de notificações e importação por planilha",
       "Suporte por e-mail",
     ],
     highlighted: false,
@@ -25,35 +40,37 @@ export const PLANS: readonly Plan[] = [
   },
   {
     id: "pro",
-    name: "Pro",
-    tagline: "Operação multi-filial com inteligência de custos.",
+    name: "Profissional",
+    tagline:
+      "Para a operação que já roda e agora precisa enxergar o desvio no mesmo dia.",
     price: { month: 69900, year: 699000 },
-    fleet: "Até 50 caminhões",
+    fleet: "Até 50 veículos ativos · usuários ilimitados",
     features: [
-      "Tudo do Starter",
-      "Roteirização inteligente com previsão de consumo",
-      "Telemetria e score de direção por motorista",
-      "Gestão de jornada e documentos do motorista",
-      "Custo por quilômetro rodado em tempo real",
-      "Integrações via API e webhooks",
+      "Tudo do Básico",
+      "Pergunte à sua frota — assistente de IA por texto e por voz",
+      "Custo operacional por km, com pedágio, motorista e seguro",
+      "Detecção de anomalia de consumo por veículo",
+      "Integrações de telemetria, rastreamento e cartão de combustível",
+      "Painel do Dono e fechamento de período",
       "Suporte prioritário em horário comercial",
     ],
     highlighted: true,
-    cta: "Assinar o Pro",
+    cta: "Assinar o Profissional",
   },
   {
     id: "enterprise",
     name: "Enterprise",
-    tagline: "Frotas grandes, SLA dedicado e governança.",
+    tagline:
+      "Para frotas grandes que querem trocar o plantão de monitoramento por análise.",
     price: { month: 189900, year: 1899000 },
-    fleet: "Frota ilimitada",
+    fleet: "Frota ilimitada · usuários ilimitados",
     features: [
-      "Tudo do Pro",
-      "Previsão de falhas com modelos preditivos",
-      "Painéis e indicadores personalizados",
+      "Tudo do Profissional",
+      "Segurança na estrada — priorização de câmeras, eventos e score de motorista",
+      "Custo total por km (TCO), com depreciação e financiamento",
       "SSO corporativo e trilha de auditoria",
-      "Ambiente de homologação dedicado",
-      "Customer Success dedicado e SLA 24/7",
+      "Implantação guiada com a equipe RookHub",
+      "Customer Success dedicado e SLA",
     ],
     highlighted: false,
     cta: "Falar com vendas",

@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 
+import { SessionReference } from "@/components/checkout/session-reference";
 import { ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Container, Section } from "@/components/ui/section";
@@ -9,12 +11,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function CheckoutSuccessPage({
-  searchParams,
-}: PageProps<"/checkout/sucesso">) {
-  // No Next 16 searchParams é uma Promise.
-  const { session_id: sessionId } = await searchParams;
-
+export default function CheckoutSuccessPage() {
   return (
     <Section className="border-b-0">
       <Container className="max-w-xl">
@@ -26,11 +23,9 @@ export default async function CheckoutSuccessPage({
             o Stripe confirmar a assinatura pelo webhook — você receberá um
             e-mail com as credenciais em instantes.
           </p>
-          {typeof sessionId === "string" ? (
-            <p className="tabular mt-6 text-xs break-all text-faint">
-              Referência: {sessionId}
-            </p>
-          ) : null}
+          <Suspense fallback={null}>
+            <SessionReference />
+          </Suspense>
           <ButtonLink href="/" size="lg" className="mt-8">
             Voltar ao início
           </ButtonLink>

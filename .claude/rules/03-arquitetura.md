@@ -13,12 +13,13 @@ src/
 │   │   ├── sucesso/page.tsx      # retorno de sucesso do Stripe
 │   │   └── cancelado/page.tsx    # retorno de cancelamento
 │   ├── api/stripe/
-│   │   ├── checkout/route.ts     # cria Checkout Session
-│   │   ├── portal/route.ts       # cria sessão do Customer Portal
-│   │   └── webhook/route.ts      # recebe e verifica eventos do Stripe
+│   │   ├── checkout/route.api.ts # cria Checkout Session
+│   │   ├── portal/route.api.ts   # cria sessão do Customer Portal
+│   │   └── webhook/route.api.ts  # recebe e verifica eventos do Stripe
 │   ├── sitemap.ts
 │   └── robots.ts
 ├── components/
+│   ├── checkout/                 # retorno do Stripe (client)
 │   ├── layout/                   # header, footer, navegação
 │   ├── marketing/                # seções da landing (hero, features, cta)
 │   ├── pricing/                  # tabela de planos e botões de checkout
@@ -64,3 +65,17 @@ src/
 - `fetch` no servidor, com cache explícito quando fizer sentido.
 - Route Handlers retornam JSON com status HTTP correto e mensagem de erro genérica ao
   cliente; o detalhe vai para o log do servidor, nunca para a resposta.
+
+## Dois alvos de build
+
+O site é publicado hoje como **export estático** na Cloudflare (`npm run build:static`,
+saída em `out/`) — decisão de produto: só o institucional vai ao ar por enquanto.
+
+- Os Route Handlers do Stripe são nomeados **`route.api.ts`**, e não `route.ts`. A extensão
+  `api.ts` só entra em `pageExtensions` no build completo (`npm run build`); no build estático
+  ela fica de fora, porque `output: "export"` não suporta POST nem leitura do request.
+- Consequência: **nenhuma página pode depender de servidor** (sem `cookies()`, sem
+  `searchParams` em Server Component, sem Server Action). `searchParams` só via
+  `useSearchParams()` em Client Component dentro de `<Suspense>`.
+- Rotas de metadado (`sitemap.ts`, `robots.ts`) exportam `dynamic = "force-static"`.
+- Detalhes do deploy: [`docs/deploy-cloudflare.md`](../../docs/deploy-cloudflare.md).

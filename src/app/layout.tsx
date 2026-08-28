@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Sora } from "next/font/google";
 
+import { BackToTop } from "@/components/layout/back-to-top";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { ThemeProvider } from "@/components/theme/theme-provider";
@@ -27,15 +28,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "RookHub — Gestão inteligente de frotas de caminhões",
+    default: "RookHub — Gestão inteligente de frotas",
     template: "%s · RookHub",
   },
   description:
-    "Plataforma SaaS que reúne telemetria, manutenção preventiva e custo por quilômetro em um só painel para transportadoras.",
+    "Plataforma que reúne checklist digital, manutenção preventiva, segurança na estrada e custo por quilômetro em um só hub, para frotas de qualquer tipo de veículo terrestre.",
   keywords: [
     "gestão de frotas",
-    "software para transportadora",
-    "telemetria de caminhões",
+    "software de gestão de frota",
+    "telemetria veicular",
     "manutenção preventiva",
     "custo por quilômetro",
   ],
@@ -45,9 +46,9 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     url: siteUrl,
     siteName: "RookHub",
-    title: "RookHub — Gestão inteligente de frotas de caminhões",
+    title: "RookHub — Gestão inteligente de frotas",
     description:
-      "Telemetria, manutenção preventiva e custo por quilômetro em um só painel.",
+      "Checklist digital, manutenção preventiva e custo por quilômetro em um só hub.",
   },
   twitter: { card: "summary_large_image" },
 };
@@ -67,8 +68,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           disableTransitionOnChange
         >
           <SiteHeader />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 pt-[84px]">{children}</main>
           <SiteFooter />
+          <BackToTop />
         </ThemeProvider>
       </body>
     </html>

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 
 import { ButtonLink } from "@/components/ui/button";
-import { GlassCard } from "@/components/ui/glass-card";
-import { OrganicGlow } from "@/components/ui/glow";
+import { Card } from "@/components/ui/card";
 import { Container, Section } from "@/components/ui/section";
 
 export const metadata: Metadata = {
@@ -12,11 +11,9 @@ export const metadata: Metadata = {
 
 export default function CheckoutCanceledPage() {
   return (
-    <Section className="grid-backdrop relative overflow-hidden">
-      <OrganicGlow className="-top-24 left-1/3 size-[30rem]" />
-
-      <Container className="relative max-w-xl">
-        <GlassCard elevated className="p-10 text-center">
+    <Section className="border-b-0">
+      <Container className="max-w-xl">
+        <Card className="p-8 text-center sm:p-10">
           <h1 className="type-headline-lg">Checkout cancelado</h1>
           <p className="type-body-lg mt-4 text-muted text-pretty">
             Nenhuma cobrança foi realizada. Você pode retomar a assinatura
@@ -35,7 +32,7 @@ export default function CheckoutCanceledPage() {
               Falar com vendas
             </ButtonLink>
           </div>
-        </GlassCard>
+        </Card>
       </Container>
     </Section>
   );

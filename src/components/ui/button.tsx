@@ -8,25 +8,25 @@ type Size = "sm" | "md" | "lg";
 
 const base =
   "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] " +
-  "font-medium transition-colors disabled:pointer-events-none disabled:opacity-60";
+  "border font-semibold transition-colors disabled:pointer-events-none disabled:opacity-60";
 
 /**
- * As três variantes do DESIGN.md.
- *
- * O primário deveria usar o Spectrum Gradient, mas o documento não define
- * nenhum dos 7 stops — enquanto isso não chegar, usa preenchimento sólido
- * `--color-brand`. Ver "Pendências" na regra 04.
+ * Wireframe: as três variantes se distinguem por peso de borda e
+ * preenchimento, nunca por cor. Alvo mínimo de 44px no tamanho `md`.
  */
 const variants: Record<Variant, string> = {
-  primary: "bg-brand text-brand-foreground hover:bg-brand-bright",
-  secondary: "glass glass-elevated text-brand-text hover:text-foreground",
-  tertiary: "text-brand-text hover:bg-surface-container",
+  primary:
+    "border-foreground bg-foreground text-background hover:bg-body hover:border-body",
+  secondary:
+    "border-foreground bg-surface text-foreground hover:bg-surface-container",
+  tertiary:
+    "border-transparent text-body hover:bg-surface-container hover:text-foreground",
 };
 
 const sizes: Record<Size, string> = {
   sm: "h-9 px-3 text-sm",
   md: "h-11 px-5 text-sm",
-  lg: "h-12 px-7 text-base",
+  lg: "h-12 px-6 text-[15px]",
 };
 
 export function buttonClasses(
@@ -64,7 +64,5 @@ export function ButtonLink({
   className,
   ...props
 }: ButtonLinkProps) {
-  return (
-    <Link className={buttonClasses(variant, size, className)} {...props} />
-  );
+  return <Link className={buttonClasses(variant, size, className)} {...props} />;
 }

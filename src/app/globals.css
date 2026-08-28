@@ -4,107 +4,42 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ===============================================================
-   Tokens — .claude/rules/04-design-system.md
-   O tema escuro é o canônico (é o que o DESIGN.md especifica);
-   o claro é derivado. Todo token existe nos dois blocos.
+   WIREFRAME — protótipo editorial em escala de cinza.
+
+   O design system de marca (Indigo/Cyan, glassmorphism, Spectrum
+   Gradient) foi removido nesta fase por decisão de produto: o
+   objetivo agora é validar estrutura, hierarquia e copy sem que a
+   estética interfira na leitura. Os tokens de marca continuam
+   recuperáveis no commit 4105812.
+
+   Nenhuma cor cromática pode entrar aqui enquanto o protótipo
+   estiver em validação. Só preto, branco e cinzas.
 ================================================================ */
 :root {
-  --color-background: #f5f7fb;
+  --color-background: #f8fafc;
   --color-surface: #ffffff;
-  --color-surface-container: #eef2f8;
-  --color-foreground: #0b1220;
-  --color-muted: #4a5568;
-  --color-border: #d9e0ec;
-
-  /* Preenchimento de controle. Ver decisão 3 da regra 04: o #6366f1 da
-     especificação reprova AA com texto branco (4.47:1). */
-  --color-brand: #5457ee;
-  --color-brand-bright: #6366f1;
-  --color-brand-text: #4338ca;
-  --color-brand-foreground: #ffffff;
-
-  --color-accent: #0e7490;
-  --color-accent-bright: #06b6d4;
-  --color-accent-foreground: #ffffff;
-
-  --color-danger: #b3261e;
-
-  /* Vidro: no tema claro a receita do documento (branco a 0.04) desaparece,
-     então o vidro claro é branco de alta opacidade com a mesma estrutura. */
-  --glass-bg: rgb(255 255 255 / 0.72);
-  --glass-bg-elevated: rgb(255 255 255 / 0.86);
-  --glass-edge: linear-gradient(
-    135deg,
-    rgb(255 255 255 / 0.9),
-    rgb(11 18 32 / 0.12)
-  );
-  --glass-blur: 16px;
-  --glass-blur-elevated: 24px;
-
-  --glow-brand: rgb(99 102 241 / 0.15);
-  --glow-accent: rgb(6 182 212 / 0.15);
-  --grid-line: rgb(11 18 32 / 0.05);
-
-  /* Gradiente de marca, extraído de public/imgs/logoCompletaColorida.svg.
-     Uso decorativo apenas: a ponta clara (#358ee3) dá 3.43:1 com texto
-     branco e reprova AA, então ele não preenche controle que carregue texto.
-     Ver "Pendências" na regra 04 — o DESIGN.md fala em 7 stops, o asset tem 6. */
-  --gradient-spectrum: linear-gradient(
-    135deg,
-    #358ee3 24.3%,
-    #5176eb 38.8%,
-    #6366f1 44.8%,
-    #4145a0 69.7%,
-    #2e3474 80.4%,
-    #0b1220 96.7%
-  );
+  --color-surface-container: #e5e7eb;
+  --color-foreground: #111827;
+  --color-body: #374151;
+  --color-muted: #6b7280;
+  --color-faint: #9ca3af;
+  --color-border: #d1d5db;
+  --color-danger: #111827;
+  /* Único desvio cromático do wireframe: o "hub" da assinatura de rodapé. */
+  --color-brand: #6366f1;
 }
 
 .dark {
-  --color-background: #0b1220;
-  --color-surface: #101828;
-  --color-surface-container: #151e30;
-  --color-foreground: #e8ecf5;
-  --color-muted: #a8b2c6;
-  --color-border: #2a3448;
-
-  --color-brand: #5457ee;
-  --color-brand-bright: #6366f1;
-  --color-brand-text: #a5b4fc;
-  --color-brand-foreground: #ffffff;
-
-  --color-accent: #06b6d4;
-  --color-accent-bright: #06b6d4;
-  --color-accent-foreground: #052f38;
-
-  --color-danger: #ffb4ab;
-
-  /* Receita canônica do DESIGN.md. */
-  --glass-bg: rgb(255 255 255 / 0.04);
-  --glass-bg-elevated: rgb(255 255 255 / 0.08);
-  --glass-edge: linear-gradient(
-    135deg,
-    rgb(255 255 255 / 0.15),
-    rgb(255 255 255 / 0.05)
-  );
-
-  --glow-brand: rgb(99 102 241 / 0.15);
-  --glow-accent: rgb(6 182 212 / 0.15);
-  --grid-line: rgb(255 255 255 / 0.05);
-
-  /* Gradiente de marca, extraído de public/imgs/logoCompletaColorida.svg.
-     Uso decorativo apenas: a ponta clara (#358ee3) dá 3.43:1 com texto
-     branco e reprova AA, então ele não preenche controle que carregue texto.
-     Ver "Pendências" na regra 04 — o DESIGN.md fala em 7 stops, o asset tem 6. */
-  --gradient-spectrum: linear-gradient(
-    135deg,
-    #358ee3 24.3%,
-    #5176eb 38.8%,
-    #6366f1 44.8%,
-    #4145a0 69.7%,
-    #2e3474 80.4%,
-    #0b1220 96.7%
-  );
+  --color-background: #0f1216;
+  --color-surface: #171b21;
+  --color-surface-container: #21262e;
+  --color-foreground: #f3f4f6;
+  --color-body: #d1d5db;
+  --color-muted: #9ca3af;
+  --color-faint: #6b7280;
+  --color-border: #343b45;
+  --color-danger: #f3f4f6;
+  --color-brand: #6366f1;
 }
 
 @theme inline {
@@ -112,35 +47,43 @@
   --color-surface: var(--color-surface);
   --color-surface-container: var(--color-surface-container);
   --color-foreground: var(--color-foreground);
+  --color-body: var(--color-body);
   --color-muted: var(--color-muted);
+  --color-faint: var(--color-faint);
   --color-border: var(--color-border);
-  --color-brand: var(--color-brand);
-  --color-brand-bright: var(--color-brand-bright);
-  --color-brand-text: var(--color-brand-text);
-  --color-brand-foreground: var(--color-brand-foreground);
-  --color-accent: var(--color-accent);
-  --color-accent-bright: var(--color-accent-bright);
-  --color-accent-foreground: var(--color-accent-foreground);
   --color-danger: var(--color-danger);
+  --color-brand: var(--color-brand);
 
   --font-display: var(--font-sora);
   --font-sans: var(--font-inter);
 
-  /* Raios: valem os números do DESIGN.md, não os nomes de classe.
-     Ver decisão 4 da regra 04 — "20px = rounded-lg" está errado. */
-  --radius-card: 20px;
-  --radius-control: 12px;
+  /* Wireframe: raio único e discreto. A forma não deve chamar atenção. */
+  --radius-card: 6px;
+  --radius-control: 6px;
 
-  /* Espaçamento do design system. */
   --spacing-xs: 8px;
   --spacing-sm: 16px;
   --spacing-md: 24px;
   --spacing-lg: 32px;
   --spacing-xl: 48px;
-  --spacing-gutter: 20px;
+
+  /* Easing de referência: leve ultrapassagem no fim do movimento. */
+  --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 }
 
 @layer base {
+  /* Barra de rolagem oculta por decisão de projeto. A rolagem continua
+     funcionando por roda, teclado e gesto — só o indicador some. O botão
+     "voltar ao topo" existe para compensar a pista perdida. */
+  html {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -150,46 +93,48 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-foreground);
     outline-offset: 2px;
   }
 }
 
 @layer components {
-  /* ---------- Escala tipográfica do DESIGN.md ---------- */
+  /* ---------- Escala tipográfica ----------
+     Mantida do design system: o que está em validação é o conteúdo,
+     e hierarquia tipográfica é parte do conteúdo. */
   .type-display-lg {
     font-family: var(--font-display), system-ui, sans-serif;
-    font-size: 48px;
+    font-size: 44px;
     font-weight: 700;
-    line-height: 56px;
+    line-height: 48px;
     letter-spacing: -0.02em;
   }
 
   .type-headline-lg {
     font-family: var(--font-display), system-ui, sans-serif;
-    font-size: 32px;
-    font-weight: 600;
-    line-height: 40px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 38px;
+    letter-spacing: -0.01em;
   }
 
-  /* headline-lg-mobile do frontmatter. */
   @media (max-width: 640px) {
-    .type-headline-lg {
-      font-size: 28px;
-      line-height: 36px;
+    .type-display-lg {
+      font-size: 32px;
+      line-height: 38px;
     }
 
-    .type-display-lg {
-      font-size: 34px;
-      line-height: 42px;
+    .type-headline-lg {
+      font-size: 24px;
+      line-height: 32px;
     }
   }
 
   .type-headline-md {
     font-family: var(--font-display), system-ui, sans-serif;
-    font-size: 24px;
+    font-size: 19px;
     font-weight: 600;
-    line-height: 32px;
+    line-height: 26px;
   }
 
   .type-body-lg {
@@ -197,126 +142,527 @@
     line-height: 28px;
   }
 
-  .type-body-md {
-    font-size: 16px;
-    line-height: 24px;
-  }
-
   .type-label-md {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    letter-spacing: 0.05em;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.14em;
   }
 
-  /* Telemetria e tabelas: números alinham verticalmente. */
   .tabular {
     font-variant-numeric: tabular-nums lining-nums;
   }
 
-  /* ---------- Vidro ----------
-     Profundidade por translucidez e refração, nunca por sombra.
-     Teto de ~6 superfícies simultâneas no viewport (regra 04). */
-  /* `.glass` e `.panel` não definem raio: quem consome escolhe (card 20px,
-     controle 12px) e a borda herda via `border-radius: inherit`. */
-  .glass {
-    position: relative;
-    background-color: var(--glass-bg);
+  /* ---------- Marcador de seção ----------
+     Auxílio de leitura do protótipo: nomeia a seção para a rodada de
+     revisão de conteúdo. Sai quando a marca entrar. */
+  .wf-tag {
+    display: inline-block;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background-color: var(--color-surface);
+    padding: 4px 10px;
+    color: var(--color-muted);
+    text-transform: uppercase;
   }
 
-  /* Painel opaco com a mesma linguagem de borda, sem backdrop-filter.
-     Usado onde a contagem de vidro estouraria o teto de performance. */
-  .panel {
-    position: relative;
-    background-color: var(--color-surface-container);
+  /* ---------- Abertura de seção centralizada ---------- */
+  .type-display-section {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(34px, 5.2vw, 58px);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
   }
 
-  /* A borda é um gradiente 135deg, exigência do DESIGN.md. Um simples
-     `border-color` não produz gradiente, daí a máscara no pseudoelemento. */
-  .glass::before,
-  .panel::before {
+  /* ---------- Superfície preta ----------
+     Redefine os tokens de tema localmente: tudo o que estiver dentro
+     (`text-muted`, `bg-surface`, `border-border`…) vira noturno sozinho,
+     nos dois temas, sem precisar de variante em cada componente. */
+  .surface-black {
+    --color-background: #070707;
+    --color-surface: #070707;
+    --color-surface-container: #16161a;
+    --color-foreground: #f4f4f5;
+    --color-body: #d4d4d8;
+    --color-muted: #8b8b93;
+    --color-faint: #6b6b73;
+    --color-border: #1c1c20;
+
+    background-color: #070707;
+    color: #f4f4f5;
+  }
+
+  /* ---------- Voltar ao topo ---------- */
+  .back-to-top {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    color: var(--color-foreground);
+    opacity: 0;
+    transform: translateY(12px);
+    visibility: hidden;
+    transition:
+      opacity 240ms ease,
+      transform 240ms var(--ease-out-back),
+      visibility 240ms;
+  }
+
+  .back-to-top[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+  }
+
+  /* ---------- Cápsulas dos pilares (seção 3) ----------
+     Quatro pastilhas inclinadas; a selecionada acende em indigo. O botão
+     inteiro é o alvo de toque — bem acima dos 44px exigidos. */
+  .capsule-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .capsule {
+    position: relative;
+    display: block;
+    width: clamp(56px, 7.5vw, 108px);
+    height: clamp(210px, 28vw, 400px);
+    border: 1px solid #2e2e36;
+    border-radius: 999px;
+    background-image: linear-gradient(155deg, #26262e, #131318);
+    transform: rotate(11deg);
+    transition:
+      background-image 260ms var(--ease-out-back),
+      border-color 260ms ease,
+      box-shadow 260ms ease,
+      transform 260ms var(--ease-out-back);
+  }
+
+  .capsule-slot:hover .capsule {
+    transform: rotate(11deg) translateY(-6px);
+  }
+
+  .capsule-slot[data-active="true"] .capsule {
+    border-color: #8f92f8;
+    background-image: linear-gradient(155deg, #8285f7, #4f52e0);
+    box-shadow: 0 24px 60px -24px rgb(99 102 241 / 0.65);
+  }
+
+  /* Botão redondo no pé da pastilha. Gira ao contrário para a seta ficar
+     em pé mesmo com a pastilha inclinada. */
+  .capsule-knob {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(40px, 5vw, 76px);
+    height: clamp(40px, 5vw, 76px);
+    border-radius: 999px;
+    background-color: #070707;
+    color: #f4f4f5;
+    transform: translateX(-50%) rotate(-11deg);
+  }
+
+  .capsule-label {
+    margin-top: clamp(28px, 3vw, 44px);
+    border-top: 1px solid var(--color-border);
+    padding-top: 12px;
+    min-width: clamp(64px, 8vw, 116px);
+    font-size: clamp(13px, 1.2vw, 16px);
+    color: var(--color-muted);
+    transition: color 200ms ease;
+  }
+
+  .capsule-slot[data-active="true"] .capsule-label {
+    border-top-color: var(--color-foreground);
+    color: var(--color-foreground);
+  }
+
+  .capsule-feature {
+    position: relative;
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--color-body);
+  }
+
+  .capsule-feature::before {
     content: "";
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background-color: var(--color-brand);
+  }
+
+  /* ---------- Editorial (seção 2) ----------
+     Manchete grande à esquerda, texto de apoio à direita e uma tabela de
+     linhas separadas por fios. A palavra fantasma atrás do título é
+     decoração pura — fica atrás do texto e não entra na leitura. */
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 64px;
+    height: 1px;
+    background-color: var(--color-border);
+  }
+
+  .type-display-editorial {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(36px, 5.6vw, 68px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+
+  .ghost-word {
+    position: absolute;
+    top: -0.42em;
+    left: -0.04em;
+    z-index: -1;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(56px, 8.5vw, 118px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 0.055);
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .editorial-row {
+    display: grid;
+    gap: 8px 32px;
+    border-top: 1px solid var(--color-border);
+    padding: 24px 0;
+  }
+
+  @media (min-width: 640px) {
+    .editorial-row {
+      grid-template-columns: minmax(120px, 0.55fr) minmax(0, 1.45fr);
+    }
+  }
+
+  .editorial-term {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(19px, 1.6vw, 23px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .editorial-today,
+  .editorial-rookhub {
+    position: relative;
+    padding-left: 22px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .editorial-today {
+    color: var(--color-faint);
+  }
+
+  .editorial-rookhub {
+    color: var(--color-body);
+  }
+
+  /* Item de lista dentro de uma linha editorial. */
+  .editorial-item {
+    position: relative;
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--color-body);
+  }
+
+  .editorial-item::before {
+    content: "";
+    position: absolute;
+    top: 11px;
+    left: 0;
+    width: 10px;
+    height: 1px;
+    background-color: var(--color-faint);
+  }
+
+  .editorial-mark {
+    position: absolute;
+    left: 0;
+    font-weight: 600;
+  }
+
+  /* ---------- Confronto “VS” (seção 2) ----------
+     Palco grudado no topo com três colunas: como é hoje, o selo com a
+     tela, e como fica com o RookHub. As caixas laterais são empilhadas
+     no mesmo ponto e trocadas por transform/opacity vindos do scroll. */
+  .vs-topic {
+    display: block;
+    width: fit-content;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background-color: var(--color-surface);
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .vs-box {
     position: absolute;
     inset: 0;
-    padding: 1px;
-    border-radius: inherit;
-    background: var(--glass-edge);
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 28px;
+    will-change: transform, opacity;
   }
 
-  .glass-elevated {
-    background-color: var(--glass-bg-elevated);
+  .vs-box-today {
+    background-color: var(--color-surface-container);
+    color: var(--color-foreground);
   }
 
-  @supports (backdrop-filter: blur(1px)) {
-    .glass {
-      backdrop-filter: blur(var(--glass-blur));
-      -webkit-backdrop-filter: blur(var(--glass-blur));
+  /* O lado da solução é o bloco cheio — é ele que precisa pesar mais. */
+  .vs-box-rookhub {
+    border-color: var(--color-foreground);
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  .vs-statement {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(20px, 2.1vw, 28px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .vs-tag {
+    width: fit-content;
+    border-radius: 999px;
+    background-color: rgb(0 0 0 / 0.08);
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .vs-box-rookhub .vs-tag {
+    background-color: rgb(255 255 255 / 0.16);
+  }
+
+  .dark .vs-box-today .vs-tag {
+    background-color: rgb(255 255 255 / 0.1);
+  }
+
+  .vs-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(104px, 11vw, 152px);
+    height: clamp(104px, 11vw, 152px);
+    border-radius: 999px;
+    /* Preenchimento em #5457EE, não no #6366F1 da marca: com texto branco
+       por cima, o valor da spec dá 4.47:1 e reprova AA. Ver decisão 3 da
+       regra 04 — este é o único indigo que passa carregando texto. */
+    background-color: #5457ee;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(34px, 3.6vw, 48px);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+  }
+
+  /* ---------- Painel bento dos pilares ----------
+     Superfície preta fixa nos dois temas: o painel é um objeto sobre a
+     página, não uma cor de tema. As divisórias saem de `gap-px` sobre o
+     fundo do painel, com cada célula opaca por cima. */
+  .bento {
+    --bento-surface: #070707;
+    --bento-line: #1c1c20;
+    --bento-fg: #f4f4f5;
+    --bento-muted: #8b8b93;
+
+    border: 1px solid var(--bento-line);
+    /* Aresta superior mais clara: é ela que marca o painel de cima quando
+       um cobre o outro no baralho. */
+    border-top-color: #2e2e36;
+    border-radius: 12px;
+    background-color: var(--bento-line);
+    color: var(--bento-fg);
+    box-shadow: 0 -24px 48px -24px rgb(0 0 0 / 0.9);
+  }
+
+  .bento-cell {
+    background-color: var(--bento-surface);
+  }
+
+  /* Brilho suave no canto do cabeçalho, como na referência. */
+  .bento-head {
+    background-image: radial-gradient(
+      110% 130% at 82% 0%,
+      rgb(255 255 255 / 0.07),
+      rgb(255 255 255 / 0) 62%
+    );
+  }
+
+  .bento-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--bento-line);
+    border-radius: 8px;
+    background-image: radial-gradient(
+      80% 120% at 50% 100%,
+      rgb(255 255 255 / 0.05),
+      rgb(255 255 255 / 0) 70%
+    );
+    color: var(--bento-muted);
+    text-align: center;
+  }
+
+  /* Etiqueta miúda no canto de um visual (o “Ping” da referência). */
+  .bento-pill {
+    border: 1px solid var(--bento-line);
+    border-radius: 999px;
+    background-color: rgb(255 255 255 / 0.06);
+    padding: 3px 9px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--bento-fg);
+  }
+
+  /* ---------- Entrada por rolagem ----------
+     O elemento sobe e aparece quando cruza a viewport. Sem JS (ou com
+     `prefers-reduced-motion`) ele já nasce no estado final. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 600ms var(--ease-out-back),
+      transform 600ms var(--ease-out-back);
+  }
+
+  .reveal[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ---------- Cápsula da barra de navegação ----------
+     A barra não é uma faixa: são ilhas flutuantes sobre o conteúdo. */
+  .nav-capsule {
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background-color: var(--color-surface);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.04),
+      0 12px 32px -12px rgb(0 0 0 / 0.18);
+  }
+
+  /* Vidro só onde o navegador sabe desfocar. Sem `backdrop-filter` a
+     superfície continua opaca — vidro sem blur é ilegível. */
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .nav-capsule {
+      border-color: rgb(255 255 255 / 0.55);
+      background-color: rgb(255 255 255 / 0.7);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      backdrop-filter: blur(18px) saturate(180%);
     }
 
-    .glass-elevated {
-      backdrop-filter: blur(var(--glass-blur-elevated));
-      -webkit-backdrop-filter: blur(var(--glass-blur-elevated));
+    .dark .nav-capsule {
+      border-color: rgb(255 255 255 / 0.12);
+      background-color: rgb(255 255 255 / 0.07);
     }
   }
 
-  /* Sem backdrop-filter o vidro fica ilegível: cai para superfície opaca. */
-  @supports not (backdrop-filter: blur(1px)) {
-    .glass,
-    .glass-elevated {
-      background-color: var(--color-surface);
+  /* ---------- Hero de ícones flutuantes ----------
+     Superfície de fidelidade alta pedida pelo produto: fundo preto fixo
+     nos dois temas, com os ícones do produto dispersos ao redor do texto. */
+  .hero-dark {
+    background-color: #070707;
+    color: #ffffff;
+    background-image: radial-gradient(
+      120% 90% at 50% 45%,
+      rgb(255 255 255 / 0.06) 0%,
+      rgb(7 7 7 / 0) 60%
+    );
+  }
+
+  .type-display-hero {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(40px, 7vw, 68px);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-float {
+    animation: hero-float 7s ease-in-out infinite;
+  }
+
+  @keyframes hero-float {
+    0%,
+    100% {
+      transform: translateY(-6px);
+    }
+    50% {
+      transform: translateY(6px);
     }
   }
 
-  /* ---------- Profundidade do fundo ----------
-     Vidro precisa de fundo com variação para refratar. */
-  .organic-glow {
-    position: absolute;
-    border-radius: 9999px;
-    filter: blur(100px);
-    pointer-events: none;
-  }
-
-  .organic-glow-brand {
-    background-color: var(--glow-brand);
-  }
-
-  .organic-glow-accent {
-    background-color: var(--glow-accent);
-  }
-
-  /* "Light leak" do DESIGN.md: fio do gradiente de marca na borda da seção. */
-  .spectrum-edge {
-    position: relative;
-  }
-
-  .spectrum-edge::after {
-    content: "";
-    position: absolute;
-    inset-inline: 0;
-    top: 0;
-    height: 1px;
-    background: var(--gradient-spectrum);
-    pointer-events: none;
-  }
-
-  .grid-backdrop {
-    background-image:
-      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-    background-size: 56px 56px;
+  /* Placeholder de imagem ou visual ainda não desenhado. */
+  .wf-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    background-color: var(--color-surface-container);
+    padding: 24px;
+    color: var(--color-muted);
+    text-align: center;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
   *,
   *::before,
   *::after {

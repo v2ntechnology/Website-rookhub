@@ -79,7 +79,9 @@ src/
 ├── components/          # layout, marketing, pricing, theme, ui
 ├── lib/                 # env, utils e integração Stripe
 └── types/               # tipos de domínio
-public/imgs/             # logotipos
+docs/                    # PRD, arquitetura e especificações de produto
+public/imgs/             # logotipos e ícones
+public/wireframe/        # referência estática do wireframe validado
 ```
 
 ## Fluxo de assinatura
@@ -109,14 +111,29 @@ Use sempre chaves de **test mode** em desenvolvimento. Cartão de teste: `4242 4
 A especificação vive em [`.claude/design/DESIGN.md`](.claude/design/DESIGN.md) e as decisões
 de implementação em [`.claude/rules/04-design-system.md`](.claude/rules/04-design-system.md).
 
-A direção visual é **Total Glassmorphism**: painéis translúcidos sobre um fundo escuro com
-glows orgânicos. Dois pontos que costumam pegar quem chega agora:
+> **Fase atual: wireframe em escala de cinza.** O site está reduzido a um protótipo de baixa
+> fidelidade para validar estrutura de seções, hierarquia e copy sem que a estética interfira
+> na leitura. O que vale hoje em `src/`:
+>
+> - Só preto, branco e cinzas. **Nenhuma cor cromática entra** enquanto o protótipo estiver em
+>   validação — sem Indigo, sem Cyan, sem Spectrum Gradient, sem glassmorphism, sem glow. A
+>   exceção única e registrada é o `--color-brand` do "hub" na assinatura de rodapé.
+> - Raio único de `6px`; superfícies são caixas com borda de `1px`.
+> - Preservados do design system: as duas famílias (Sora/Inter), a escala tipográfica,
+>   `tabular-nums`, alvo de toque de 44px e respeito a `prefers-reduced-motion`.
+>
+> A marca (**Total Glassmorphism**: painéis translúcidos sobre fundo escuro com glows
+> orgânicos) continua normativa para a reaplicação depois da validação de conteúdo. A
+> implementação anterior — tokens de marca, `glass-card`, `glow`, `spectrum-edge` — está
+> recuperável no commit `4105812`.
+
+Dois pontos da especificação que valem para quando a marca voltar:
 
 - O indigo de preenchimento é `#5457EE`, e não o `#6366F1` da especificação — o original
-  reprova AA com texto branco (4.47:1). O `#6366F1` segue vivo em `--color-brand-bright`,
-  para glows e indicadores, onde nunca há texto por cima.
-- Superfície de vidro tem orçamento: `backdrop-filter` recompõe a cada frame. Em grades
-  repetidas use `<GlassCard flat>`, que mantém raio e borda mas dispensa o blur.
+  reprova AA com texto branco (4.47:1). O `#6366F1` segue reservado a glows e indicadores,
+  onde nunca há texto por cima.
+- Superfície de vidro tem orçamento: `backdrop-filter` recompõe a cada frame, então o teto é
+  de ~6 superfícies simultâneas no viewport.
 
 ## Contribuindo
 

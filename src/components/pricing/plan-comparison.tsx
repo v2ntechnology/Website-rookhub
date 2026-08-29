@@ -147,62 +147,71 @@ function Value({ value, plan }: { value: Cell; plan: string }) {
 
 export function PlanComparison() {
   return (
-    <div className="cmp-scroll">
-      <table className="cmp">
-        <caption className="sr-only">
-          Comparação de recursos entre os planos Básico, Profissional e
-          Enterprise
-        </caption>
+    <>
+      {/* A tabela tem largura mínima de 720px e rola dentro do próprio
+          contêiner. Sem barra de rolagem visível no site, a pista de que
+          há mais coluna à direita precisa ser dita. */}
+      <p aria-hidden className="mb-4 text-xs text-faint sm:hidden">
+        Arraste para o lado para comparar os planos →
+      </p>
 
-        <thead>
-          <tr>
-            <td />
-            {PLANS.map((plan) => (
-              <th key={plan.id} scope="col">
-                <span className="cmp-plan">{plan.name}</span>
-                <Link href={`#plano-${plan.id}`} className="cmp-cta">
-                  {plan.cta}
-                  <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden
-                    className="size-3.5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M7 17 17 7M9 7h8v8" />
-                  </svg>
-                </Link>
-              </th>
-            ))}
-          </tr>
-        </thead>
+      <div className="cmp-scroll">
+        <table className="cmp">
+          <caption className="sr-only">
+            Comparação de recursos entre os planos Básico, Profissional e
+            Enterprise
+          </caption>
 
-        {groups.map((group) => (
-          <tbody key={group.title}>
+          <thead>
             <tr>
-              <th scope="colgroup" colSpan={4} className="cmp-group">
-                {group.title}
-              </th>
-            </tr>
-
-            {group.features.map((feature) => (
-              <tr key={feature.label}>
-                <th scope="row" className="cmp-label">
-                  {feature.label}
+              <td />
+              {PLANS.map((plan) => (
+                <th key={plan.id} scope="col">
+                  <span className="cmp-plan">{plan.name}</span>
+                  <Link href={`#plano-${plan.id}`} className="cmp-cta">
+                    {plan.cta}
+                    <svg
+                      viewBox="0 0 24 24"
+                      aria-hidden
+                      className="size-3.5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M7 17 17 7M9 7h8v8" />
+                    </svg>
+                  </Link>
                 </th>
-                {feature.values.map((value, index) => (
-                  <td key={PLANS[index].id} className="cmp-value">
-                    <Value value={value} plan={PLANS[index].name} />
-                  </td>
-                ))}
+              ))}
+            </tr>
+          </thead>
+
+          {groups.map((group) => (
+            <tbody key={group.title}>
+              <tr>
+                <th scope="colgroup" colSpan={4} className="cmp-group">
+                  {group.title}
+                </th>
               </tr>
-            ))}
-          </tbody>
-        ))}
-      </table>
-    </div>
+
+              {group.features.map((feature) => (
+                <tr key={feature.label}>
+                  <th scope="row" className="cmp-label">
+                    {feature.label}
+                  </th>
+                  {feature.values.map((value, index) => (
+                    <td key={PLANS[index].id} className="cmp-value">
+                      <Value value={value} plan={PLANS[index].name} />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          ))}
+        </table>
+      </div>
+    </>
   );
 }

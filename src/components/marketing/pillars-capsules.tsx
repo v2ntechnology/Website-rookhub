@@ -30,25 +30,25 @@ export function PillarsCapsules({ pillars }: { pillars: Pillar[] }) {
   const current = pillars[active];
 
   return (
-    <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-10">
+    <div className="grid gap-10 sm:gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-10">
       {/* Texto do pilar selecionado */}
       <div
         role="tabpanel"
         id={`${baseId}-panel`}
         aria-labelledby={`${baseId}-tab-${active}`}
-        className="max-w-[46ch]"
+        className="order-2 max-w-[46ch] lg:order-1"
       >
         <p className="type-label-md uppercase text-muted">{current.number}</p>
 
-        <h3 className="type-display-editorial mt-4 text-balance">
+        <h3 className="type-display-editorial mt-3 text-balance sm:mt-4">
           {current.title}
         </h3>
 
-        <p className="mt-5 text-[15px] leading-relaxed text-muted text-pretty">
+        <p className="mt-4 text-[15px] leading-relaxed text-muted text-pretty sm:mt-5">
           {current.lead}
         </p>
 
-        <ul className="mt-7 space-y-3">
+        <ul className="mt-6 space-y-3 sm:mt-7">
           {current.features.map((feature) => (
             <li key={feature} className="capsule-feature">
               {feature}
@@ -63,7 +63,7 @@ export function PillarsCapsules({ pillars }: { pillars: Pillar[] }) {
         aria-label="Pilares da plataforma"
         aria-orientation="horizontal"
         onKeyDown={onKeyDown}
-        className="flex items-end justify-center gap-3 py-6 sm:gap-6"
+        className="order-1 flex w-full items-end justify-center gap-2 py-2 sm:gap-6 sm:py-6 lg:order-2"
       >
         {pillars.map((pillar, index) => {
           const selected = index === active;

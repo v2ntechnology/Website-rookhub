@@ -41,7 +41,9 @@ export function PlanCard({ plan, interval, action }: PlanCardProps) {
 
   return (
     <div className={cn("price-card", plan.highlighted && "price-card-featured")}>
-      <div className="flex items-start justify-between gap-3">
+      {/* Envolve: em cartão estreito, "Profissional" + o selo não cabem na
+          mesma linha e o selo empurrava o conteúdo para fora do cartão. */}
+      <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
         <h3 className="font-display text-[19px] font-semibold">{plan.name}</h3>
         {plan.highlighted ? (
           <span className="price-badge">Mais contratado</span>

@@ -51,24 +51,24 @@ export default function PricingPage() {
     <>
       {/* Sangra por trás da barra fixa: sem isso, o `pt-[84px]` do `main`
           deixa uma faixa da cor do corpo acima da seção preta. */}
-      <Section className="surface-deep -mt-[84px] border-b-0 pt-[calc(4rem+84px)] sm:pt-[calc(5rem+84px)]">
+      <Section className="surface-deep mt-[calc(var(--header-h)*-1)] border-b-0 pt-[calc(3rem+var(--header-h))] sm:pt-[calc(5rem+var(--header-h))]">
         <Container>
           <header className="mx-auto max-w-3xl text-center">
             <p className="font-display text-[15px] font-bold tracking-[-0.01em] text-foreground">
               Rook<span className="text-brand-text">Hub</span>
             </p>
 
-            <h1 className="type-display-editorial mt-8 text-balance">
+            <h1 className="type-display-editorial mt-6 text-balance sm:mt-8">
               Preço por porte de frota, sem{" "}
               <span className="text-brand">surpresa</span>.
             </h1>
 
-            <p className="mt-5 text-[16px] leading-[1.7] text-muted">
+            <p className="mt-5 text-[15px] leading-[1.7] text-muted sm:text-base">
               Confira os preços dos planos Básico, Profissional e Enterprise.
             </p>
           </header>
 
-          <div className="mt-12">
+          <div className="mt-10 sm:mt-12">
             <PricingTable />
           </div>
 
@@ -87,7 +87,7 @@ export default function PricingPage() {
 
       <Section className="surface-deep border-b-0 pt-0">
         <Container>
-          <h2 className="type-display-section mb-14 text-center text-balance">
+          <h2 className="type-display-section mb-10 text-center text-balance sm:mb-14">
             Compare os recursos dos planos
           </h2>
 
@@ -103,7 +103,7 @@ export default function PricingPage() {
 
       <Section className="surface-deep border-b-0">
         <Container className="max-w-4xl">
-          <h2 className="type-display-section mb-10 text-balance">
+          <h2 className="type-display-section mb-8 text-balance sm:mb-10">
             Perguntas frequentes
           </h2>
 
@@ -111,7 +111,7 @@ export default function PricingPage() {
             {faq.map((item) => (
               <div key={item.question} className="faq-row">
                 <dt className="editorial-term">{item.question}</dt>
-                <dd className="text-[14px] leading-relaxed text-body">
+                <dd className="text-[14.5px] leading-relaxed text-body">
                   {item.answer}
                 </dd>
               </div>

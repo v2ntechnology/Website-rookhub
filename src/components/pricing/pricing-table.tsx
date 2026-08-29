@@ -43,7 +43,11 @@ export function PricingTable() {
         })}
       </div>
 
-      <ul className="mt-12 grid items-start gap-5 lg:grid-cols-3">
+      {/* Até `lg` os cartões ficam em coluna única: com três planos, duas
+          colunas deixariam o terceiro órfão, e três colunas em 768px dão
+          226px de largura — estreito demais para preço, botão e lista.
+          A coluna é centrada e limitada para o cartão não esticar. */}
+      <ul className="mx-auto mt-10 grid max-w-md items-start gap-5 sm:mt-12 lg:max-w-none lg:grid-cols-3">
         {PLANS.map((plan) => (
           <li key={plan.id} id={`plano-${plan.id}`} className="h-full scroll-mt-28">
             <PlanCard

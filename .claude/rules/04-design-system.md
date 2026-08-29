@@ -44,6 +44,13 @@ Mudou o `DESIGN.md`? Atualize esta regra na mesma branch. Os dois não podem div
 > da marca**, que acontece depois da validação de conteúdo. A implementação anterior — tokens,
 > `glass-card`, `glow`, `spectrum-edge` — está recuperável no commit `4105812`.
 >
+> - Navegação: são **duas barras**, não uma barra adaptativa. Acima de `md` valem as ilhas
+>   flutuantes (`site-header.tsx` + `header-actions.tsx`); abaixo de `md`, `mobile-nav.tsx`
+>   — faixa única com folha de navegação em tela cheia. Mexeu em uma, confira a outra.
+> - A altura reservada para a barra fixa é o token `--header-h` (68px no mobile, 84px a
+>   partir de `md`). `main`, o hero e o topo de `/precos` sangram por trás dela usando esse
+>   token — nunca escreva o número na classe.
+>
 > Os assets de logotipo seguem em `public/imgs/`; o wireframe usa wordmark textual.
 
 ## Identidade
@@ -160,6 +167,12 @@ Grid fluido: **12 colunas** no desktop (margem `24px`, gutter `20px`), **8** no 
 **4** no mobile (margem `16px`). Ritmo vertical entre módulos: `24px`.
 
 Escala de espaçamento: `base 4 · xs 8 · sm 16 · md 24 · lg 32 · xl 48`.
+
+**Não registre essa escala como `--spacing-xs…--spacing-xl` no `@theme`.** No Tailwind v4
+esse namespace é o mesmo das utilities de tamanho: registrar as chaves `xs…xl` ali sequestra
+`max-w-xs` (virava 8px), `max-w-md` (24px) e `max-w-xl` (48px), e faz `max-w-sm`, `max-w-lg`
+e `max-w-2xl` deixarem de existir. Use os múltiplos de 4 nativos (`p-2 p-4 p-6 p-8 p-12`),
+que entregam exatamente a mesma escala.
 
 ## Glassmorphism
 

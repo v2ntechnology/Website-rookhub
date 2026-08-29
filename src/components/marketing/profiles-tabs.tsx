@@ -41,7 +41,7 @@ export function ProfilesTabs({ profiles }: { profiles: Profile[] }) {
         role="tablist"
         aria-label="Perfis de usuário"
         onKeyDown={onKeyDown}
-        className="flex flex-wrap justify-center gap-x-8 gap-y-2 sm:gap-x-12"
+        className="flex flex-wrap justify-center gap-x-6 gap-y-1 sm:gap-x-12 sm:gap-y-2"
       >
         {profiles.map((profile, index) => (
           <button
@@ -69,12 +69,19 @@ export function ProfilesTabs({ profiles }: { profiles: Profile[] }) {
         id={`${baseId}-panel`}
         aria-labelledby={`${baseId}-tab-${active}`}
       >
-        <div className="mt-10 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+        <div className="mt-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 sm:mt-10">
           <p className="text-sm text-muted">{current.quote}</p>
           <p className="type-label-md uppercase text-faint">{current.meta}</p>
         </div>
 
-        <div className="ptab-scroll mt-6">
+        {/* A tabela tem largura mínima de 640px e rola dentro do próprio
+            contêiner. Sem barra de rolagem visível no site, a pista de que
+            há mais coluna à direita precisa ser dita. */}
+        <p aria-hidden className="mt-6 text-xs text-faint sm:hidden">
+          Arraste para o lado para ver a tabela →
+        </p>
+
+        <div className="ptab-scroll mt-3 sm:mt-6">
           <table className="ptab-table">
             <caption className="sr-only">
               O que {current.title} vê ao abrir o RookHub

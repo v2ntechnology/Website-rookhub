@@ -68,7 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           disableTransitionOnChange
         >
           <SiteHeader />
-          <main className="flex-1 pt-[84px]">{children}</main>
+          <main className="flex-1 pt-[var(--header-h)]">{children}</main>
           <SiteFooter />
           <BackToTop />
         </ThemeProvider>

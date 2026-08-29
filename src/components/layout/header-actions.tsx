@@ -13,8 +13,10 @@ const navigation = [
 ];
 
 /**
- * Cápsula flutuante de ações. Toda a navegação vive atrás do botão de menu,
- * inclusive no desktop — a barra é uma ilha, não uma faixa de largura total.
+ * Cápsula flutuante de ações do desktop. Toda a navegação vive atrás do
+ * botão de menu — a barra é uma ilha, não uma faixa de largura total.
+ *
+ * No mobile quem manda é `mobile-nav.tsx`; este componente não é montado lá.
  */
 export function HeaderActions() {
   const [open, setOpen] = useState(false);
@@ -72,8 +74,7 @@ export function HeaderActions() {
           href="/#contato"
           className={buttonClasses("primary", "md", "h-11 rounded-full px-5")}
         >
-          <span className="hidden sm:inline">Solicitar demonstração</span>
-          <span className="sm:hidden">Demonstração</span>
+          Solicitar demonstração
         </Link>
       </div>
 

@@ -15,7 +15,7 @@ export default function CheckoutSuccessPage() {
   return (
     <Section className="border-b-0">
       <Container className="max-w-xl">
-        <Card className="p-8 text-center sm:p-10">
+        <Card className="p-6 text-center sm:p-10">
           <p className="type-label-md uppercase text-muted">Tudo certo</p>
           <h1 className="type-headline-lg mt-3">Assinatura confirmada</h1>
           <p className="type-body-lg mt-4 text-muted text-pretty">
@@ -26,7 +26,7 @@ export default function CheckoutSuccessPage() {
           <Suspense fallback={null}>
             <SessionReference />
           </Suspense>
-          <ButtonLink href="/" size="lg" className="mt-8">
+          <ButtonLink href="/" size="lg" className="mt-8 w-full sm:w-auto">
             Voltar ao início
           </ButtonLink>
         </Card>

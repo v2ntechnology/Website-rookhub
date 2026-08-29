@@ -66,14 +66,29 @@
   --radius-card: 6px;
   --radius-control: 6px;
 
-  --spacing-xs: 8px;
-  --spacing-sm: 16px;
-  --spacing-md: 24px;
-  --spacing-lg: 32px;
-  --spacing-xl: 48px;
+  /* A escala de espaçamento do design system (base 4 · xs 8 · sm 16 ·
+     md 24 · lg 32 · xl 48) NÃO entra aqui como `--spacing-*`: registrar
+     as chaves `xs…xl` nesse namespace sequestra todas as utilities de
+     tamanho com esses nomes — `max-w-xs` virava 8px, `max-w-md` 24px,
+     `max-w-xl` 48px, e `max-w-sm`/`lg`/`2xl` deixavam de existir. Use os
+     múltiplos de 4 do Tailwind (`p-2 p-4 p-6 p-8 p-12`), que dão a mesma
+     escala. */
 
   /* Easing de referência: leve ultrapassagem no fim do movimento. */
   --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+/* Altura reservada para a barra fixa. É um token porque a barra do mobile
+   é outra peça, mais baixa: `main`, o hero e o topo de /precos sangram por
+   trás dela e precisam do mesmo número. */
+:root {
+  --header-h: 68px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-h: 84px;
+  }
 }
 
 @layer base {
@@ -241,9 +256,12 @@
   .price-toggle-option {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     border-radius: 999px;
-    padding: 10px 20px;
+    /* Alvo de toque de 44px de altura mesmo no menor tamanho. */
+    min-height: 44px;
+    padding: 10px 16px;
     font-size: 14px;
     color: var(--color-muted);
     transition:
@@ -282,7 +300,13 @@
     border: 1px solid var(--color-border);
     border-radius: 16px;
     background-color: var(--color-surface);
-    padding: 28px;
+    padding: 20px;
+  }
+
+  @media (min-width: 640px) {
+    .price-card {
+      padding: 28px;
+    }
   }
 
   .price-card-featured {
@@ -353,11 +377,6 @@
 
   .ptab[data-active="true"]::after {
     transform: scaleX(1);
-  }
-
-  .ptab-scroll {
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
   }
 
   .ptab-table {
@@ -450,9 +469,28 @@
   /* ---------- Tabela de comparação ----------
      Em tela estreita a tabela rola na horizontal dentro do próprio
      contêiner; a página nunca rola de lado. */
-  .cmp-scroll {
+  /* A tabela rola até a borda física da tela: com a margem da seção por
+     dentro, o conteúdo cortado parecia um erro de layout em vez de uma
+     pista de que há mais coluna à direita. */
+  .cmp-scroll,
+  .ptab-scroll {
+    /* `position: relative` não é decoração: os textos `sr-only` da tabela
+       são absolutos e, sem um bloco contêiner aqui, se posicionam contra o
+       viewport — escapam do clipe e fazem a PÁGINA rolar de lado. */
+    position: relative;
+    margin-inline: -16px;
+    padding-inline: 16px;
     overflow-x: auto;
     overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @media (min-width: 640px) {
+    .cmp-scroll,
+    .ptab-scroll {
+      margin-inline: 0;
+      padding-inline: 0;
+    }
   }
 
   .cmp {
@@ -645,6 +683,45 @@
     color: var(--color-foreground);
   }
 
+  /* Em 360px as quatro pastilhas inclinadas não cabem: a rotação de 11°
+     soma a altura à largura ocupada. No mobile elas ficam em pé e mais
+     estreitas — e o botão do pé não precisa mais girar ao contrário. */
+  @media (max-width: 639px) {
+    .capsule {
+      width: 100%;
+      height: 152px;
+      transform: none;
+    }
+
+    .capsule-slot {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .capsule-slot:hover .capsule {
+      transform: translateY(-4px);
+    }
+
+    .capsule-slot[data-active="true"] .capsule {
+      transform: none;
+    }
+
+    .capsule-knob {
+      width: 34px;
+      height: 34px;
+      bottom: 8px;
+      transform: translateX(-50%);
+    }
+
+    .capsule-label {
+      margin-top: 16px;
+      min-width: 0;
+      width: 100%;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+  }
+
   .capsule-feature {
     position: relative;
     padding-left: 20px;
@@ -698,6 +775,8 @@
     position: absolute;
     top: -0.42em;
     left: -0.04em;
+    max-width: 100%;
+    overflow: hidden;
     z-index: -1;
     font-family: var(--font-display), system-ui, sans-serif;
     font-size: clamp(56px, 8.5vw, 118px);
@@ -945,6 +1024,66 @@
       0 12px 32px -12px rgb(0 0 0 / 0.18);
   }
 
+  /* ---------- Barra de navegação do mobile ----------
+     Peça própria, não a barra do desktop encolhida: uma faixa única com
+     logotipo à esquerda e dois alvos de 44px à direita. Todo o resto da
+     navegação vive na folha em tela cheia, onde há espaço para alvo de
+     toque e para o CTA de largura inteira. */
+  .mobile-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 6px 6px 14px;
+  }
+
+  .mobile-sheet {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-background);
+    /* A folha abre por baixo da barra: a barra continua clicável para
+       fechar, e o gesto de fechar fica no mesmo lugar do de abrir. */
+    padding: calc(var(--header-h) + 8px) 16px
+      calc(24px + env(safe-area-inset-bottom));
+    opacity: 0;
+    transform: translateY(-8px);
+    visibility: hidden;
+    transition:
+      opacity 200ms ease,
+      transform 240ms var(--ease-out-back),
+      visibility 240ms;
+  }
+
+  .mobile-sheet[data-open="true"] {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+  }
+
+  .mobile-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid var(--color-border);
+    /* 60px de altura: bem acima do alvo mínimo de 44px. */
+    padding: 18px 2px;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* O fio de topo é do primeiro item da lista, não de cada link: o `a` é
+     sempre o primeiro filho do seu `li`, e `:first-child` no link daria
+     fio duplo entre todas as linhas. */
+  .mobile-sheet li:first-child .mobile-link {
+    border-top: 1px solid var(--color-border);
+  }
+
   /* Vidro só onde o navegador sabe desfocar. Sem `backdrop-filter` a
      superfície continua opaca — vidro sem blur é ilegível. */
   @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
@@ -978,20 +1117,6 @@
     font-weight: 700;
     line-height: 1.04;
     letter-spacing: -0.03em;
-  }
-
-  .hero-float {
-    animation: hero-float 7s ease-in-out infinite;
-  }
-
-  @keyframes hero-float {
-    0%,
-    100% {
-      transform: translateY(-6px);
-    }
-    50% {
-      transform: translateY(6px);
-    }
   }
 
   /* Placeholder de imagem ou visual ainda não desenhado. */

@@ -36,7 +36,7 @@ const social = [
 
 export function SiteFooter() {
   return (
-    <footer className="surface-deep mt-auto overflow-hidden px-4 pt-20 sm:px-6">
+    <footer className="surface-deep mt-auto overflow-hidden px-4 pt-14 sm:px-6 sm:pt-20">
       <div className="mx-auto w-full max-w-6xl">
         {/* Manchete com o símbolo da marca embutido na linha de texto. */}
         <p className="type-display-hero flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-center">
@@ -59,7 +59,7 @@ export function SiteFooter() {
           </span>
         </p>
 
-        <div className="mt-20 grid gap-10 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.4fr]">
+        <div className="mt-14 grid gap-10 sm:mt-20 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.4fr]">
           <nav aria-label="Soluções">
             <h2 className="text-[15px] text-muted">Soluções</h2>
             <ul className="mt-5 space-y-3">
@@ -123,15 +123,15 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-wrap items-center justify-between gap-6">
-          <div className="flex items-center gap-4 rounded-[18px] border border-border bg-background p-4 pr-6">
+        <div className="mt-14 flex flex-col items-start gap-8 sm:mt-16 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-6">
+          <div className="flex w-full items-center gap-4 rounded-[18px] border border-border bg-background p-4 pr-6 sm:w-auto">
             <div className="wf-placeholder size-24 shrink-0 p-0 text-xs">QR</div>
             <p className="max-w-[16ch] text-[15px] font-semibold leading-snug">
               Escaneie para baixar o aplicativo
             </p>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
             <ThemeToggle />
             <p className="text-xs text-faint">
               © {new Date().getFullYear()} RookHub. Todos os direitos reservados.

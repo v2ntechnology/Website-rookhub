@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export function Section({ className, ...props }: ComponentProps<"section">) {
   return (
     <section
-      className={cn("border-b border-dashed border-border px-4 py-16 sm:px-6 sm:py-20", className)}
+      className={cn("border-b border-dashed border-border px-4 py-14 sm:px-6 sm:py-20", className)}
       {...props}
     />
   );

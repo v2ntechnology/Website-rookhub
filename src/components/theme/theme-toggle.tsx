@@ -23,7 +23,16 @@ export function ThemeToggle({ className }: { className?: string }) {
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      aria-label={isDark ? "Ativar tema claro" : "Ativar tema escuro"}
+      // O rótulo depende do tema resolvido, que só existe no client: antes
+      // da hidratação ele precisa ser neutro, senão o servidor manda
+      // "escuro" e o client corrige para "claro" — divergência de hidratação.
+      aria-label={
+        mounted
+          ? isDark
+            ? "Ativar tema claro"
+            : "Ativar tema escuro"
+          : "Alternar tema"
+      }
       className={cn(
         "inline-flex size-9 items-center justify-center rounded-[var(--radius-control)]",
         "border border-border text-muted transition-colors",

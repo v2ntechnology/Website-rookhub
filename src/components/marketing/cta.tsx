@@ -39,7 +39,7 @@ export function CallToAction() {
                   na tela — não um ambiente de exemplo.
                 </p>
 
-                <div className="mt-7 flex flex-wrap gap-3">
+                <div className="mt-7 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                   <ButtonLink href="/precos" size="lg">
                     Ver planos e começar
                   </ButtonLink>

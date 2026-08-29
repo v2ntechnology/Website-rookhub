@@ -136,10 +136,11 @@ Website-rookhub/
 ├── src/
 │   ├── app/                      # App Router: só o que vira URL mora aqui
 │   │   ├── layout.tsx            # Shell raiz: fontes, tema, metadata base
-│   │   ├── page.tsx              → /
 │   │   ├── globals.css           # Tailwind v4 e os design tokens
 │   │   ├── icon.svg              # Ícone da aba
-│   │   ├── precos/               → /precos
+│   │   ├── (marketing)/          # Grupo de rotas: os parênteses não entram na URL
+│   │   │   ├── page.tsx          → /
+│   │   │   └── precos/           → /precos
 │   │   ├── checkout/             → /checkout/sucesso e /checkout/cancelado
 │   │   ├── api/stripe/           # checkout, portal e webhook (route.api.ts)
 │   │   ├── robots.ts             → /robots.txt
@@ -151,6 +152,7 @@ Website-rookhub/
 │   │   ├── pricing/              # Tabela de planos, comparativo, prova social, checkout
 │   │   ├── checkout/             # Retorno do Stripe (client)
 │   │   └── theme/                # Provider e alternador de tema
+│   ├── content/                  # Conteúdo editorial tipado, fora dos componentes
 │   ├── lib/
 │   │   ├── env.ts                # Leitura das variáveis, com falha explícita
 │   │   ├── utils.ts              # Helper `cn`
@@ -171,11 +173,12 @@ prático:
 
 | O que você está escrevendo | Onde ele mora |
 | -------------------------- | ------------- |
-| Rota nova | `src/app/<rota>/page.tsx`, e entra no `sitemap.ts` |
+| Página institucional nova | `src/app/(marketing)/<rota>/page.tsx`, e entra no `sitemap.ts` |
 | Bloco de uma seção da landing | `src/components/marketing/` |
 | Qualquer coisa de planos e cobrança | `src/components/pricing/` |
 | Cabeçalho, rodapé, navegação | `src/components/layout/` |
 | Primitivo reutilizável por qualquer tela | `src/components/ui/` |
+| **Texto, lista ou tabela de conteúdo** | `src/content/`, **nunca** dentro do JSX |
 | Regra de negócio, integração, helper | `src/lib/` |
 | Tipo usado por mais de um módulo | `src/types/` |
 | Token de cor, fonte ou raio | `@theme` em `src/app/globals.css` |
@@ -184,6 +187,20 @@ prático:
 
 **Por que `app/` só tem roteamento:** o que está em `src/app` vira URL. Componente que não é rota
 não mora ali, senão o mapa de rotas do projeto deixa de ser legível de relance.
+
+**Por que o grupo `(marketing)`:** os parênteses organizam sem alterar URL. No dia em que existir
+uma área com layout próprio (central de ajuda, documentação, landing de campanha), ela entra como
+grupo irmão com o próprio `layout.tsx`, sem que nenhuma URL atual mude.
+
+**Por que `content/` separado do componente:** texto de marketing muda por decisão de produto, não
+de engenharia. Dentro do JSX, corrigir uma vírgula obriga a abrir um componente React, e a troca de
+copy aparece no diff como mudança de código. A regra é curta: **componente desenha, `content/` diz
+o quê.** Os tipos desse conteúdo ficam em `src/types/`, para o dado não depender da tela.
+
+⚠️ **Variante de layout arquivada não é código morto.** `marketing/pillars-bento.tsx` e
+`marketing/problem-solution-vs.tsx` foram substituídos mas seguem inteiros e funcionais, cada um
+com um cabeçalho dizendo como voltar a ele. Uma varredura de importações acusa os dois como órfãos.
+Não apague: leia o cabeçalho.
 
 **Por que os handlers do Stripe se chamam `route.api.ts`:** essa extensão só entra em
 `pageExtensions` no build completo. No export estático ela fica de fora, porque `output: "export"`

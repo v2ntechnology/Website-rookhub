@@ -3,21 +3,13 @@
 import Link from "next/link";
 import { useId, useRef, useState } from "react";
 
-export type ProfileRow = {
-  label: string;
-  text: string;
-  module: string;
-};
+import type { Profile } from "@/types/marketing";
 
-export type Profile = {
-  title: string;
-  short: string;
-  meta: string;
-  quote: string;
-  rows: ProfileRow[];
-};
-
-export function ProfilesTabs({ profiles }: { profiles: Profile[] }) {
+export function ProfilesTabs({
+  profiles,
+}: {
+  profiles: readonly Profile[];
+}) {
   const [active, setActive] = useState(0);
   const baseId = useId();
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);

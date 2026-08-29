@@ -2,21 +2,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/reveal";
 import { Container, Section } from "@/components/ui/section";
 import { SectionIntro } from "@/components/ui/section-intro";
-
-const steps = [
-  {
-    term: "Semana 1",
-    text: "Importamos sua frota e seu histórico por planilha, com validação linha a linha, e conectamos os sistemas que você já usa.",
-  },
-  {
-    term: "Primeiras descobertas",
-    text: "O primeiro desvio costuma aparecer ainda na primeira semana — sem consultoria e sem projeto de seis meses.",
-  },
-  {
-    term: "Até 30 dias",
-    text: "Você tem em tela o número que hoje não existe: custo por quilômetro por veículo, por motorista e por composição.",
-  },
-];
+import { ONBOARDING_STEPS } from "@/content/onboarding";
 
 export function CallToAction() {
   return (
@@ -57,7 +43,7 @@ export function CallToAction() {
         </Reveal>
 
         <div className="border-b border-border">
-          {steps.map((step, index) => (
+          {ONBOARDING_STEPS.map((step, index) => (
             <Reveal key={step.term} delay={index * 90}>
               <div className="editorial-row">
                 <h3 className="editorial-term">{step.term}</h3>

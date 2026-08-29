@@ -2,15 +2,13 @@
 
 import { useId, useRef, useState } from "react";
 
-export type Pillar = {
-  number: string;
-  short: string;
-  title: string;
-  lead: string;
-  features: string[];
-};
+import type { Pillar } from "@/types/marketing";
 
-export function PillarsCapsules({ pillars }: { pillars: Pillar[] }) {
+export function PillarsCapsules({
+  pillars,
+}: {
+  pillars: readonly Pillar[];
+}) {
   const [active, setActive] = useState(0);
   const baseId = useId();
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);

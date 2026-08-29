@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 
+import { PlanComparison } from "@/components/pricing/plan-comparison";
+import { TrustedBy } from "@/components/pricing/trusted-by";
 import { PricingTable } from "@/components/pricing/pricing-table";
-import {
-  Container,
-  Section,
-  SectionHeading,
-  SectionTag,
-} from "@/components/ui/section";
+import { Container, Section } from "@/components/ui/section";
 
 export const metadata: Metadata = {
   title: "Planos e preços",
@@ -52,25 +49,69 @@ const faq = [
 export default function PricingPage() {
   return (
     <>
-      <Section>
+      {/* Sangra por trás da barra fixa: sem isso, o `pt-[84px]` do `main`
+          deixa uma faixa da cor do corpo acima da seção preta. */}
+      <Section className="surface-deep -mt-[84px] border-b-0 pt-[calc(4rem+84px)] sm:pt-[calc(5rem+84px)]">
         <Container>
-          <SectionTag>Planos</SectionTag>
-          <SectionHeading
-            title="Preço por porte de frota, sem surpresa"
-            description="Todos os planos incluem atualizações, suporte e usuários ilimitados. Sem taxa de implantação."
-          />
-          <PricingTable />
+          <header className="mx-auto max-w-3xl text-center">
+            <p className="font-display text-[15px] font-bold tracking-[-0.01em] text-foreground">
+              Rook<span className="text-brand-text">Hub</span>
+            </p>
+
+            <h1 className="type-display-editorial mt-8 text-balance">
+              Preço por porte de frota, sem{" "}
+              <span className="text-brand">surpresa</span>.
+            </h1>
+
+            <p className="mt-5 text-[16px] leading-[1.7] text-muted">
+              Confira os preços dos planos Básico, Profissional e Enterprise.
+            </p>
+          </header>
+
+          <div className="mt-12">
+            <PricingTable />
+          </div>
+
+          <p className="mt-8 text-center text-xs text-faint">
+            Valores em reais. A troca de plano e o cancelamento são feitos no
+            portal do cliente, a qualquer momento.
+          </p>
         </Container>
       </Section>
 
-      <Section className="border-b-0">
-        <Container className="max-w-3xl">
-          <h2 className="type-headline-lg">Perguntas frequentes</h2>
-          <dl className="mt-7 divide-y divide-border border-y border-border">
+      <Section className="surface-deep border-b-0 pt-0">
+        <Container>
+          <TrustedBy />
+        </Container>
+      </Section>
+
+      <Section className="surface-deep border-b-0 pt-0">
+        <Container>
+          <h2 className="type-display-section mb-14 text-center text-balance">
+            Compare os recursos dos planos
+          </h2>
+
+          <PlanComparison />
+
+          <p className="mt-6 text-xs text-faint">
+            Veículo ativo é o que esteve em operação no ciclo. Módulo não
+            contratado aparece no menu em estado bloqueado, com convite para
+            conhecer — nunca com dado de exemplo dentro da operação.
+          </p>
+        </Container>
+      </Section>
+
+      <Section className="surface-deep border-b-0">
+        <Container className="max-w-4xl">
+          <h2 className="type-display-section mb-10 text-balance">
+            Perguntas frequentes
+          </h2>
+
+          <dl className="border-b border-border">
             {faq.map((item) => (
-              <div key={item.question} className="py-5">
-                <dt className="font-display font-semibold">{item.question}</dt>
-                <dd className="mt-2 text-sm leading-relaxed text-muted">
+              <div key={item.question} className="faq-row">
+                <dt className="editorial-term">{item.question}</dt>
+                <dd className="text-[14px] leading-relaxed text-body">
                   {item.answer}
                 </dd>
               </div>

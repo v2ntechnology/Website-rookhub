@@ -36,7 +36,7 @@ const social = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto overflow-hidden bg-surface px-4 pt-20 sm:px-6">
+    <footer className="surface-deep mt-auto overflow-hidden px-4 pt-20 sm:px-6">
       <div className="mx-auto w-full max-w-6xl">
         {/* Manchete com o símbolo da marca embutido na linha de texto. */}
         <p className="type-display-hero flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-center">

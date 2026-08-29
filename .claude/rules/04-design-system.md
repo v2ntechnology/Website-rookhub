@@ -18,9 +18,25 @@ Mudou o `DESIGN.md`? Atualize esta regra na mesma branch. Os dois não podem div
 >   `#6B7280`, `#374151`, `#111827` (mais o espelho escuro em `.dark`).
 > - **Nenhuma cor cromática pode entrar** enquanto o protótipo estiver em validação:
 >   sem Indigo, sem Cyan, sem Spectrum Gradient, sem glassmorphism, sem organic glow.
->   Exceção única e registrada: o `--color-brand` (`#6366F1`) que colore o "hub" da
->   assinatura de rodapé. Qualquer outro uso de cor precisa de nova decisão aqui.
+>   Exceções registradas, e só elas — o indigo de marca aparece **apenas** como acento
+>   pontual em texto e ícone, nunca como preenchimento de superfície:
+>
+>   | Onde | Token | Uso |
+>   | --- | --- | --- |
+>   | `site-footer` | `--color-brand` | o "hub" da assinatura de rodapé |
+>   | `hero` | `--color-brand` | a palavra "hub" na headline |
+>   | `/precos` (h1) | `--color-brand` | a palavra "surpresa" na headline |
+>   | `/precos` (wordmark) | `--color-brand-text` | o "Hub" do wordmark textual |
+>   | `plan-comparison` | `--color-brand` | ícone de recurso incluído |
+>
+>   Qualquer outro uso de cor precisa de nova linha nesta tabela. `--color-brand-text`
+>   (`#4338CA` claro / `#A5B4FC` escuro) existe porque `#6366F1` puro reprova AA como
+>   texto — vale a mesma regra da tabela de contraste mais abaixo.
 > - Raio único de `6px`; superfícies são caixas delimitadoras com borda de `1px`.
+> - `.surface-deep` redefine os tokens localmente para uma seção de fundo próprio
+>   (usada em `/precos`), mantendo o contrato de escala de cinza nos dois temas.
+> - Logotipos de terceiros na prova social entram como **máscara CSS** (`.logo-mark`),
+>   não como imagem: a cor vem do tema e o arquivo precisa ter fundo transparente.
 > - Preservados do design system: a estratégia de duas famílias (Sora/Inter), a escala
 >   tipográfica, `tabular-nums`, o alvo de toque de 44px e o respeito a `prefers-reduced-motion`.
 >

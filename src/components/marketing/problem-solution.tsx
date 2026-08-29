@@ -77,7 +77,7 @@ function RowItem({ row }: { row: Row }) {
 
 export function ProblemSolution() {
   return (
-    <Section id="solucoes" className="surface-black border-b-0">
+    <Section id="solucoes" className="surface-deep border-b-0">
       <Container>
         <Reveal>
           <SectionIntro

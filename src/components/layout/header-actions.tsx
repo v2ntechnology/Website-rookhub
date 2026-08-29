@@ -7,9 +7,7 @@ import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { buttonClasses } from "@/components/ui/button";
 
 const navigation = [
-  { href: "/#solucoes", label: "Soluções" },
-  { href: "/#pilares", label: "Diferenciais" },
-  { href: "/#perfis", label: "Perfis" },
+  { href: "/", label: "Início" },
   { href: "/precos", label: "Planos e preços" },
   { href: "/#contato", label: "Entrar" },
 ];

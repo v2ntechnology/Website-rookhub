@@ -5,7 +5,6 @@ import { useState } from "react";
 import { CheckoutButton } from "@/components/pricing/checkout-button";
 import { PlanCard } from "@/components/pricing/plan-card";
 import { PLANS } from "@/lib/stripe/plans";
-import { cn } from "@/lib/utils";
 import type { BillingInterval } from "@/types/billing";
 
 const intervals: { value: BillingInterval; label: string; note?: string }[] = [
@@ -21,7 +20,7 @@ export function PricingTable() {
       <div
         role="radiogroup"
         aria-label="Intervalo de cobrança"
-        className="mt-8 flex w-fit overflow-hidden rounded-[var(--radius-control)] border border-border bg-surface"
+        className="price-toggle mx-auto"
       >
         {intervals.map((option) => {
           const active = interval === option.value;
@@ -32,25 +31,21 @@ export function PricingTable() {
               role="radio"
               aria-checked={active}
               onClick={() => setInterval(option.value)}
-              className={cn(
-                "px-4 py-2.5 text-sm transition-colors",
-                active
-                  ? "bg-foreground font-semibold text-background"
-                  : "text-muted hover:text-foreground",
-              )}
+              data-active={active}
+              className="price-toggle-option"
             >
               {option.label}
               {option.note ? (
-                <span className="ml-2 text-xs">· {option.note}</span>
+                <span className="price-toggle-note">{option.note}</span>
               ) : null}
             </button>
           );
         })}
       </div>
 
-      <ul className="mt-8 grid items-start gap-5 lg:grid-cols-3">
+      <ul className="mt-12 grid items-start gap-5 lg:grid-cols-3">
         {PLANS.map((plan) => (
-          <li key={plan.id} className="h-full">
+          <li key={plan.id} id={`plano-${plan.id}`} className="h-full scroll-mt-28">
             <PlanCard
               plan={plan}
               interval={interval}

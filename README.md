@@ -410,8 +410,14 @@ Dois pontos que valem para quando a marca voltar:
 ## Convenções
 
 As regras completas estão em [`.claude/`](.claude/), que é a **fonte única** de diretrizes. Não
-crie `.cursor/`, `.codex/` nem `.github/copilot-instructions.md`. O `CLAUDE.md` da raiz é só um
-ponteiro, e o `AGENTS.md` é gerado pelo `next dev` e deve ser commitado como veio.
+crie `.cursor/`, `.codex/` nem `.github/copilot-instructions.md`. **A raiz não tem `CLAUDE.md` nem
+`AGENTS.md`**: os dois foram removidos e estão no `.gitignore`.
+
+⚠️ **Se eles reaparecerem no seu disco, é o Next, e não commite.** O Next 16 recria os dois quando
+o `next dev` roda de dentro de um agente de IA, detectado pelo `@vercel/detect-agent`. Num terminal
+comum isso nunca acontece, e é por isso que só algumas pessoas os veem surgir. Não há opção de
+desligar. E nunca apague apenas um: sem o `AGENTS.md`, o Next passa a injetar o bloco dele dentro
+do `CLAUDE.md`.
 
 O essencial:
 

@@ -40,3 +40,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Arquivos de agente gerados pelo `next dev`.
+#
+# O Next 16 recria AGENTS.md e CLAUDE.md na raiz sempre que o `dev` roda de
+# dentro de um agente de IA (ele detecta pelo @vercel/detect-agent; num terminal
+# comum nada acontece). Nao ha opcao de desligar.
+#
+# Ignorados de proposito: as regras deste projeto vivem em .claude/, e esses
+# dois arquivos sao ruido do framework. Ignorar evita que voltem como alteracao
+# pendente a cada execucao.
+/AGENTS.md
+/CLAUDE.md

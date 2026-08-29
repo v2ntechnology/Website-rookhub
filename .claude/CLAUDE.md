@@ -5,9 +5,18 @@
 > ou qualquer outra pasta/arquivo paralelo de instruções para IA. Qualquer agente ou
 > ferramenta que atue neste repositório **deve** ler `.claude/` antes de escrever código.
 >
-> O `CLAUDE.md` da raiz é apenas um ponteiro (`@`) para este arquivo — não coloque regras lá.
-> O `AGENTS.md` da raiz é gerado automaticamente pelo `next dev` (arquivo do framework,
-> não é uma fonte de regras de projeto) e deve ser commitado como veio.
+> **Não existe `CLAUDE.md` nem `AGENTS.md` na raiz** (decisão do usuário em 29/08/2026). Os dois
+> foram removidos e estão no `.gitignore`. Este arquivo é o ponto de entrada, e não há ponteiro
+> na raiz apontando para ele.
+>
+> ⚠️ **Eles voltam a aparecer no seu disco, e isso é esperado.** O Next 16 recria os dois sempre
+> que o `next dev` roda de dentro de um agente de IA: ele detecta pelo `@vercel/detect-agent`, e
+> num terminal comum nada acontece. Não existe opção de desligar (a lógica está em
+> `node_modules/next/dist/server/lib/generate-agent-files.js`). Por isso estão ignorados: quando
+> reaparecerem, **não commite**.
+>
+> ⚠️ **Nunca apague só um dos dois.** Se o `AGENTS.md` sumir e o `CLAUDE.md` existir, o Next
+> injeta o bloco inteiro dele **dentro do `CLAUDE.md`**. Ou os dois existem, ou nenhum.
 
 ## O produto
 

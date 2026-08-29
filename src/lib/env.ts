@@ -9,7 +9,7 @@
 function required(value: string | undefined, name: string): string {
   if (!value) {
     throw new Error(
-      `Variável de ambiente ausente: ${name}. Consulte .env.example.`,
+      `Variável de ambiente ausente: ${name}. Consulte o .env da raiz.`,
     );
   }
   return value;

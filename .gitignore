@@ -30,9 +30,11 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# Arquivos de ambiente. Nenhum e versionado, nem o de exemplo: a referencia de
+# quais variaveis existem e o proprio `.env` de cada pessoa, que nasce com as
+# chaves comentadas e a explicacao de cada uma. Mesmo combinado dos outros tres
+# projetos do RookHub.
 .env*
-!.env.example
 
 # vercel
 .vercel

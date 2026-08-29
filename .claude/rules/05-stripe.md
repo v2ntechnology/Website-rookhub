@@ -20,7 +20,13 @@ verdade para copy, features e mapeamento `plano+intervalo → priceId`.
 | `NEXT_PUBLIC_STRIPE_PRICE_*` | client | IDs de price por plano/intervalo |
 | `NEXT_PUBLIC_SITE_URL` | client | URL absoluta, base das URLs de retorno |
 
-`.env.local` **nunca** é commitado. Mudou o contrato? Atualize `.env.example`.
+⚠️ **Nenhum arquivo de ambiente é versionado, nem o de exemplo.** A referência de quais variáveis
+existem é o próprio `.env` da raiz, que nasce com as chaves comentadas e a explicação de cada uma.
+Variável nova entra lá, comentada, na mesma branch.
+
+⚠️ **Não preencher variável do Stripe com valor de exemplo.** Com `price_xxx` presente,
+`resolvePriceId` devolve algo truthy, o guarda de `503` deixa de valer e a rota tenta falar com o
+Stripe de verdade, devolvendo `500`. Ou a chave é real, ou a linha fica comentada.
 
 ## Fluxo de assinatura
 

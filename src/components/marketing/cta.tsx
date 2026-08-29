@@ -20,7 +20,7 @@ const steps = [
 
 export function CallToAction() {
   return (
-    <Section id="contato" className="surface-black border-b-0">
+    <Section id="contato" className="surface-deep border-b-0">
       <Container>
         <Reveal>
           <SectionIntro

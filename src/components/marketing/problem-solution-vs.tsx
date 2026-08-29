@@ -111,7 +111,7 @@ function Heading({ className }: { className?: string }) {
 
 export function ProblemSolution() {
   return (
-    <Section id="solucoes" className="surface-black border-b-0">
+    <Section id="solucoes" className="surface-deep border-b-0">
       <Container>
         <Heading className="mb-12 lg:hidden" />
 

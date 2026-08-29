@@ -1,7 +1,6 @@
 import { CallToAction } from "@/components/marketing/cta";
 import { Hero } from "@/components/marketing/hero";
 import { Pillars } from "@/components/marketing/pillars";
-import { PlansPreview } from "@/components/marketing/plans-preview";
 import { ProblemSolution } from "@/components/marketing/problem-solution";
 import { Profiles } from "@/components/marketing/profiles";
 import { siteUrl } from "@/lib/env";
@@ -35,7 +34,6 @@ export default function HomePage() {
       <ProblemSolution />
       <Pillars />
       <Profiles />
-      <PlansPreview />
       <CallToAction />
     </>
   );

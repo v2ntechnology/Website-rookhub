@@ -27,6 +27,9 @@
   --color-danger: #111827;
   /* Único desvio cromático do wireframe: o "hub" da assinatura de rodapé. */
   --color-brand: #6366f1;
+  /* O #6366F1 puro não passa AA como texto pequeno em fundo claro
+     (3.94:1). Para rótulo, selo e chip use este par. Ver regra 04. */
+  --color-brand-text: #4338ca;
 }
 
 .dark {
@@ -40,6 +43,7 @@
   --color-border: #343b45;
   --color-danger: #f3f4f6;
   --color-brand: #6366f1;
+  --color-brand-text: #a5b4fc;
 }
 
 @theme inline {
@@ -53,6 +57,7 @@
   --color-border: var(--color-border);
   --color-danger: var(--color-danger);
   --color-brand: var(--color-brand);
+  --color-brand-text: var(--color-brand-text);
 
   --font-display: var(--font-sora);
   --font-sans: var(--font-inter);
@@ -175,11 +180,35 @@
     letter-spacing: -0.03em;
   }
 
-  /* ---------- Superfície preta ----------
-     Redefine os tokens de tema localmente: tudo o que estiver dentro
-     (`text-muted`, `bg-surface`, `border-border`…) vira noturno sozinho,
-     nos dois temas, sem precisar de variante em cada componente. */
-  .surface-black {
+  /* ---------- Superfície profunda ----------
+     A superfície dominante do site. Redefine os tokens de tema
+     localmente, então tudo o que estiver dentro (`text-muted`,
+     `bg-surface`, `border-border`…) acompanha sozinho — não existe
+     variante `dark:` espalhada pelos componentes.
+
+     No escuro é o preto #070707; no claro, o branco com o mesmo
+     contraste relativo. `--ink` é a tinta decorativa (palavra fantasma,
+     brilhos, sombras) sempre na cor oposta ao fundo. */
+  .surface-deep {
+    --color-background: #ffffff;
+    --color-surface: #ffffff;
+    --color-surface-container: #f3f4f6;
+    --color-foreground: #0b0b0c;
+    --color-body: #3f3f46;
+    --color-muted: #6b6b73;
+    --color-faint: #9a9aa2;
+    --color-border: #e4e4e8;
+
+    --color-brand-text: #4338ca;
+    --ink: 0 0 0;
+    --paper: 255 255 255;
+    --ghost-opacity: 0.05;
+
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .dark .surface-deep {
     --color-background: #070707;
     --color-surface: #070707;
     --color-surface-container: #16161a;
@@ -189,8 +218,326 @@
     --color-faint: #6b6b73;
     --color-border: #1c1c20;
 
-    background-color: #070707;
-    color: #f4f4f5;
+    --color-brand-text: #a5b4fc;
+    --ink: 255 255 255;
+    --paper: 0 0 0;
+    --ghost-opacity: 0.055;
+  }
+
+
+  /* ---------- Página de preços ----------
+     Cartões de altura igual, alternador em pílula e lista com checks.
+     A ordem dentro do cartão é preço → ação → lista. */
+  .price-toggle {
+    display: flex;
+    width: fit-content;
+    gap: 4px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background-color: var(--color-surface);
+    padding: 4px;
+  }
+
+  .price-toggle-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: var(--color-muted);
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .price-toggle-option:hover {
+    color: var(--color-foreground);
+  }
+
+  .price-toggle-option[data-active="true"] {
+    background-color: var(--color-foreground);
+    font-weight: 600;
+    color: var(--color-background);
+  }
+
+  .price-toggle-note {
+    border-radius: 999px;
+    background-color: rgb(99 102 241 / 0.16);
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-brand-text);
+  }
+
+  .price-toggle-option[data-active="true"] .price-toggle-note {
+    background-color: rgb(var(--paper, 255 255 255) / 0.18);
+    color: inherit;
+  }
+
+  .price-card {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    background-color: var(--color-surface);
+    padding: 28px;
+  }
+
+  .price-card-featured {
+    border-color: var(--color-brand);
+    box-shadow: inset 0 0 0 1px var(--color-brand);
+  }
+
+  .price-badge {
+    flex-shrink: 0;
+    border-radius: 999px;
+    background-color: rgb(99 102 241 / 0.16);
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-brand-text);
+  }
+
+  .price-amount {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .price-check {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    color: var(--color-brand);
+  }
+
+  /* ---------- Abas de perfil (seção 4) ----------
+     Aba ativa marcada por sublinhado, e uma tabela por perfil. */
+  .ptab {
+    position: relative;
+    padding-bottom: 10px;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(17px, 1.8vw, 22px);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-muted);
+    transition: color 180ms ease;
+  }
+
+  .ptab:hover {
+    color: var(--color-foreground);
+  }
+
+  .ptab::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 2px;
+    border-radius: 2px;
+    background-color: var(--color-brand);
+    transform: scaleX(0);
+    transition: transform 220ms var(--ease-out-back);
+  }
+
+  .ptab[data-active="true"] {
+    color: var(--color-foreground);
+  }
+
+  .ptab[data-active="true"]::after {
+    transform: scaleX(1);
+  }
+
+  .ptab-scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .ptab-table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .ptab-table thead th {
+    border-bottom: 1px solid var(--color-border);
+    padding: 0 16px 12px 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-faint);
+  }
+
+  .ptab-table tbody th {
+    width: 26%;
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  .ptab-table tbody td {
+    font-size: 14px;
+    color: var(--color-muted);
+  }
+
+  .ptab-table tbody th,
+  .ptab-table tbody td {
+    border-bottom: 1px solid var(--color-border);
+    padding: 18px 16px 18px 0;
+    vertical-align: middle;
+  }
+
+  .ptab-table tbody tr:last-child th,
+  .ptab-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .ptab-chip {
+    display: inline-block;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+    color: var(--color-body);
+  }
+
+  .ptab-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: border-color 180ms ease;
+  }
+
+  .ptab-more:hover {
+    border-bottom-color: var(--color-foreground);
+  }
+
+  /* ---------- Logotipo como máscara ----------
+     O arquivo entra pelo canal alfa e a cor vem do tema: um só asset
+     serve aos dois modos, e logos de origens diferentes ficam com o
+     mesmo peso. Exige arquivo com fundo transparente. */
+  .logo-mark {
+    display: block;
+    height: 34px;
+    background-color: var(--color-foreground);
+    opacity: 0.7;
+    transition: opacity 200ms ease;
+    -webkit-mask-image: var(--logo);
+    mask-image: var(--logo);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+
+  .logo-mark:hover {
+    opacity: 1;
+  }
+
+  /* ---------- Tabela de comparação ----------
+     Em tela estreita a tabela rola na horizontal dentro do próprio
+     contêiner; a página nunca rola de lado. */
+  .cmp-scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .cmp {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .cmp th,
+  .cmp td {
+    padding: 16px 12px;
+    vertical-align: middle;
+  }
+
+  .cmp thead th {
+    padding-bottom: 28px;
+    text-align: center;
+  }
+
+  .cmp-plan {
+    display: block;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .cmp-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background-color: var(--color-surface-container);
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .cmp-cta:hover {
+    border-color: var(--color-foreground);
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  .cmp-group {
+    padding-top: 40px;
+    padding-bottom: 12px;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .cmp-label {
+    width: 38%;
+    border-top: 1px solid var(--color-border);
+    padding-left: 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .cmp-value {
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+  }
+
+  /* ---------- Pergunta frequente ---------- */
+  .faq-row {
+    display: grid;
+    gap: 10px 32px;
+    border-top: 1px solid var(--color-border);
+    padding: 24px 0;
+  }
+
+  @media (min-width: 768px) {
+    .faq-row {
+      grid-template-columns: minmax(200px, 0.6fr) minmax(0, 1.4fr);
+    }
   }
 
   /* ---------- Voltar ao topo ---------- */
@@ -239,9 +586,13 @@
     display: block;
     width: clamp(56px, 7.5vw, 108px);
     height: clamp(210px, 28vw, 400px);
-    border: 1px solid #2e2e36;
+    border: 1px solid var(--color-border);
     border-radius: 999px;
-    background-image: linear-gradient(155deg, #26262e, #131318);
+    background-image: linear-gradient(
+      155deg,
+      var(--color-surface-container),
+      var(--color-background)
+    );
     transform: rotate(11deg);
     transition:
       background-image 260ms var(--ease-out-back),
@@ -262,6 +613,8 @@
 
   /* Botão redondo no pé da pastilha. Gira ao contrário para a seta ficar
      em pé mesmo com a pastilha inclinada. */
+  /* O botão do pé é sempre escuro: ele contrasta com a pastilha, não
+     com a página. */
   .capsule-knob {
     position: absolute;
     bottom: 10px;
@@ -272,7 +625,7 @@
     width: clamp(40px, 5vw, 76px);
     height: clamp(40px, 5vw, 76px);
     border-radius: 999px;
-    background-color: #070707;
+    background-color: #0b0b0c;
     color: #f4f4f5;
     transform: translateX(-50%) rotate(-11deg);
   }
@@ -351,7 +704,7 @@
     font-weight: 700;
     letter-spacing: -0.04em;
     text-transform: uppercase;
-    color: rgb(255 255 255 / 0.055);
+    color: rgb(var(--ink, 255 255 255) / var(--ghost-opacity, 0.055));
     user-select: none;
     pointer-events: none;
     white-space: nowrap;
@@ -611,13 +964,11 @@
   /* ---------- Hero de ícones flutuantes ----------
      Superfície de fidelidade alta pedida pelo produto: fundo preto fixo
      nos dois temas, com os ícones do produto dispersos ao redor do texto. */
-  .hero-dark {
-    background-color: #070707;
-    color: #ffffff;
+  .hero-surface {
     background-image: radial-gradient(
       120% 90% at 50% 45%,
-      rgb(255 255 255 / 0.06) 0%,
-      rgb(7 7 7 / 0) 60%
+      rgb(var(--ink, 255 255 255) / 0.06) 0%,
+      rgb(var(--ink, 255 255 255) / 0) 60%
     );
   }
 

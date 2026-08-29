@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 
-import { Bullet, Card } from "@/components/ui/card";
 import { MONTHS_IN_YEAR } from "@/lib/stripe/plans";
 import { cn, formatBRL } from "@/lib/utils";
 import type { BillingInterval, Plan } from "@/types/billing";
@@ -12,53 +11,71 @@ interface PlanCardProps {
   action: ReactNode;
 }
 
+function Check() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden
+      className="price-check"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m5 12.5 4.5 4.5L19 7.5" />
+    </svg>
+  );
+}
+
 /**
  * Card de plano compartilhado entre a prévia da landing e a tabela de /precos,
  * para que a copy comercial exista em um lugar só (`lib/stripe/plans.ts`).
+ *
+ * A ordem é a de uma página de preço: nome, preço, ação e só então a lista.
+ * Quem está comparando decide pelo preço e pelo botão — a lista é conferência.
  */
 export function PlanCard({ plan, interval, action }: PlanCardProps) {
   const monthly =
     interval === "year" ? plan.price.year / MONTHS_IN_YEAR : plan.price.month;
 
   return (
-    <Card
-      className={cn(
-        "flex h-full flex-col",
-        plan.highlighted && "border-2 border-foreground",
-      )}
-    >
-      {plan.highlighted ? (
-        <p className="type-label-md mb-3 w-fit rounded-full border border-foreground px-2.5 py-1 uppercase">
-          Mais contratado
-        </p>
-      ) : null}
+    <div className={cn("price-card", plan.highlighted && "price-card-featured")}>
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="font-display text-[19px] font-semibold">{plan.name}</h3>
+        {plan.highlighted ? (
+          <span className="price-badge">Mais contratado</span>
+        ) : null}
+      </div>
 
-      <h3 className="type-headline-md">{plan.name}</h3>
-      <p className="mt-1.5 text-sm text-muted">{plan.tagline}</p>
-
-      <p className="mt-5 flex items-baseline gap-1">
-        <span className="font-display tabular text-[34px] font-bold tracking-[-0.02em]">
-          {formatBRL(monthly)}
-        </span>
-        <span className="text-sm text-muted">/mês</span>
+      <p className="mt-2 min-h-[42px] text-sm leading-relaxed text-muted">
+        {plan.tagline}
       </p>
-      <p className="mt-1 text-sm text-muted">
+
+      <p className="mt-6 flex items-baseline gap-1.5">
+        <span className="price-amount">{formatBRL(monthly)}</span>
+        <span className="text-sm text-muted">/ mês</span>
+      </p>
+      <p className="mt-1.5 text-[13px] text-faint">
         {interval === "year"
-          ? `${formatBRL(plan.price.year)} cobrados anualmente`
-          : "Cobrança mensal recorrente"}
+          ? `${formatBRL(plan.price.year)} cobrados uma vez por ano`
+          : "Cobrança mensal recorrente, sem fidelidade"}
       </p>
 
-      <p className="my-4 border-y border-border py-3 text-[13px] text-muted">
-        {plan.fleet}
-      </p>
+      <div className="mt-6">{action}</div>
 
-      <ul className="mb-5 flex-1 space-y-2">
+      <p className="mt-7 text-[13px] font-semibold">{plan.fleet}</p>
+
+      <ul className="mt-4 space-y-2.5 border-t border-border pt-5">
         {plan.features.map((feature) => (
-          <Bullet key={feature}>{feature}</Bullet>
+          <li key={feature} className="flex gap-2.5">
+            <Check />
+            <span className="text-[13.5px] leading-relaxed text-body">
+              {feature}
+            </span>
+          </li>
         ))}
       </ul>
-
-      <div className="mt-auto">{action}</div>
-    </Card>
+    </div>
   );
 }

@@ -52,7 +52,7 @@ function FloatingIcons() {
             alt=""
             width={icon.size * 2}
             height={icon.size * 2}
-            className="h-full w-full object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.55)]"
+            className="h-full w-full object-contain drop-shadow-[0_18px_40px_rgb(0_0_0/0.35)]"
             style={{ transform: `rotate(${icon.rotate}deg)` }}
           />
         </span>
@@ -82,7 +82,7 @@ function IconStrip() {
 
 export function Hero() {
   return (
-    <section className="hero-dark relative isolate -mt-[84px] flex min-h-svh items-center overflow-hidden px-4 pt-[84px] pb-16 sm:px-6">
+    <section className="hero-surface surface-deep relative isolate -mt-[84px] flex min-h-svh items-center overflow-hidden px-4 pt-[84px] pb-16 sm:px-6">
       <FloatingIcons />
 
       <Container className="relative z-10 flex max-w-3xl flex-col items-center text-center">
@@ -91,7 +91,7 @@ export function Hero() {
           alt="RookHub"
           width={34}
           height={40}
-          className="opacity-90"
+          className="opacity-90 dark:invert-0 invert"
           priority
         />
 
@@ -101,21 +101,20 @@ export function Hero() {
           em um só <span className="text-brand">hub</span>.
         </h1>
 
-        <p className="mt-5 max-w-[46ch] text-[15px] leading-relaxed text-white/60 text-pretty">
+        <p className="mt-5 max-w-[46ch] text-[15px] leading-relaxed text-muted text-pretty">
           Telemetria, combustível, multas e planilhas chegam de lugares
           diferentes. O RookHub reúne tudo e mostra o prejuízo enquanto ele
           ainda dá para estancar.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <ButtonLink href="/precos" size="sm" className="border-white bg-white text-black hover:bg-white/90">
+          <ButtonLink href="/precos" size="sm">
             Ver planos
           </ButtonLink>
           <ButtonLink
             href="#contato"
             size="sm"
             variant="secondary"
-            className="border-white/20 bg-white/10 text-white hover:bg-white/20"
           >
             Falar com um consultor
           </ButtonLink>

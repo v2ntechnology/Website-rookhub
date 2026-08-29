@@ -60,7 +60,7 @@ const pillars: Pillar[] = [
 
 export function Pillars() {
   return (
-    <Section id="pilares" className="surface-black border-b-0">
+    <Section id="pilares" className="surface-deep border-b-0">
       <Container>
         <SectionIntro
           eyebrow="Pilares da plataforma"

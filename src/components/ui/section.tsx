@@ -5,7 +5,10 @@ import { cn } from "@/lib/utils";
 export function Section({ className, ...props }: ComponentProps<"section">) {
   return (
     <section
-      className={cn("border-b border-dashed border-border px-4 py-14 sm:px-6 sm:py-20", className)}
+      className={cn(// `overflow-x: clip` (e não `hidden`) contém a sangria decorativa da
+      // palavra fantasma sem criar um contêiner de rolagem — `hidden` quebraria
+      // qualquer `position: sticky` dentro da seção.
+      "overflow-x-clip border-b border-dashed border-border px-4 py-14 sm:px-6 sm:py-20", className)}
       {...props}
     />
   );

@@ -775,8 +775,6 @@
     position: absolute;
     top: -0.42em;
     left: -0.04em;
-    max-width: 100%;
-    overflow: hidden;
     z-index: -1;
     font-family: var(--font-display), system-ui, sans-serif;
     font-size: clamp(56px, 8.5vw, 118px);
@@ -1109,6 +1107,20 @@
       rgb(var(--ink, 255 255 255) / 0.06) 0%,
       rgb(var(--ink, 255 255 255) / 0) 60%
     );
+  }
+
+  .hero-float {
+    animation: hero-float 7s ease-in-out infinite;
+  }
+
+  @keyframes hero-float {
+    0%,
+    100% {
+      transform: translateY(-6px);
+    }
+    50% {
+      transform: translateY(6px);
+    }
   }
 
   .type-display-hero {

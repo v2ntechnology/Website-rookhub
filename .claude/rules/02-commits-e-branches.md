@@ -1,34 +1,29 @@
 # 02 — Commits, Branches e PRs
 
-## Conventional Commits (obrigatório)
+## Mensagem de commit
 
-Formato: `<tipo>(<escopo opcional>): <descrição no imperativo, minúscula, sem ponto final>`
+⚠️ **Sem prefixo de Conventional Commits** (decisão do usuário em 29/08/2026). Nada de `feat:`,
+`fix(escopo):`, `docs:`, `chore:`, `build:` e afins. O assunto é a frase, e só.
 
-| Tipo | Uso |
-| --- | --- |
-| `feat` | nova funcionalidade para o usuário |
-| `fix` | correção de bug |
-| `refactor` | mudança de código sem alterar comportamento |
-| `style` | formatação, espaçamento, CSS sem efeito funcional |
-| `perf` | melhoria de performance |
-| `docs` | documentação (inclui `.claude/`) |
-| `test` | testes |
-| `build` | build, dependências, bundler |
-| `ci` | pipelines |
-| `chore` | manutenção geral |
-| `revert` | reversão de commit |
-
-Escopos usuais: `landing`, `pricing`, `checkout`, `stripe`, `ui`, `theme`, `seo`, `config`.
-
-Breaking change: sufixo `!` (`feat(stripe)!: ...`) e rodapé `BREAKING CHANGE: <impacto>`.
+Formato: uma frase em **pt-BR** explicando o que a mudança faz. O corpo, quando existir, explica o
+porquê e o que não é óbvio no diff.
 
 Exemplos válidos:
 
 ```
-feat(pricing): adiciona alternância entre cobrança mensal e anual
-fix(stripe): valida assinatura do webhook com o corpo bruto
-docs: documenta o fluxo de assinatura em .claude/rules/05-stripe.md
+Adiciona alternancia entre cobranca mensal e anual
+Valida a assinatura do webhook com o corpo bruto
+Separa o conteudo editorial dos componentes
 ```
+
+**Por que sem prefixo:** o time tem 3 desenvolvedores e o histórico precisa ser legível por todos.
+`docs:` e `chore:` classificam a mudança para uma ferramenta, não explicam nada para uma pessoa. A
+mesma regra vale nos quatro projetos do RookHub, e este era o único fora do padrão.
+
+⚠️ **O histórico anterior a 29/08/2026 usa o formato antigo.** Não é para imitar, e não é para
+reescrever: commit publicado fica como está.
+
+Commits pequenos, um por ideia.
 
 ## Proibição de assinatura de IA (regra dura)
 
@@ -56,7 +51,8 @@ Para auditar o histórico inteiro, troque `log -1` por `log`.
 - `main` é protegida: **nunca** receba commit direto, nem `git push --force`.
 - Padrão de nome: `<tipo>/<slug-curto>` — `feat/pricing-table`, `fix/webhook-raw-body`.
 - Uma branch = uma unidade lógica de trabalho. Rebase na `main` antes de abrir o PR.
-- Merge via PR. Preferir *squash merge* com título no padrão Conventional Commits.
+- Ao juntar por *squash merge*, o título segue a mesma regra de mensagem acima: frase em pt-BR,
+  sem prefixo.
 
 ## PRs
 

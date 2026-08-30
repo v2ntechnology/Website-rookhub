@@ -140,9 +140,11 @@ A árvore normativa está em [rules/03-arquitetura.md](rules/03-arquitetura.md).
 
 - Repo: `https://github.com/v2ntechnology/Website-rookhub.git`. Detalhe em
   [rules/02-commits-e-branches.md](rules/02-commits-e-branches.md).
-- ⚠️ **Conventional Commits é obrigatório aqui**: `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`.
-  Isso é o **oposto** do `../System-web`, `../System-mobile` e `../Backend-web`, que proíbem o
-  prefixo. A regra é por repositório, e a divergência já confundiu.
+- Commits pequenos, mensagem em pt-BR e **sem prefixo de Conventional Commits** (decisão do usuário
+  em 29/08/2026): nada de `feat:`, `fix(escopo):`, `docs:` ou `chore:`. O assunto explica em uma
+  frase o que a mudança faz. Mesma regra dos outros três projetos.
+- ⚠️ **O histórico anterior a 29/08/2026 usa o formato antigo.** Não imitar, e não reescrever:
+  commit publicado fica como está.
 - ⚠️ **Nunca commitar direto na `main`.** Sempre `feat/*`, `fix/*` ou `chore/*`, e PR.
 - Nenhum commit pode atribuir autoria a IA, em autor, committer ou trailer. Citar a pasta
   `.claude/` no corpo não é violação.
@@ -161,7 +163,7 @@ A árvore normativa está em [rules/03-arquitetura.md](rules/03-arquitetura.md).
 | --- | --- |
 | [memoria.md](memoria.md) | Decisões, história e armadilhas. O **porquê**, não normativo |
 | [rules/01-stack.md](rules/01-stack.md) | Stack, versões e ferramentas permitidas |
-| [rules/02-commits-e-branches.md](rules/02-commits-e-branches.md) | Conventional Commits, branches, PRs |
+| [rules/02-commits-e-branches.md](rules/02-commits-e-branches.md) | Mensagem de commit, branches, PRs |
 | [rules/03-arquitetura.md](rules/03-arquitetura.md) | Estrutura de pastas, Server/Client, TypeScript |
 | [rules/04-design-system.md](rules/04-design-system.md) | Tokens, temas, fase de wireframe |
 | [design/DESIGN.md](design/DESIGN.md) | Especificação de origem do design system (normativa) |

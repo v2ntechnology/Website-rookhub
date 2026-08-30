@@ -189,6 +189,8 @@ mais nada na raiz.
   `vercel.svg`, `window.svg`). Foram removidos em 29/08/2026: ninguém os referenciava e eles
   entravam no export, ou seja, `rookhub.com.br/vercel.svg` respondia com o logotipo da Vercel
   servido pelo domínio do produto.
-- ⚠️ **Conventional Commits é obrigatório aqui e proibido no `../System-web`.** A regra é por
-  repositório, e a divergência já confundiu. A daqui é `rules/02-commits-e-branches.md`.
+- ⚠️ **Sem prefixo de Conventional Commits desde 29/08/2026.** Este era o único dos quatro projetos
+  que exigia `feat:` e `docs:`, e passou a seguir o padrão dos irmãos: uma frase em pt-BR, sem
+  prefixo. O histórico anterior mantém o formato antigo e não será reescrito, então o `git log`
+  mostra os dois estilos.
 - **Nunca** commitar direto na `main`: sempre `feat/*`, `fix/*` ou `chore/*` e PR.

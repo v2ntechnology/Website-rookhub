@@ -230,8 +230,9 @@ numeradas.
 
 O que mais surpreende quem chega, sobretudo vindo dos projetos irmãos:
 
-- ⚠️ **Conventional Commits é obrigatório aqui** (`feat:`, `fix:`, `docs:`) e **proibido** nos
-  outros três. E **nunca** se commita na `main`: sempre `feat/*`, `fix/*` ou `chore/*` e PR.
+- **Mensagem de commit é uma frase em pt-BR, sem prefixo** (`feat:`, `docs:` e afins não entram),
+  igual aos outros três projetos. ⚠️ O histórico anterior a 29/08/2026 usa o formato antigo: não
+  imite, e não reescreva.
 - ⚠️ **Tipografia é classe própria**, não utilitário: use `.type-display-hero`, `.type-headline-md`
   e as outras. `text-4xl font-bold` quebra a escala e some com o responsivo.
 - ⚠️ **A barra de rolagem é oculta** por decisão de projeto. O botão "voltar ao topo" existe para

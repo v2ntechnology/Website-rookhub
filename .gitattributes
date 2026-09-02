@@ -1,0 +1,16 @@
+# Normaliza as quebras de linha em LF na árvore de trabalho e no repositório.
+# O Git para Windows instala `core.autocrlf=true` no config de SISTEMA, e sem
+# este arquivo ele avisa a cada commit que vai trocar LF por CRLF no disco. O
+# conteúdo versionado já está todo em LF: isto impede que ele deixe de estar.
+* text=auto eol=lf
+
+# Binários: nunca normalizar.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff binary
+*.woff2 binary

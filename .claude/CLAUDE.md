@@ -128,9 +128,11 @@ A árvore normativa está em [rules/03-arquitetura.md](../docs/rules/03-arquitet
 - **Rota nova entra no `sitemap.ts`**, que não descobre sozinho, e recebe `metadata` própria.
 - Antes de qualquer PR, os três precisam passar:
   `npm run lint && npm run typecheck && npm run build`.
-- ⚠️ **`npm run build:static` não roda no Windows**: o script usa sintaxe Unix de variável de
-  ambiente. Para validar localmente, definir `BUILD_TARGET=static` pelo bash e chamar
-  `./node_modules/.bin/next build`.
+- `npm run build:static` passa por `scripts/build-static.mjs`, que define `BUILD_TARGET`, chama o
+  `next build` e roda `flatten-rsc-segments.mjs` em seguida. Roda no Windows e no bash.
+- ⚠️ **O flatten não é opcional.** O export do Next 16 grava o payload RSC de cada segmento como
+  pasta aninhada, mas o cliente o pede com o caminho achatado por pontos. Sem a cópia, todo
+  prefetch responde 404 em produção. Detalhe na [memoria.md](memoria.md).
 
 ## Segredos
 

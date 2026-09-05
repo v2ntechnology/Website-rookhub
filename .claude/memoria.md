@@ -160,6 +160,35 @@ vago de propósito para a regra voltar com o mesmo nome.
 
 ## Build e deploy
 
+### Prefetch do App Router quebrado no export
+
+⚠️ **O Next 16 com `output: "export"` grava o payload RSC de cada segmento como pasta aninhada,
+mas o cliente pede o mesmo recurso com o caminho achatado por pontos.**
+
+    gerado:  out/precos/__next.!KG1hcmtldGluZyk/precos/__PAGE__.txt
+    pedido:  /precos/__next.!KG1hcmtldGluZyk.precos.__PAGE__.txt
+
+Resultado: todo prefetch responde 404. O site funciona, porque o Next cai para navegação normal,
+mas perde a navegação instantânea e enche o console. **Só apareceu em produção**, porque em
+desenvolvimento o Next serve o payload dinamicamente.
+
+`scripts/flatten-rsc-segments.mjs` copia cada arquivo para o nome achatado, e roda dentro do
+`build:static`. É remendo contra o framework: se um Next futuro passar a gravar já achatado, o
+script avisa que não encontrou nada e pode sair.
+
+### O `build:static` virou envoltório em Node
+
+⚠️ **`BUILD_TARGET=static next build` no `package.json` nunca rodou no Windows**, e era um gotcha
+registrado aqui: a pessoa exportava a variável pelo bash e chamava o binário à mão. Quem esquecia
+gerava um build normal achando que tinha gerado o export.
+
+Desde 05/09/2026 o script é `node scripts/build-static.mjs`, mesmo padrão do `dev.mjs`. Ele define
+a variável, chama o `next build` e roda o flatten em seguida.
+
+⚠️ **Ao montar caminho de script no Windows, usar `fileURLToPath`, nunca `URL.pathname`.** O
+`pathname` devolve `/C:/Users/Lucas%20Dias/…`, com barra à frente e espaço percent-encoded, e o
+Node não resolve. Custou uma rodada.
+
 - **Dois alvos a partir do mesmo código.** `npm run build` é o build normal, `npm run build:static`
   gera `out/` para a Cloudflare.
 - ⚠️ **Desde 05/09/2026 os dois produzem o mesmo conteúdo**, porque todas as rotas viraram

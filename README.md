@@ -167,9 +167,10 @@ Configuração do Worker em `wrangler.jsonc`, e o passo a passo em
 Component, sem Server Action e sem Route Handler. Rota de metadado exporta
 `dynamic = "force-static"`.
 
-⚠️ **`npm run build:static` não roda no Windows**, porque o script usa sintaxe Unix de variável de
-ambiente. Para validar, definir `BUILD_TARGET=static` pelo bash e chamar
-`./node_modules/.bin/next build`.
+⚠️ **`npm run build:static` faz duas coisas**, por `scripts/build-static.mjs`: o export do Next e,
+em seguida, `scripts/flatten-rsc-segments.mjs`. O segundo passo não é opcional. O export do Next 16
+grava o payload de prefetch de cada segmento como pasta aninhada, mas o cliente o pede com o
+caminho achatado por pontos, então sem a cópia todo prefetch responde 404 em produção.
 
 ---
 

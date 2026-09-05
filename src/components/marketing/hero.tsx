@@ -1,108 +1,174 @@
 import Image from "next/image";
+import Link from "next/link";
 
-import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/section";
+import { cn } from "@/lib/utils";
 
 /**
- * Ícones flutuantes do hero. Enquanto o catálogo de arte não fica pronto,
- * os três assets de `public/imgs` se repetem apenas para avaliar a
- * composição — `x`/`y` são o centro do ícone em % da área do hero.
+ * Hero cinematográfico: vídeo em tela cheia, conteúdo ancorado embaixo e
+ * entrada escalonada saindo do desfoque.
  *
- * Só existem a partir de `lg`: a dispersão pede as laterais vazias que o
- * mobile não tem, e lá o hero fica só com texto.
+ * ⚠️ **O vídeo é decoração, e nada depende dele.** Título, texto e botões são
+ * HTML e aparecem antes de qualquer byte de mídia. Se o vídeo falhar, o
+ * `poster` cobre o fundo; se o poster falhar, sobra a superfície escura.
+ *
+ * ⚠️ **`preload="none"` é deliberado.** O arquivo tem 9 MB, e baixá-lo junto
+ * com a página atrasaria o primeiro contato com a marca. O pôster, de 12 KB,
+ * segura a composição enquanto o vídeo chega.
+ *
+ * Com `prefers-reduced-motion` o vídeo some e o pôster fica no lugar dele,
+ * parado. O bloco global de movimento reduzido já zera as animações de entrada.
  */
-type FloatingIcon = {
-  src: string;
-  alt: string;
-  x: number;
-  y: number;
-  size: number;
-  rotate: number;
-};
 
-const icons: FloatingIcon[] = [
-  { src: "/imgs/combustivelIcone.png", alt: "Combustível", x: 9, y: 26, size: 124, rotate: -6 },
-  { src: "/imgs/excelIcone.png", alt: "Planilhas", x: 23, y: 44, size: 66, rotate: 5 },
-  { src: "/imgs/multaIcone.png", alt: "Multas", x: 7, y: 55, size: 92, rotate: 3 },
-  { src: "/imgs/excelIcone.png", alt: "Planilhas", x: 21, y: 62, size: 82, rotate: -4 },
-  { src: "/imgs/combustivelIcone.png", alt: "Combustível", x: 9, y: 80, size: 56, rotate: 8 },
-  { src: "/imgs/multaIcone.png", alt: "Multas", x: 72, y: 34, size: 58, rotate: -5 },
-  { src: "/imgs/excelIcone.png", alt: "Planilhas", x: 88, y: 24, size: 96, rotate: 4 },
-  { src: "/imgs/combustivelIcone.png", alt: "Combustível", x: 84, y: 50, size: 116, rotate: -3 },
-  { src: "/imgs/multaIcone.png", alt: "Multas", x: 74, y: 71, size: 88, rotate: 6 },
-  { src: "/imgs/excelIcone.png", alt: "Planilhas", x: 90, y: 76, size: 54, rotate: -7 },
+/** Sinais do produto, na linha acima do título. Traço simples, 1,6px. */
+const SIGNALS: { label: string; path: string }[] = [
+  {
+    label: "Checklist digital em campo",
+    path: "M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11",
+  },
+  {
+    label: "Assistente de IA por voz",
+    path: "M12 2a3 3 0 00-3 3v7a3 3 0 006 0V5a3 3 0 00-3-3zM19 10v2a7 7 0 01-14 0v-2M12 19v3",
+  },
+  {
+    label: "Custo por quilômetro",
+    path: "M3 3v18h18M7 15l4-5 4 3 5-7",
+  },
 ];
 
-function FloatingIcons() {
+function Signal({ label, path }: { label: string; path: string }) {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
-      {icons.map((icon, index) => (
-        <span
-          key={`${icon.src}-${index}`}
-          className="hero-float absolute"
-          style={{
-            left: `${icon.x}%`,
-            top: `${icon.y}%`,
-            width: icon.size,
-            height: icon.size,
-            marginLeft: -icon.size / 2,
-            marginTop: -icon.size / 2,
-            animationDelay: `${(index % 5) * -1.4}s`,
-          }}
-        >
-          <Image
-            src={icon.src}
-            alt=""
-            width={icon.size * 2}
-            height={icon.size * 2}
-            className="h-full w-full object-contain drop-shadow-[0_18px_40px_rgb(0_0_0/0.35)]"
-            style={{ transform: `rotate(${icon.rotate}deg)` }}
-          />
-        </span>
-      ))}
-    </div>
+    <li className="flex items-center gap-2">
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden
+        className="size-4 shrink-0 sm:size-[18px]"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.6}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d={path} />
+      </svg>
+      {label}
+    </li>
+  );
+}
+
+/** Pílula de vidro usada nos botões secundários. */
+function GlassLink({
+  href,
+  children,
+  className,
+  style,
+}: {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <Link
+      href={href}
+      style={style}
+      className={cn(
+        "liquid-glass inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-white transition-colors sm:px-8 sm:py-3",
+        "hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+        className,
+      )}
+    >
+      {children}
+    </Link>
   );
 }
 
 export function Hero() {
   return (
-    <section className="hero-surface surface-deep relative isolate mt-[calc(var(--header-h)*-1)] flex min-h-svh items-center overflow-hidden px-4 pt-[calc(var(--header-h)+24px)] pb-16 sm:px-6 md:pt-[var(--header-h)]">
-      <FloatingIcons />
+    <section className="hero-over-video surface-deep relative isolate mt-[calc(var(--header-h)*-1)] flex min-h-svh flex-col justify-end overflow-hidden px-4 pt-[calc(var(--header-h)+24px)] pb-12 sm:px-6 md:pb-16">
+      <video
+        className="hero-media motion-reduce:hidden"
+        poster="/video/hero-poster.webp"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="none"
+        aria-hidden
+        tabIndex={-1}
+      >
+        <source src="/video/hero.mp4" type="video/mp4" />
+      </video>
 
-      <Container className="relative z-10 flex max-w-3xl flex-col items-center text-center">
-        <Image
-          src="/imgs/logoOfficialBranca.svg"
-          alt="RookHub"
-          width={34}
-          height={40}
-          className="opacity-90 invert dark:invert-0"
-          priority
-        />
+      {/* Ocupa o lugar do vídeo quando o visitante pede menos movimento. */}
+      <Image
+        src="/video/hero-poster.webp"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="hero-media hidden motion-reduce:block"
+      />
 
-        <h1 className="type-display-hero mt-6 text-balance">
-          Toda a frota
-          <br />
-          em um só <span className="text-brand">hub</span>.
-        </h1>
+      <div aria-hidden className="hero-blur" />
+      <div aria-hidden className="hero-veil" />
 
-        <p className="mt-5 max-w-[46ch] text-[15px] leading-relaxed text-muted text-pretty sm:text-base">
-          Telemetria, combustível, multas e planilhas chegam de lugares
-          diferentes. O RookHub reúne tudo e mostra o prejuízo enquanto ele
-          ainda dá para estancar.
-        </p>
+      <Container className="relative z-10">
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-3xl">
+            <ul
+              className="hero-meta animate-blur-fade-up flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:gap-x-7 sm:text-sm"
+              style={{ "--delay": "300ms" } as React.CSSProperties}
+            >
+              {SIGNALS.map((signal) => (
+                <Signal key={signal.label} {...signal} />
+              ))}
+            </ul>
 
-        <div className="mt-8 flex w-full max-w-xs flex-col items-stretch gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center">
-          <ButtonLink href="/precos" size="md" className="md:h-9 md:px-3">
-            Ver planos
-          </ButtonLink>
-          <ButtonLink
-            href="#contato"
-            size="md"
-            variant="secondary"
-            className="md:h-9 md:px-3"
-          >
-            Falar com um consultor
-          </ButtonLink>
+            <h1
+              className="type-display-hero animate-blur-fade-up mt-6 text-balance md:mt-8"
+              style={{ "--delay": "400ms" } as React.CSSProperties}
+            >
+              Atravesse.
+              <br />
+              Opere com <span className="hero-accent">clareza</span>.
+            </h1>
+
+            <p
+              className="hero-lead animate-blur-fade-up mt-5 max-w-[52ch] text-base leading-relaxed text-pretty sm:text-lg md:mt-6"
+              style={{ "--delay": "500ms" } as React.CSSProperties}
+            >
+              Telemetria, combustível, multas e planilhas chegam de lugares
+              diferentes. O RookHub reúne tudo e mostra onde organizar a
+              operação para alcançar resultados melhores.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4 md:mt-12">
+              <Link
+                href="/precos"
+                className="animate-blur-fade-up inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-medium text-black transition-colors hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:px-8 sm:py-3"
+                style={{ "--delay": "600ms" } as React.CSSProperties}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden
+                  className="size-[18px]"
+                  fill="currentColor"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Ver planos
+              </Link>
+
+              <GlassLink
+                href="/contato"
+                className="animate-blur-fade-up"
+                style={{ "--delay": "700ms" } as React.CSSProperties}
+              >
+                Falar com um consultor
+              </GlassLink>
+            </div>
+          </div>
         </div>
       </Container>
     </section>

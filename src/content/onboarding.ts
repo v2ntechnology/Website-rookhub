@@ -8,7 +8,7 @@ export const ONBOARDING_STEPS: readonly OnboardingStep[] = [
   },
   {
     term: "Primeiras descobertas",
-    text: "O primeiro desvio costuma aparecer ainda na primeira semana — sem consultoria e sem projeto de seis meses.",
+    text: "O primeiro desvio costuma aparecer ainda na primeira semana, sem consultoria e sem projeto de seis meses.",
   },
   {
     term: "Até 30 dias",

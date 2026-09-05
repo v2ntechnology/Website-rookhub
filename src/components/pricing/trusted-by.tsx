@@ -6,14 +6,15 @@ import { Reveal } from "@/components/ui/reveal";
  * origens diferentes ficam com o mesmo peso visual e funcionam nos dois
  * temas, sem precisar de uma versão branca e uma preta de cada um.
  *
- * Requisito do arquivo: fundo transparente. A máscara usa o canal alfa —
- * um PNG com fundo branco vira um retângulo sólido.
+ * Requisito do arquivo: fundo transparente, porque a máscara lê o canal alfa
+ * e um arquivo com fundo branco viraria um retângulo sólido. Os três são SVG:
+ * o da Amazonas veio de um raster e foi vetorizado, ver a nota no arquivo.
  */
 const logos = [
-  { name: "Amazonas", src: "/imgs/logoAmazonas.png", width: 150 },
-  // Versão sem a placa branca de fundo — ver o comentário no arquivo.
-  { name: "Servioeste", src: "/imgs/logoServioeste-mask.svg", width: 176 },
-  { name: "Telecarga", src: "/imgs/LogoTelecarrga.svg", width: 132 },
+  { name: "Amazonas", src: "/logos/amazonas.svg", width: 150 },
+  // Versão sem a placa branca de fundo, ver o comentário no arquivo.
+  { name: "Servioeste", src: "/logos/servioeste-mask.svg", width: 176 },
+  { name: "Telecarga", src: "/logos/telecarga.svg", width: 132 },
 ];
 
 export function TrustedBy() {

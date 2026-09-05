@@ -10,7 +10,7 @@ import { siteUrl } from "@/lib/env";
 import "./globals.css";
 
 // Estratégia de duas famílias do DESIGN.md: Sora para títulos, Inter para
-// corpo e UI. Auto-hospedadas pelo next/font — sem requisição externa.
+// corpo e UI. Auto-hospedadas pelo next/font, sem requisição externa.
 const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
@@ -28,7 +28,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "RookHub — Gestão inteligente de frotas",
+    default: "RookHub, Gestão inteligente de frotas",
     template: "%s · RookHub",
   },
   description:
@@ -41,12 +41,33 @@ export const metadata: Metadata = {
     "custo por quilômetro",
   ],
   alternates: { canonical: "/" },
+  /* O ícone da aba é o próprio símbolo da marca, escolhido pelo tema do
+     navegador: o colorido sobre aba clara, o branco sobre aba escura. São os
+     mesmos arquivos que o site usa, e não cópias, então mexer no símbolo
+     atualiza a aba junto.
+     ⚠️ Isto substitui a convenção `app/icon.svg`, que foi removida: mantida,
+     ela geraria um terceiro `<link rel="icon">` sem `media`, e o navegador
+     poderia preferi-lo aos dois de baixo. */
+  icons: {
+    icon: [
+      {
+        url: "/images/rookhub-symbol-dark.svg",
+        media: "(prefers-color-scheme: light)",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/images/rookhub-symbol-white.svg",
+        media: "(prefers-color-scheme: dark)",
+        type: "image/svg+xml",
+      },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "pt_BR",
     url: siteUrl,
     siteName: "RookHub",
-    title: "RookHub — Gestão inteligente de frotas",
+    title: "RookHub, Gestão inteligente de frotas",
     description:
       "Checklist digital, manutenção preventiva e custo por quilômetro em um só hub.",
   },

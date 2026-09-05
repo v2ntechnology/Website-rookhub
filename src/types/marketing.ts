@@ -43,3 +43,22 @@ export type OnboardingStep = {
   term: string;
   text: string;
 };
+
+/** Manchete digitada: o trecho fixo e as palavras que se revezam no fim. */
+export type TypingHeadline = {
+  prefix: string;
+  words: string[];
+};
+
+/** Um canal de contato, na página `/contato`. */
+export type ContactChannel = {
+  term: string;
+  text: string;
+  action: { label: string; href: string };
+};
+
+/** Uma pergunta frequente, ao pé de `/precos`. */
+export type FaqItem = {
+  question: string;
+  answer: string;
+};

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 /**
- * Volta ao topo. Aparece depois de uma tela de rolagem — antes disso o
+ * Volta ao topo. Aparece depois de uma tela de rolagem, antes disso o
  * topo está logo ali e o botão só ocuparia espaço.
  *
  * Existe também porque a barra de rolagem do site é oculta: sem ela, esta

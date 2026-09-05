@@ -22,7 +22,7 @@ export function CallToAction() {
               <>
                 <p>
                   Demonstração de 30 minutos, com um veículo real da sua frota
-                  na tela — não um ambiente de exemplo.
+                  na tela, não um ambiente de exemplo.
                 </p>
 
                 <div className="mt-7 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">

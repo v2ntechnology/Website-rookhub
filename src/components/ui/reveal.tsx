@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Revela o conteúdo quando ele entra na viewport. Uma vez visível, não
- * volta atrás — rolar para cima não desmonta o que já foi lido.
+ * volta atrás, rolar para cima não desmonta o que já foi lido.
  */
 export function Reveal({
   children,

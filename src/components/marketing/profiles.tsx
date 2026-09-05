@@ -18,7 +18,7 @@ export function Profiles() {
                 vê o que precisa decidir.
               </>
             }
-            description="Mesmo hub, quatro leituras. O dono não navega em tela de lançamento, e o operador não esbarra em número que não é dele — a permissão define o que existe na tela, não só o que está bloqueado nela."
+            description="Mesmo hub, quatro leituras. O dono não navega em tela de lançamento, e o operador não esbarra em número que não é dele, a permissão define o que existe na tela, não só o que está bloqueado nela."
           />
         </Reveal>
 

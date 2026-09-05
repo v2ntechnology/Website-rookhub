@@ -18,7 +18,7 @@ export const COMPARISON_ROWS: readonly ComparisonRow[] = [
   },
   {
     topic: "Custo por km",
-    today: "Calculado à mão na planilha — quando é calculado.",
+    today: "Calculado à mão na planilha, quando é calculado.",
     rookhub:
       "Custo por km e consumo calculados sozinhos, por veículo, motorista e composição.",
   },
@@ -33,11 +33,11 @@ export const COMPARISON_ROWS: readonly ComparisonRow[] = [
     today:
       "Instaladas, mas com três a quatro pessoas assistindo vídeo 24 horas por dia.",
     rookhub:
-      "Análise que prioriza as câmeras com maior chance de evento — a decisão continua humana.",
+      "Análise que prioriza as câmeras com maior chance de evento, a decisão continua humana.",
   },
   {
     topic: "Reação",
-    today: "O número que decide o mês só existe no fechamento — e já é passado.",
+    today: "O número que decide o mês só existe no fechamento, e já é passado.",
     rookhub:
       "O desvio aparece no dia em que acontece, com a ação já ao lado do alerta.",
   },

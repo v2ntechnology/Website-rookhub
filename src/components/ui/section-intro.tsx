@@ -15,7 +15,7 @@ export function SectionIntro({
   className,
 }: {
   eyebrow: string;
-  /** Palavra decorativa atrás do título. Curta — ela não pode quebrar. */
+  /** Palavra decorativa atrás do título. Curta, ela não pode quebrar. */
   ghost: string;
   title: ReactNode;
   description: ReactNode;

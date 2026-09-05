@@ -4,16 +4,24 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ===============================================================
-   WIREFRAME — protótipo editorial em escala de cinza.
+   Base editorial em cinzas, com a marca entrando por acento.
 
-   O design system de marca (Indigo/Cyan, glassmorphism, Spectrum
-   Gradient) foi removido nesta fase por decisão de produto: o
-   objetivo agora é validar estrutura, hierarquia e copy sem que a
-   estética interfira na leitura. Os tokens de marca continuam
-   recuperáveis no commit 4105812.
+   Veio da fase de wireframe de 27/08/2026, que reduziu o site a
+   preto, branco e cinzas para validar estrutura e copy. Essa fase
+   acabou: a marca voltou por acento, e a estrutura de cinzas ficou
+   porque ela é o que faz o acento aparecer.
 
-   Nenhuma cor cromática pode entrar aqui enquanto o protótipo
-   estiver em validação. Só preto, branco e cinzas.
+   ⚠️ A cor da marca é TERRACOTA #D5623A desde 04/09/2026, decisão do
+   usuário, no lugar do indigo #6366F1. A troca alcançou os tokens
+   daqui, os SVGs de logotipo, o favicon e o gradiente de sete stops.
+   O `docs/design/DESIGN.md` ainda descreve a paleta indigo: ele é
+   a especificação de origem do designer e não foi reescrito, então
+   nesse ponto ele está vencido pela decisão registrada aqui.
+
+   A superfície continua neutra: os cinzas do tema são levemente
+   frios (matiz ~215) e não acompanharam a virada para o quente. Se
+   isso incomodar ao lado do terracota, é decisão de design própria,
+   e não sobra da troca de marca.
 ================================================================ */
 :root {
   --color-background: #f8fafc;
@@ -25,11 +33,26 @@
   --color-faint: #9ca3af;
   --color-border: #d1d5db;
   --color-danger: #111827;
-  /* Único desvio cromático do wireframe: o "hub" da assinatura de rodapé. */
-  --color-brand: #6366f1;
-  /* O #6366F1 puro não passa AA como texto pequeno em fundo claro
-     (3.94:1). Para rótulo, selo e chip use este par. Ver regra 04. */
-  --color-brand-text: #4338ca;
+  /* Terracota da marca desde 04/09/2026, no lugar do indigo. É a cor do
+     logotipo, e vale para preenchimento, ícone e superfície decorativa. */
+  --color-brand: #d5623a;
+  /* ⚠️ O #D5623A puro NÃO serve como texto: medido, dá 3,56:1 sobre o fundo
+     claro e 3,01:1 sobre o container, ou seja, reprova AA nos dois. Também
+     reprova com texto branco por cima (3,73:1). Para texto, rótulo, selo e
+     chip use este par.
+
+     ⚠️ O valor foi calibrado contra o pior fundo em que ele aparece, que não
+     é a página: é o chip (`price-badge`, `price-toggle-note`), cujo fundo é a
+     própria marca a 16%. Sobre branco esse chip resolve em rgb(246,228,221),
+     e um tom calibrado só contra a página dava 4,33:1 ali, reprovando. Medido
+     no navegador: 4,79:1 no chip, 5,63:1 na página, 5,89:1 na superfície. */
+  --color-brand-text: #a24a2c;
+
+  /* Marca sobre mídia (vídeo ou foto). Mesmo matiz da terracota, muito mais
+     claro, porque sobre imagem o texto disputa com um fundo de luminância
+     média que escurecer não resolve. Vale nos dois temas: o hero é escuro em
+     ambos. Não usar fora de mídia, ali o par é `--color-brand-text`. */
+  --color-brand-on-media: #f7ac86;
 }
 
 .dark {
@@ -42,8 +65,9 @@
   --color-faint: #6b7280;
   --color-border: #343b45;
   --color-danger: #f3f4f6;
-  --color-brand: #6366f1;
-  --color-brand-text: #a5b4fc;
+  --color-brand: #d5623a;
+  --color-brand-text: #db7a58;
+  --color-brand-on-media: #f7ac86;
 }
 
 @theme inline {
@@ -76,6 +100,11 @@
 
   /* Easing de referência: leve ultrapassagem no fim do movimento. */
   --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+
+  /* Curva do encaixe da barra. Sai rápido e desacelera longo, sem a
+     ultrapassagem do `--ease-out-back`: numa peça que muda de largura, o
+     repique lê como a barra errando o lugar e voltando. */
+  --ease-nav: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Altura reservada para a barra fixa. É um token porque a barra do mobile
@@ -214,7 +243,7 @@
     --color-faint: #9a9aa2;
     --color-border: #e4e4e8;
 
-    --color-brand-text: #4338ca;
+    --color-brand-text: #a24a2c;
     --ink: 0 0 0;
     --paper: 255 255 255;
     --ghost-opacity: 0.05;
@@ -233,7 +262,7 @@
     --color-faint: #6b6b73;
     --color-border: #1c1c20;
 
-    --color-brand-text: #a5b4fc;
+    --color-brand-text: #db7a58;
     --ink: 255 255 255;
     --paper: 0 0 0;
     --ghost-opacity: 0.055;
@@ -281,7 +310,7 @@
 
   .price-toggle-note {
     border-radius: 999px;
-    background-color: rgb(99 102 241 / 0.16);
+    background-color: rgb(213 98 58 / 0.16);
     padding: 2px 8px;
     font-size: 11px;
     font-weight: 600;
@@ -317,7 +346,7 @@
   .price-badge {
     flex-shrink: 0;
     border-radius: 999px;
-    background-color: rgb(99 102 241 / 0.16);
+    background-color: rgb(213 98 58 / 0.16);
     padding: 5px 10px;
     font-size: 11px;
     font-weight: 600;
@@ -644,9 +673,9 @@
   }
 
   .capsule-slot[data-active="true"] .capsule {
-    border-color: #8f92f8;
-    background-image: linear-gradient(155deg, #8285f7, #4f52e0);
-    box-shadow: 0 24px 60px -24px rgb(99 102 241 / 0.65);
+    border-color: #e58257;
+    background-image: linear-gradient(155deg, #dc744b, #a54a2b);
+    box-shadow: 0 24px 60px -24px rgb(213 98 58 / 0.55);
   }
 
   /* Botão redondo no pé da pastilha. Gira ao contrário para a seta ficar
@@ -925,10 +954,11 @@
     width: clamp(104px, 11vw, 152px);
     height: clamp(104px, 11vw, 152px);
     border-radius: 999px;
-    /* Preenchimento em #5457EE, não no #6366F1 da marca: com texto branco
-       por cima, o valor da spec dá 4.47:1 e reprova AA. Ver decisão 3 da
-       regra 04 — este é o único indigo que passa carregando texto. */
-    background-color: #5457ee;
+    /* Preenchimento em #B35231, e não no #D5623A da marca: com texto branco
+       por cima, a cor de marca dá 3,73:1 e reprova AA. Este tom, medido em
+       5,04:1, é o mais próximo dela que passa carregando texto. Mesma
+       situação que o indigo tinha antes da troca de marca. */
+    background-color: #b35231;
     font-family: var(--font-display), system-ui, sans-serif;
     font-size: clamp(34px, 3.6vw, 48px);
     font-weight: 700;
@@ -1022,17 +1052,214 @@
       0 12px 32px -12px rgb(0 0 0 / 0.18);
   }
 
+  /* ---------- Barra do desktop: encaixada e solta ----------
+     Uma peça só, com dois estados. Encaixada no topo ela é a faixa do site
+     inteira: largura total, cantos retos e sem fundo próprio, fundida ao
+     bloco de cima. Assim que a página rola ela desencaixa e vira um
+     retângulo arredondado flutuante.
+
+     Nada disso vale no mobile: lá a barra é `mobile-bar`, sempre solta, e a
+     navegação continua atrás do botão de menu. */
+  .desk-nav {
+    /* Largura da barra solta. Menor que o `max-w-6xl` do conteúdo: solta
+       ela é um controle flutuante, não a régua da página. */
+    --desk-nav-w: 1120px;
+    padding: 0;
+    /* `will-change` só enquanto a barra existe na tela, não em hover: o
+       navegador promove a camada uma vez e não refaz isso a cada gesto. */
+    will-change: padding;
+    transition: padding 420ms var(--ease-nav);
+  }
+
+  /* Solta, a barra encolhe até `--desk-nav-w` e recolhe os cantos: o
+     logotipo, o alternador de tema e o CTA deixam de morar nas beiradas da
+     tela e passam a conversar com os links do centro.
+
+     O encolhimento é padding calculado, e não `max-width`, porque `none`
+     não interpola: com `max-width` a barra saltaria de largura no meio de
+     uma transição que anima tudo o mais. O `max()` segura a margem mínima
+     nas telas que já são mais estreitas que o alvo. */
+  .desk-nav[data-docked="false"] {
+    padding: 12px max(24px, calc((100vw - var(--desk-nav-w)) / 2));
+  }
+
+  .desk-nav-shell {
+    /* Âncora do `nav`, que é posicionado no centro do viewport em vez de
+       ficar no fluxo entre o logotipo e as ações. */
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: var(--header-h);
+    padding: 0 24px;
+    border: 1px solid transparent;
+    border-radius: 0;
+    /* Encaixada a barra não intercepta o ponteiro: ela é transparente e
+       ocupa a largura toda, então o que está atrás precisa seguir clicável.
+       Solta, a superfície é visível e volta a capturar o clique. */
+    pointer-events: none;
+    /* A barra muda de tamanho, e `height`/`padding` recalculam layout a cada
+       frame. `contain: layout` prende esse recálculo à própria barra, para o
+       resto da página não entrar na conta do movimento. */
+    contain: layout;
+    /* A forma leva 420ms e a superfície 240ms: o vidro termina de aparecer
+       enquanto a barra ainda está encolhendo, então o movimento chega já
+       vestido em vez de mudar de cor no fim. */
+    transition:
+      height 420ms var(--ease-nav),
+      padding 420ms var(--ease-nav),
+      border-radius 420ms var(--ease-nav),
+      border-color 240ms ease-out,
+      background-color 240ms ease-out,
+      box-shadow 240ms ease-out;
+  }
+
+  .desk-nav[data-docked="false"] .desk-nav-shell {
+    height: 64px;
+    padding: 0 12px 0 20px;
+    border-color: var(--color-border);
+    border-radius: 16px;
+    background-color: var(--color-surface);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.04),
+      0 12px 32px -12px rgb(0 0 0 / 0.18);
+    pointer-events: auto;
+  }
+
+  /* Vidro só onde o navegador sabe desfocar, e só na barra solta: com a
+     barra encaixada o `backdrop-filter` desfocaria o bloco de cima.
+
+     Superfície a 72% com desfoque de 24px, bem mais vidro que a
+     `nav-capsule`. Medido com uma placa sólida atrás da barra, que é o pior
+     caso possível: como ela é uniforme, o desfoque não atenua nada. O vidro
+     resolve em rgb(88,90,95) sobre branco no tema escuro e em
+     rgb(184,184,184) sobre preto no claro.
+
+     Contra esse fundo, o link inativo dá 4,68:1 no escuro e 5,20:1 no
+     claro, e o ativo 6,27:1 e 8,94:1. É por isso que o link solto usa
+     `--color-body` e não `--color-muted`: com `muted` o mesmo pior caso cai
+     para 2,72:1 e 2,44:1, ou seja, reprova AA nos dois temas.
+
+     Afinar mais que 72% exige refazer essa medição. */
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .desk-nav[data-docked="false"] .desk-nav-shell {
+      background-color: color-mix(in srgb, var(--color-surface) 72%, transparent);
+      border-color: color-mix(in srgb, var(--color-border) 80%, transparent);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      backdrop-filter: blur(24px) saturate(180%);
+    }
+  }
+
+  .desk-link {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-muted);
+    transition:
+      color 160ms ease,
+      background-color 160ms ease;
+  }
+
+  /* O hover é só a cor da marca, sem pastilha de fundo: a barra encaixada não
+     tem superfície própria, e um retângulo aceso atrás do link aparecia
+     flutuando sobre o bloco de cima. */
+  .desk-link:hover {
+    color: var(--color-brand-text);
+  }
+
+  .desk-link[aria-current="page"] {
+    font-weight: 600;
+    color: var(--color-foreground);
+  }
+
+  /* Solta, a barra é vidro fino e o que passa por baixo dela muda conforme
+     a página rola. O link inativo sobe de `muted` para `body` para o
+     contraste não depender do trecho que estiver atrás no momento. */
+  .desk-nav[data-docked="false"] .desk-link {
+    color: var(--color-body);
+  }
+
+  .desk-nav[data-docked="false"] .desk-link[aria-current="page"] {
+    color: var(--color-foreground);
+  }
+
+  /* Depois do `aria-current` de propósito: com a mesma especificidade, quem
+     vem por último vence, e passar o mouse sobre a página atual precisa
+     responder. */
+  .desk-nav[data-docked="false"] .desk-link:hover {
+    color: var(--color-brand-text);
+  }
+
+  /* ⚠️ Encaixada sobre o hero, a barra passa por cima de mídia escura **nos
+     dois temas**, e os tokens de tema deixam de servir: medido no tema claro,
+     "Início" saía em rgb(17,24,39) e os demais em rgb(107,114,128) sobre o
+     vídeo, ou seja, quase invisíveis. Sobre mídia, a cor é clara e fixa.
+     `:has()` limita a regra às páginas que têm hero com vídeo: nas outras a
+     barra encaixada continua seguindo o tema. */
+  body:has(.hero-over-video) .desk-nav[data-docked="true"] .desk-link {
+    color: rgb(255 255 255 / 0.72);
+  }
+
+  body:has(.hero-over-video)
+    .desk-nav[data-docked="true"]
+    .desk-link[aria-current="page"] {
+    color: #ffffff;
+  }
+
+  body:has(.hero-over-video) .desk-nav[data-docked="true"] .desk-link:hover {
+    color: var(--color-brand-on-media);
+  }
+
   /* ---------- Barra de navegação do mobile ----------
      Peça própria, não a barra do desktop encolhida: uma faixa única com
      logotipo à esquerda e dois alvos de 44px à direita. Todo o resto da
      navegação vive na folha em tela cheia, onde há espaço para alvo de
      toque e para o CTA de largura inteira. */
+  /* Mesmo encaixe do desktop, na medida do mobile: solta ela é a ilha que
+     sempre foi, encaixada ela se funde ao bloco de cima.
+
+     A folha de navegação força o estado encaixado enquanto está aberta (ver
+     `mobile-nav.tsx`): com a folha ocupando a tela inteira, uma ilha
+     flutuando sobre ela leria como duas camadas soltas, e o que se quer ali
+     é uma barra de cabeçalho da própria folha. */
+  .mob-nav {
+    padding: 0;
+    will-change: padding;
+    transition: padding 420ms var(--ease-nav);
+  }
+
+  .mob-nav[data-docked="false"] {
+    padding: 12px;
+  }
+
   .mobile-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
     padding: 6px 6px 6px 14px;
+    contain: layout;
+    transition:
+      height 420ms var(--ease-nav),
+      padding 420ms var(--ease-nav),
+      border-radius 420ms var(--ease-nav),
+      border-color 240ms ease-out,
+      background-color 240ms ease-out,
+      box-shadow 240ms ease-out;
+  }
+
+  .mob-nav[data-docked="true"] .mobile-bar {
+    height: var(--header-h);
+    padding: 0 6px 0 16px;
+    border-radius: 0;
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .mobile-sheet {
@@ -1075,12 +1302,9 @@
     letter-spacing: -0.02em;
   }
 
-  /* O fio de topo é do primeiro item da lista, não de cada link: o `a` é
-     sempre o primeiro filho do seu `li`, e `:first-child` no link daria
-     fio duplo entre todas as linhas. */
-  .mobile-sheet li:first-child .mobile-link {
-    border-top: 1px solid var(--color-border);
-  }
+  /* A lista começa sem fio: o primeiro item fica logo abaixo da barra, e o
+     fio de topo lia como uma segunda borda dela. Os separadores entre os
+     links continuam existindo, pelo `border-bottom` de cada um. */
 
   /* Vidro só onde o navegador sabe desfocar. Sem `backdrop-filter` a
      superfície continua opaca — vidro sem blur é ilegível. */
@@ -1098,9 +1322,11 @@
     }
   }
 
-  /* ---------- Hero de ícones flutuantes ----------
-     Superfície de fidelidade alta pedida pelo produto: fundo preto fixo
-     nos dois temas, com os ícones do produto dispersos ao redor do texto. */
+  /* ---------- Hero ----------
+     Superfície de fidelidade alta pedida pelo produto: fundo próprio nos
+     dois temas, com um halo suave atrás do texto. Os ícones 3D que
+     flutuavam ao redor saíram em 04/09/2026, por decisão de produto, e com
+     eles a animação `hero-float`. */
   .hero-surface {
     background-image: radial-gradient(
       120% 90% at 50% 45%,
@@ -1109,17 +1335,279 @@
     );
   }
 
-  .hero-float {
-    animation: hero-float 7s ease-in-out infinite;
+  /* ---------- Hero cinematográfico ----------
+     Vídeo em tela cheia, conteúdo alinhado embaixo e um desfoque que sobe do
+     rodapé. Decoração pura: o texto e os botões são HTML e não dependem de
+     nada disso para existir. */
+
+  /* O vídeo cobre a seção inteira e nunca recebe clique. */
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    pointer-events: none;
   }
 
-  @keyframes hero-float {
+  /* Desfoque que aparece só na metade de baixo, onde fica o texto, e some
+     antes do meio da tela. É `backdrop-filter` com máscara, então ele borra o
+     vídeo em vez de escurecê-lo. */
+  .hero-blur {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 45%);
+    mask-image: linear-gradient(to top, #000 0%, transparent 45%);
+  }
+
+  /* ⚠️ Véu medido, não decorativo. **O desfoque sozinho não cria contraste:**
+     ele espalha a luz, e uma área clara borrada continua clara. Medido quadro a
+     quadro sobre este vídeo, só com o blur reprovavam o texto de apoio (3,83),
+     a linha de sinais (3,19), os links da barra (2,77) e o "clareza" em
+     terracota (1,22, contra um mínimo de 3).
+
+     São duas cargas, e cada uma resolve um problema:
+     - **de baixo para cima**, para o bloco de texto do hero;
+     - **de cima para baixo**, para a faixa onde a barra fixa passa por cima do
+       céu aceso. Sem ela, os links da barra somem quando o sol entra no quadro.
+       Isto escurece o vídeo atrás da barra, não a barra.
+     O miolo fica quase livre, que é onde o portal aparece. */
+  .hero-veil {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        to top,
+        rgb(0 0 0 / 0.82) 0%,
+        rgb(0 0 0 / 0.7) 25%,
+        rgb(0 0 0 / 0.6) 40%,
+        rgb(0 0 0 / 0.38) 55%,
+        rgb(0 0 0 / 0.1) 70%,
+        rgb(0 0 0 / 0) 82%
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(0 0 0 / 0.52) 0%,
+        rgb(0 0 0 / 0.3) 9%,
+        rgb(0 0 0 / 0) 20%
+      );
+  }
+
+  /* ⚠️ Acento da marca sobre mídia, e só aí.
+     O terracota `--color-brand` tem luminância 0,23, perto demais do céu do
+     vídeo: medido, dava 1,22:1 contra um mínimo de 3. Nenhuma dose de véu
+     razoável resolve, porque escurecer o fundo aproxima os dois. A saída é
+     clarear o texto, e não afundar a imagem.
+
+     ⚠️ É classe própria, e não um override de `.text-brand`: a utility do
+     Tailwind vive na layer `utilities`, posterior a esta, e layer vence
+     especificidade. Tentar sobrescrever ali não pega. */
+  .hero-accent {
+    color: var(--color-brand-on-media);
+  }
+
+  /* ---------- Alternador de tema ----------
+     Os dois ícones ficam empilhados no mesmo ponto e trocam de lugar girando.
+     O que sai gira para frente e encolhe; o que entra chega girando do outro
+     lado. Como os dois existem sempre, a transição tem os dois estados para
+     interpolar, o que um `if` no JSX não permitiria. */
+  .theme-toggle {
+    position: relative;
+    display: inline-flex;
+    height: 36px;
+    width: 36px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-control);
+    color: var(--color-muted);
+    transition:
+      color 220ms ease,
+      background-color 220ms ease,
+      border-color 220ms ease,
+      transform 220ms var(--ease-out-back);
+  }
+
+  .theme-toggle:hover {
+    background-color: var(--color-surface-container);
+    color: var(--color-foreground);
+  }
+
+  .theme-toggle:active {
+    transform: scale(0.92);
+  }
+
+  .theme-toggle-stage {
+    position: relative;
+    display: block;
+    height: 16px;
+    width: 16px;
+  }
+
+  .theme-toggle-icon {
+    position: absolute;
+    inset: 0;
+    height: 16px;
+    width: 16px;
+    transition:
+      opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Estado de repouso: escondido, girado e encolhido. Cada ícone sai para o
+     seu lado, então a troca tem direção e não pisca no lugar. */
+  .theme-toggle-sun {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.4);
+  }
+
+  .theme-toggle-moon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.4);
+  }
+
+  /* No escuro mostra o sol, que é a ação: clicar leva ao claro. */
+  .theme-toggle[data-theme-state="dark"] .theme-toggle-sun,
+  .theme-toggle[data-theme-state="light"] .theme-toggle-moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  /* ⚠️ Antes da hidratação nenhum dos dois aparece: `data-theme-state` é
+     "unknown" no servidor. Sem isso, o ícone errado apareceria por um quadro
+     e giraria sozinho na hidratação. */
+
+  /* ⚠️ Sobre o hero, a barra encaixada fica em cima de mídia escura nos dois
+     temas, então os tokens de tema não servem: no tema claro o ícone ficaria
+     cinza-escuro sobre vídeo escuro. Aqui ele vira vidro claro, medido contra
+     os mesmos quadros do texto do hero: 6,07:1.
+
+     ⚠️ O `:has()` não é enfeite. Sem ele a regra pegava toda barra encaixada,
+     e em `/precos` no tema claro o botão sumia, branco sobre fundo branco. Só
+     vale onde existe hero com mídia escura. */
+  body:has(.hero-over-video) .desk-nav[data-docked="true"] .theme-toggle,
+  body:has(.hero-over-video) .mob-nav[data-docked="true"] .theme-toggle {
+    border-color: rgb(255 255 255 / 0.28);
+    background-color: rgb(255 255 255 / 0.08);
+    color: rgb(255 255 255 / 0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  body:has(.hero-over-video) .desk-nav[data-docked="true"] .theme-toggle:hover,
+  body:has(.hero-over-video) .mob-nav[data-docked="true"] .theme-toggle:hover {
+    border-color: rgb(255 255 255 / 0.45);
+    background-color: rgb(255 255 255 / 0.16);
+    color: #ffffff;
+  }
+
+  /* ⚠️ Sobre o vídeo o texto é claro nos **dois** temas: o véu é escuro em
+     ambos, então usar o token de tema apagaria o texto no tema claro. */
+  .hero-over-video {
+    color: #ffffff;
+  }
+
+  .hero-over-video .hero-lead {
+    color: rgb(255 255 255 / 0.72);
+  }
+
+  .hero-over-video .hero-meta {
+    color: rgb(255 255 255 / 0.9);
+  }
+
+  /* Vidro líquido: superfície quase transparente, com um fio de luz na borda
+     que acende em cima e embaixo. O brilho é um `::before` mascarado, e não
+     uma borda, para o gradiente correr só no contorno. */
+  .liquid-glass {
+    position: relative;
+    overflow: hidden;
+    border: none;
+    background: rgb(255 255 255 / 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.1);
+  }
+
+  .liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    padding: 1.4px;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.45) 0%,
+      rgb(255 255 255 / 0.15) 20%,
+      rgb(255 255 255 / 0) 40%,
+      rgb(255 255 255 / 0) 60%,
+      rgb(255 255 255 / 0.15) 80%,
+      rgb(255 255 255 / 0.45) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+
+  /* Entrada escalonada: cada elemento sobe saindo do desfoque. O atraso vem
+     de `--delay`, em vez de `style` inline, para a classe ser reutilizável. */
+  @keyframes blurFadeUp {
+    from {
+      opacity: 0;
+      filter: blur(20px);
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+  }
+
+  .animate-blur-fade-up {
+    opacity: 0;
+    animation: blurFadeUp 1s ease-out forwards;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  /* Cursor da manchete digitada do rodapé. Acompanha a escala do texto por
+     `em`, então não precisa de ajuste quando a manchete muda de tamanho.
+     Pisca só na pausa: durante a digitação ele fica firme, senão some
+     debaixo da própria letra que está entrando. */
+  .typing-caret {
+    display: inline-block;
+    width: 0.06em;
+    height: 0.82em;
+    margin-left: 0.08em;
+    background-color: var(--color-brand);
+    vertical-align: baseline;
+  }
+
+  .typing-caret[data-blinking="true"] {
+    animation: typing-blink 1.06s step-end infinite;
+  }
+
+  @keyframes typing-blink {
     0%,
     100% {
-      transform: translateY(-6px);
+      opacity: 1;
     }
     50% {
-      transform: translateY(6px);
+      opacity: 0;
     }
   }
 
@@ -1143,6 +1631,7 @@
     color: var(--color-muted);
     text-align: center;
   }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1160,3 +1649,4 @@
     scroll-behavior: auto !important;
   }
 }
+

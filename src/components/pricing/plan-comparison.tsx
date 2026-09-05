@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { PLANS } from "@/lib/stripe/plans";
+import { PLANS } from "@/content/plans";
 
 /** `true` = incluído · `false` = fora do plano · texto = limite ou nota. */
 type Cell = boolean | string;
@@ -9,8 +9,8 @@ type Feature = { label: string; values: [Cell, Cell, Cell] };
 type Group = { title: string; features: Feature[] };
 
 /**
- * Matriz de comparação. Os valores vêm do catálogo em `lib/stripe/plans.ts`
- * — Segurança na Estrada e Pergunte à Sua Frota são reservados aos planos
+ * Matriz de comparação. Os valores vêm do catálogo em `content/plans.ts`.
+ * Segurança na Estrada e Pergunte à Sua Frota são reservados aos planos
  * superiores por RN-006, e o eixo comercial é veículo ativo (RN-016).
  */
 const groups: Group[] = [
@@ -66,7 +66,7 @@ const groups: Group[] = [
     title: "Inteligência e segurança",
     features: [
       {
-        label: "Pergunte à sua frota — assistente de IA por texto e por voz",
+        label: "Pergunte à sua frota, assistente de IA por texto e por voz",
         values: [false, true, true],
       },
       {
@@ -74,7 +74,7 @@ const groups: Group[] = [
         values: [false, true, true],
       },
       {
-        label: "Segurança na estrada — priorização de câmeras e eventos",
+        label: "Segurança na estrada, priorização de câmeras e eventos",
         values: [false, false, true],
       },
       {

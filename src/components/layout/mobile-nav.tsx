@@ -11,7 +11,7 @@ import { buttonClasses } from "@/components/ui/button";
 const navigation = [
   { href: "/", label: "Início" },
   { href: "/precos", label: "Planos e preços" },
-  { href: "/#contato", label: "Entrar" },
+  { href: "/contato", label: "Entrar" },
 ];
 
 /**
@@ -19,11 +19,38 @@ const navigation = [
  *
  * É uma peça própria, não a cápsula do desktop encolhida: lá a navegação
  * inteira cabe atrás de um botão porque sobra largura; aqui o menu é o
- * caminho principal, então ele vira folha em tela cheia — cada link com
+ * caminho principal, então ele vira folha em tela cheia, cada link com
  * 60px de altura e o CTA ocupando a linha toda.
  */
 export function MobileNav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    let frame = 0;
+
+    function update() {
+      frame = 0;
+      setScrolled(window.scrollY > 8);
+    }
+
+    function onScroll() {
+      if (!frame) frame = requestAnimationFrame(update);
+    }
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  // A folha aberta devolve a barra ao estado encaixado, mesmo com a página
+  // rolada: ela vira o cabeçalho da folha em vez de uma ilha boiando sobre
+  // ela. Fechar não guarda estado nenhum, a barra volta ao que a rolagem
+  // disser naquele momento.
+  const docked = !scrolled || open;
 
   // Trocar de rota fecha a folha, inclusive pelo botão "voltar" do browser.
   // Ajuste durante a renderização, não em efeito: evita o segundo passe de
@@ -54,27 +81,31 @@ export function MobileNav() {
   }, [open]);
 
   return (
-    <>
+    <div className="mob-nav" data-docked={docked}>
       <div className="nav-capsule mobile-bar pointer-events-auto relative z-[70]">
         <Link
           href="/"
-          aria-label="RookHub — página inicial"
+          aria-label="RookHub, página inicial"
           onClick={() => setOpen(false)}
-          className="flex items-center gap-2.5"
+          className="flex items-center"
         >
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-[10px] bg-brand">
-            <Image
-              src="/imgs/logoOfficialBranca.svg"
-              alt=""
-              width={34}
-              height={40}
-              className="h-4 w-auto"
-              priority
-            />
-          </span>
-          <span className="font-display text-[15px] font-bold tracking-[-0.01em]">
-            RookHub
-          </span>
+          {/* Mesma troca por CSS do desktop, ver `desktop-nav.tsx`. */}
+          <Image
+            src="/images/rookhub-full-dark.svg"
+            alt=""
+            width={556}
+            height={120}
+            className="h-7 w-auto dark:hidden"
+            priority
+          />
+          <Image
+            src="/images/rookhub-full-white.svg"
+            alt=""
+            width={556}
+            height={120}
+            className="hidden h-7 w-auto dark:block"
+            priority
+          />
         </Link>
 
         <div className="flex items-center gap-1.5">
@@ -110,7 +141,7 @@ export function MobileNav() {
       <div
         id="menu-mobile"
         // `inert` tira a folha fechada da ordem de foco e do leitor de tela
-        // sem `display: none` — a transição de saída continua visível.
+        // sem `display: none`, a transição de saída continua visível.
         inert={!open}
         data-open={open}
         className="mobile-sheet pointer-events-auto"
@@ -145,7 +176,7 @@ export function MobileNav() {
 
         <div className="mt-auto pt-8">
           <Link
-            href="/#contato"
+            href="/contato"
             onClick={() => setOpen(false)}
             className={buttonClasses("primary", "lg", "w-full rounded-full")}
           >
@@ -163,6 +194,6 @@ export function MobileNav() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }

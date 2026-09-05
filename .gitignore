@@ -1,6 +1,6 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# https://help.github.com/articles/ignoring-files/
 
-# dependencies
+# Dependências
 /node_modules
 /.pnp
 .pnp.*
@@ -10,47 +10,32 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
-
-# next.js
+# Build
 /.next/
 /out/
-
-# production
 /build
+/coverage
 
-# misc
+# Ambiente. Nenhum é versionado, nem o de exemplo: a referência é o próprio .env
+.env*
+
+# Agente. O .claude/ é versionado, mas a configuração de cada máquina não
+.claude/settings.json
+.claude/settings.local.json
+
+# Gerados pelo `next dev` dentro de um agente de IA. Não há como desligar
+/AGENTS.md
+/CLAUDE.md
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Diversos
 .DS_Store
 *.pem
-
-# debug
+.vercel
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
-
-# Arquivos de ambiente. Nenhum e versionado, nem o de exemplo: a referencia de
-# quais variaveis existem e o proprio `.env` de cada pessoa, que nasce com as
-# chaves comentadas e a explicacao de cada uma. Mesmo combinado dos outros tres
-# projetos do RookHub.
-.env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# Arquivos de agente gerados pelo `next dev`.
-#
-# O Next 16 recria AGENTS.md e CLAUDE.md na raiz sempre que o `dev` roda de
-# dentro de um agente de IA (ele detecta pelo @vercel/detect-agent; num terminal
-# comum nada acontece). Nao ha opcao de desligar.
-#
-# Ignorados de proposito: as regras deste projeto vivem em .claude/, e esses
-# dois arquivos sao ruido do framework. Ignorar evita que voltem como alteracao
-# pendente a cada execucao.
-/AGENTS.md
-/CLAUDE.md

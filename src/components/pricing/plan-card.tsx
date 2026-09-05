@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { MONTHS_IN_YEAR } from "@/lib/stripe/plans";
+import { MONTHS_IN_YEAR } from "@/content/plans";
 import { cn, formatBRL } from "@/lib/utils";
 import type { BillingInterval, Plan } from "@/types/billing";
 
@@ -33,7 +33,7 @@ function Check() {
  * para que a copy comercial exista em um lugar só (`lib/stripe/plans.ts`).
  *
  * A ordem é a de uma página de preço: nome, preço, ação e só então a lista.
- * Quem está comparando decide pelo preço e pelo botão — a lista é conferência.
+ * Quem está comparando decide pelo preço e pelo botão, a lista é conferência.
  */
 export function PlanCard({ plan, interval, action }: PlanCardProps) {
   const monthly =

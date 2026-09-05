@@ -1,8 +1,12 @@
 # Instruções para Claude — RookHub Website-rookhub (pt-BR)
 
-> **Fonte única de verdade.** Toda regra deste repositório vive em `.claude/`. É proibido criar
-> `.cursor/`, `.codex/`, `.github/copilot-instructions.md` ou qualquer outra pasta paralela de
-> instruções para IA.
+> **Fonte única de verdade.** É proibido criar `.cursor/`, `.codex/`,
+> `.github/copilot-instructions.md` ou qualquer outra pasta paralela de instruções para IA.
+>
+> ⚠️ **A documentação mudou de lugar em 04/09/2026**, por decisão do usuário. As regras numeradas e
+> a especificação de design saíram de `.claude/` e vivem em **`docs/rules/`** e
+> **`docs/design/`**, junto do resto da documentação do repositório. O `.claude/` ficou só com o
+> que é de agente: este arquivo, a `memoria.md` e as configurações.
 >
 > Este arquivo é o operacional: o que você precisa saber **antes** de escrever a primeira linha.
 > Para o detalhe de um assunto, a regra numerada correspondente é mais completa e **vence** em caso
@@ -12,8 +16,10 @@
 
 - Responder sempre em pt-BR, direto e objetivo, resumo breve no fim.
 - **Nunca usar travessão (`—`)** em texto de interface, README, documentação, comentário de código
-  ou mensagem de commit (decisão do usuário em 15/08/2026, vale nos quatro projetos). Quebrar a
-  frase em duas, ou usar dois-pontos e parênteses.
+  ou mensagem de commit (decisão do usuário em 15/08/2026, vale nos quatro projetos). ⚠️ **Trocar
+  por vírgula** (decisão do usuário em 04/09/2026, que substitui a orientação anterior de quebrar a
+  frase em duas). Onde a vírgula emendar duas orações independentes e prejudicar a leitura, quebrar
+  a frase e avisar.
 - Fazer só o que foi pedido: sem refatoração, limpeza ou melhoria não solicitada.
 - Este repositório é o **site público e a assinatura**, não o painel. Se a tarefa envolve login,
   frota, viagem ou dado de operação, o projeto certo é `../System-web`, `../System-mobile` ou
@@ -28,8 +34,11 @@
 
 ## Código
 
-- Stack: Next.js 16 (App Router), React 19, TypeScript estrito, Tailwind v4 em CSS,
-  `next-themes` e Stripe. Detalhe e versões em [rules/01-stack.md](rules/01-stack.md).
+- Stack: Next.js 16 (App Router), React 19, TypeScript estrito, Tailwind v4 em CSS e
+  `next-themes`. Detalhe e versões em [rules/01-stack.md](../docs/rules/01-stack.md).
+- ⚠️ **O site é estático e não tem back-end.** Sem Stripe, sem Route Handler, sem Server Action,
+  sem SDK de serviço externo. A integração de cobrança saiu em 05/09/2026 e está no histórico do
+  Git. `/precos` é vitrine, e os CTAs de plano levam a `/contato`.
 - ⚠️ **Não existe Prettier nem suíte de testes aqui**, ao contrário do `../System-web`. Não alegar
   cobertura inexistente nem procurar `npm run format`.
 - Arquivos em `kebab-case.tsx`, componentes em `PascalCase`, **um componente por arquivo**.
@@ -42,7 +51,7 @@
 
 ### Onde cada arquivo mora
 
-A árvore normativa está em [rules/03-arquitetura.md](rules/03-arquitetura.md). O resumo:
+A árvore normativa está em [rules/03-arquitetura.md](../docs/rules/03-arquitetura.md). O resumo:
 
 | O que você está escrevendo | Onde |
 | --- | --- |
@@ -51,30 +60,35 @@ A árvore normativa está em [rules/03-arquitetura.md](rules/03-arquitetura.md).
 | Planos e cobrança | `src/components/pricing/` |
 | Cabeçalho, rodapé, navegação | `src/components/layout/` |
 | Primitivo reutilizável | `src/components/ui/` |
+| Variante substituída que pode voltar | `src/components/archive/`, e só ela |
 | **Texto, lista ou tabela de conteúdo** | `src/content/`, **nunca** dentro do JSX |
 | Regra de negócio, integração, helper | `src/lib/` |
 | Tipo usado por mais de um módulo | `src/types/` |
 | Token, classe de tipografia, estilo | `src/app/globals.css` |
-| Imagem ou logotipo | `public/imgs/` |
-| Convenção nova | `.claude/rules/`, **nunca** só no README |
+| Imagem, ícone ou logotipo da RookHub | `public/images/` |
+| Logotipo de outra empresa (prova social) | `public/logos/` |
+| Convenção nova | `docs/rules/`, **nunca** só no README |
 
 - **`app/` só tem roteamento.** O que está lá vira URL. Componente que não é rota não mora ali.
 - **Componente desenha, `content/` diz o quê.** O componente recebe o dado por prop e não sabe de
   onde veio. Os tipos desse conteúdo ficam em `src/types/`, nunca no componente, senão a
   dependência se inverte.
-- ⚠️ **`lib/stripe/plans.ts` não é conteúdo**, apesar de carregar copy: ele resolve `priceId` no
-  servidor e é fonte de verdade de produto.
+- ⚠️ **`content/plans.ts` é o catálogo comercial**, e é conteúdo como qualquer outro: copy, preço
+  e features dos três planos. Viveu em `lib/stripe/` enquanto resolvia `priceId`, o que fazia dele
+  regra de negócio; sem a integração, virou texto.
 
 ### Server e client
 
 - **Server Component é o padrão.** `"use client"` só com estado, efeito, evento de navegador ou API
   do navegador, e sempre empurrado para a folha da árvore.
-- Hoje são doze ilhas de interação, e a lista serve de referência do que justifica virar client:
-  `theme-provider`, `theme-toggle`, `back-to-top`, `header-actions`, `mobile-nav`, `reveal`,
-  `pillars-capsules`, `profiles-tabs`, `pricing-table`, `checkout-button`, `session-reference` e o
-  arquivado `vs-scroller`.
-- Segredo e SDK server-side do Stripe existem **apenas** no servidor. Marcar módulo sensível com
-  `import "server-only"`.
+- As ilhas de interação de hoje, como referência do que justifica virar client: `theme-provider`,
+  `theme-toggle`, `back-to-top`, `desktop-nav`, `mobile-nav`, `typing-headline`, `reveal`,
+  `pillars-capsules`, `profiles-tabs`, `pricing-table` e o arquivado `archive/vs-scroller`. `header-actions` deixou de ter estado quando o menu sanduíche
+  saiu do desktop: hoje é só o par tema mais CTA.
+- ⚠️ **`components/archive/` guarda variante substituída, e a pasta inteira é órfã de propósito.**
+  Nada ali é importado pelo site. Não apagar: o inventário e a regra estão no `README.md` de lá.
+- Se um dia voltar a existir segredo ou SDK server-side, ele vive **apenas** no servidor, e o
+  módulo é marcado com `import "server-only"`. Hoje o site não tem nenhum dos dois.
 
 ### Estilo: o que o projeto faz diferente
 
@@ -90,23 +104,25 @@ A árvore normativa está em [rules/03-arquitetura.md](rules/03-arquitetura.md).
 - ⚠️ **A barra de rolagem é oculta por decisão de projeto** (`@layer base`). A rolagem continua
   funcionando; só o indicador some. É por isso que o botão "voltar ao topo" existe: ele compensa a
   pista perdida. Não repor `scrollbar-width`.
-- ⚠️ **A navegação são duas, não uma barra adaptativa.** Acima de `md` valem as ilhas flutuantes
-  (`site-header` + `header-actions`); abaixo, `mobile-nav`. Mexeu em uma, confira a outra.
+- ⚠️ **A navegação são duas peças, uma por faixa de largura, e as duas têm dois estados.** Acima de
+  `md` vale `desktop-nav`: encaixada no topo ela é a faixa do site inteira, e ao rolar vira um
+  retângulo arredondado de 1120px com vidro. Abaixo de `md` vale `mobile-nav`, com o mesmo par de
+  estados, e a folha de navegação aberta força o estado encaixado. Mexeu em uma, confira a outra.
 - Classe de seção vive em `@layer components` do `globals.css`, agrupada por bloco (`.capsule*`,
-  `.ptab*`, `.cmp*`, `.price-*`, `.editorial-*`). Bloco novo entra lá, não em estilo inline.
-- ⚠️ **A fase atual é wireframe em escala de cinza.** Nenhuma cor cromática entra enquanto durar a
-  validação. As exceções autorizadas estão tabeladas em
-  [rules/04-design-system.md](rules/04-design-system.md), e uso novo exige linha nova lá.
+  `.ptab*`, `.cmp*`, `.price-*`, `.editorial-*`, `.desk-*`, `.mob-*`). Bloco novo entra lá, não em
+  estilo inline.
+- ⚠️ **A cor da marca é terracota `#D5623A`**, e a fase de wireframe em escala de cinza **acabou**
+  em 04/09/2026. São dois tokens, não um: `--color-brand` para preenchimento e texto grande,
+  `--color-brand-text` para texto de corpo, rótulo e chip. A cor pura reprova AA como texto pequeno.
+  Detalhe e números medidos em [rules/04-design-system.md](../docs/rules/04-design-system.md).
 - Revisar a mudança nos **dois temas** e em viewport móvel de 360px é parte do pronto.
 
 ### Build, rotas e deploy
 
-- Dois alvos a partir do mesmo código: `npm run build` (completo, com as rotas do Stripe) e
-  `npm run build:static` (export em `out/`, o que vai ao ar na Cloudflare).
-- ⚠️ **Os handlers do Stripe se chamam `route.api.ts`, e isso é mecanismo.** A extensão só entra em
-  `pageExtensions` no build completo; no estático fica de fora, porque `output: "export"` não
-  suporta POST nem leitura do request.
-- Consequência: **nenhuma página pode depender de servidor**. Sem `cookies()`, sem `searchParams`
+- Dois alvos a partir do mesmo código: `npm run build` (build normal) e `npm run build:static`
+  (export em `out/`, o que vai ao ar na Cloudflare). ⚠️ **Desde 05/09/2026 os dois geram o mesmo
+  conteúdo**, porque todas as rotas são estáticas; a distinção sobrou só para produzir `out/`.
+- **Nenhuma página pode depender de servidor**. Sem `cookies()`, sem `searchParams`
   em Server Component, sem Server Action. `searchParams` só via `useSearchParams()` em Client
   Component dentro de `<Suspense>`. Rota de metadado exporta `dynamic = "force-static"`.
 - **Rota nova entra no `sitemap.ts`**, que não descobre sozinho, e recebe `metadata` própria.
@@ -125,21 +141,15 @@ A árvore normativa está em [rules/03-arquitetura.md](rules/03-arquitetura.md).
 - ⚠️ **As públicas são referenciadas literalmente em `src/lib/env.ts`**, e não por índice dinâmico:
   o Next substitui `process.env.NEXT_PUBLIC_*` estaticamente no bundle, então `process.env[nome]`
   não funcionaria no cliente.
-- ⚠️ **Não preencher variável do Stripe com valor de exemplo.** Com `price_xxx` presente,
-  `resolvePriceId` devolve algo truthy, o guarda de `503` deixa de valer, e a rota tenta falar com
-  o Stripe devolvendo `500`. Ou a chave é real, ou a linha fica comentada.
-- ⚠️ **Nunca confiar em preço vindo do navegador.** O cliente manda `{ planId, interval }`; o
-  servidor resolve o `priceId`. Aceitar preço do cliente permitiria assinar qualquer Price da
-  conta, inclusive um de R$ 0.
-- O webhook verifica a assinatura sobre o corpo **bruto** (`await request.text()`). Fazer
-  `request.json()` antes invalida a checagem. Detalhe em [rules/05-stripe.md](rules/05-stripe.md).
+- Hoje **`NEXT_PUBLIC_SITE_URL` é a única variável do projeto**, e ela tem valor padrão. Não há
+  segredo neste repositório: quem precisar de um está criando back-end onde não existe.
 - Nunca pôr o literal de um segredo em comando de shell (a harness grava comandos como permissão no
   `settings.local.json`); buscar pelo nome da variável.
 
 ## Git / autoria
 
 - Repo: `https://github.com/v2ntechnology/Website-rookhub.git`. Detalhe em
-  [rules/02-commits-e-branches.md](rules/02-commits-e-branches.md).
+  [rules/02-commits-e-branches.md](../docs/rules/02-commits-e-branches.md).
 - Commits pequenos, mensagem em pt-BR e **sem prefixo de Conventional Commits** (decisão do usuário
   em 29/08/2026): nada de `feat:`, `fix(escopo):`, `docs:` ou `chore:`. O assunto explica em uma
   frase o que a mudança faz. Mesma regra dos outros três projetos.
@@ -159,13 +169,16 @@ A árvore normativa está em [rules/03-arquitetura.md](rules/03-arquitetura.md).
 
 ## Índice das regras
 
+As regras vivem em `docs/`, e a pasta tem o próprio índice em
+[docs/README.md](../docs/README.md).
+
 | Documento | Conteúdo |
 | --- | --- |
 | [memoria.md](memoria.md) | Decisões, história e armadilhas. O **porquê**, não normativo |
-| [rules/01-stack.md](rules/01-stack.md) | Stack, versões e ferramentas permitidas |
-| [rules/02-commits-e-branches.md](rules/02-commits-e-branches.md) | Mensagem de commit, branches, PRs |
-| [rules/03-arquitetura.md](rules/03-arquitetura.md) | Estrutura de pastas, Server/Client, TypeScript |
-| [rules/04-design-system.md](rules/04-design-system.md) | Tokens, temas, fase de wireframe |
-| [design/DESIGN.md](design/DESIGN.md) | Especificação de origem do design system (normativa) |
-| [rules/05-stripe.md](rules/05-stripe.md) | Checkout, Portal, Webhooks, segurança |
-| [rules/06-seo-performance.md](rules/06-seo-performance.md) | Metadata, Core Web Vitals, acessibilidade |
+| [docs/rules/01-stack.md](../docs/rules/01-stack.md) | Stack, versões e ferramentas permitidas |
+| [docs/rules/02-commits-e-branches.md](../docs/rules/02-commits-e-branches.md) | Mensagem de commit, branches, PRs |
+| [docs/rules/03-arquitetura.md](../docs/rules/03-arquitetura.md) | Estrutura de pastas, Server/Client, TypeScript |
+| [docs/rules/04-design-system.md](../docs/rules/04-design-system.md) | Tokens, temas, cor de marca, contraste |
+| [docs/design/DESIGN.md](../docs/design/DESIGN.md) | Especificação de origem do design system, vencida no que for cor |
+| [docs/rules/06-seo-performance.md](../docs/rules/06-seo-performance.md) | Metadata, Core Web Vitals, acessibilidade |
+| [docs/deploy-cloudflare.md](../docs/deploy-cloudflare.md) | Como o export estático vai ao ar |

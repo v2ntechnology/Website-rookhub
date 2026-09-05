@@ -43,7 +43,7 @@ export function ProblemSolution() {
                 é a planilha. É o escuro.
               </>
             }
-            description="Você não perde dinheiro por falta de sistema. Perde por não conseguir juntar, no mesmo lugar e no mesmo dia, o que cada sistema já sabe separadamente. Cada linha abaixo é um assunto em que a operação hoje anda no escuro — e o que passa a existir no lugar."
+            description="Você não perde dinheiro por falta de sistema. Perde por não conseguir juntar, no mesmo lugar e no mesmo dia, o que cada sistema já sabe separadamente. Cada linha abaixo é um assunto em que a operação hoje anda no escuro, e o que passa a existir no lugar."
           />
         </Reveal>
 

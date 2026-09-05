@@ -1,45 +1,11 @@
 /**
- * Leitura de variáveis de ambiente com falha explícita.
+ * Variáveis de ambiente do site.
  *
  * `process.env` não pode ser indexado dinamicamente no client: o Next substitui
  * `process.env.NEXT_PUBLIC_*` estaticamente no bundle. Por isso as públicas são
- * referenciadas literalmente.
+ * referenciadas literalmente, nunca por `process.env[nome]`.
  */
 
-function required(value: string | undefined, name: string): string {
-  if (!value) {
-    throw new Error(
-      `Variável de ambiente ausente: ${name}. Consulte o .env da raiz.`,
-    );
-  }
-  return value;
-}
-
-/** Só pode ser chamado no servidor. */
-export const serverEnv = {
-  get stripeSecretKey() {
-    return required(process.env.STRIPE_SECRET_KEY, "STRIPE_SECRET_KEY");
-  },
-  get stripeWebhookSecret() {
-    return required(process.env.STRIPE_WEBHOOK_SECRET, "STRIPE_WEBHOOK_SECRET");
-  },
-};
-
+/** Base absoluta do sitemap, do robots e das URLs de Open Graph. */
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-
-/** IDs de price expostos ao bundle — não são segredos. */
-export const publicPriceIds = {
-  starter: {
-    month: process.env.NEXT_PUBLIC_STRIPE_PRICE_STARTER_MONTHLY,
-    year: process.env.NEXT_PUBLIC_STRIPE_PRICE_STARTER_YEARLY,
-  },
-  pro: {
-    month: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY,
-    year: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY,
-  },
-  enterprise: {
-    month: process.env.NEXT_PUBLIC_STRIPE_PRICE_ENTERPRISE_MONTHLY,
-    year: process.env.NEXT_PUBLIC_STRIPE_PRICE_ENTERPRISE_YEARLY,
-  },
-} as const;

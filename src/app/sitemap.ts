@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { siteUrl } from "@/lib/env";
 
-// Valor conhecido em build — necessário para o export estático.
+// Valor conhecido em build, necessário para o export estático.
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -15,6 +15,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "monthly",
       priority: 0.9,
+    },
+    {
+      url: `${siteUrl}/contato`,
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.6,
     },
   ];
 }

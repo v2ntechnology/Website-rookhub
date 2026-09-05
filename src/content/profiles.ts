@@ -30,7 +30,7 @@ export const PROFILES: readonly Profile[] = [
       },
       {
         label: "Painel enxuto",
-        text: "Abre em segundos, entre uma reunião e outra — decisão de projeto.",
+        text: "Abre em segundos, entre uma reunião e outra, decisão de projeto.",
         module: "Produto",
       },
       {
@@ -86,7 +86,7 @@ export const PROFILES: readonly Profile[] = [
       },
       {
         label: "Abastecimento",
-        text: "Até 5 campos e 20 segundos — meta medida a cada versão.",
+        text: "Até 5 campos e 20 segundos, meta medida a cada versão.",
         module: "Custos",
       },
       {
@@ -101,7 +101,7 @@ export const PROFILES: readonly Profile[] = [
       },
       {
         label: "Visibilidade financeira",
-        text: "Uma chave nas mãos do dono — ligada ou desligada.",
+        text: "Uma chave nas mãos do dono, ligada ou desligada.",
         module: "Permissões",
       },
     ],
@@ -129,7 +129,7 @@ export const PROFILES: readonly Profile[] = [
       },
       {
         label: "Próprio score",
-        text: "Vê como foi calculado — e pode contestar um evento.",
+        text: "Vê como foi calculado, e pode contestar um evento.",
         module: "Segurança",
       },
       {

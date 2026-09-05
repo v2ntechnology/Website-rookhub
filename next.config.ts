@@ -1,16 +1,15 @@
 import type { NextConfig } from "next";
 
 /**
- * `BUILD_TARGET=static` produz o export estático em `out/` (deploy na Cloudflare).
- * Sem a variável, o build continua completo: SSR + Route Handlers do Stripe.
+ * `BUILD_TARGET=static` produz o export estático em `out/`, que é o que vai ao
+ * ar na Cloudflare. Sem a variável, o build é o normal do Next.
+ *
+ * O site é inteiramente estático: não há Route Handler, Server Action nem
+ * página que dependa de servidor.
  */
 const isStaticExport = process.env.BUILD_TARGET === "static";
 
 const nextConfig: NextConfig = {
-  // Os Route Handlers do Stripe se chamam `route.api.ts`. A extensão só entra em
-  // `pageExtensions` no build completo — o export estático não suporta POST nem
-  // leitura do request, então esses arquivos ficam fora dele.
-  pageExtensions: isStaticExport ? ["tsx", "ts"] : ["tsx", "ts", "api.ts"],
   ...(isStaticExport
     ? {
         output: "export" as const,

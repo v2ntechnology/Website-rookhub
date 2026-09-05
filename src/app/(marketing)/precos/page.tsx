@@ -4,6 +4,7 @@ import { PlanComparison } from "@/components/pricing/plan-comparison";
 import { TrustedBy } from "@/components/pricing/trusted-by";
 import { PricingTable } from "@/components/pricing/pricing-table";
 import { Container, Section } from "@/components/ui/section";
+import { FAQ } from "@/content/faq";
 
 export const metadata: Metadata = {
   title: "Planos e preços",
@@ -18,34 +19,6 @@ export const metadata: Metadata = {
   },
 };
 
-const faq = [
-  {
-    question: "Como é a cobrança?",
-    answer:
-      "Por veículo ativo na frota. Usuários são ilimitados em todos os planos — escritório, manutenção e motoristas entram no sistema sem custo adicional por pessoa.",
-  },
-  {
-    question: "Posso trocar de plano depois?",
-    answer:
-      "Sim. A troca é feita no portal do cliente e o valor é ajustado proporcionalmente no ciclo vigente.",
-  },
-  {
-    question: "Existe fidelidade?",
-    answer:
-      "Não. O cancelamento é feito a qualquer momento e o acesso permanece até o fim do período já pago.",
-  },
-  {
-    question: "Quanto tempo leva a implantação?",
-    answer:
-      "O primeiro resultado concreto sai em até 30 dias, com as primeiras descobertas já na primeira semana — a importação do histórico por planilha é o que viabiliza esse prazo.",
-  },
-  {
-    question: "Quais formas de pagamento?",
-    answer:
-      "Cartão de crédito e boleto para planos anuais, processados com segurança pelo Stripe.",
-  },
-];
-
 export default function PricingPage() {
   return (
     <>
@@ -54,11 +27,7 @@ export default function PricingPage() {
       <Section className="surface-deep mt-[calc(var(--header-h)*-1)] border-b-0 pt-[calc(3rem+var(--header-h))] sm:pt-[calc(5rem+var(--header-h))]">
         <Container>
           <header className="mx-auto max-w-3xl text-center">
-            <p className="font-display text-[15px] font-bold tracking-[-0.01em] text-foreground">
-              Rook<span className="text-brand-text">Hub</span>
-            </p>
-
-            <h1 className="type-display-editorial mt-6 text-balance sm:mt-8">
+            <h1 className="type-display-editorial text-balance">
               Preço por porte de frota, sem{" "}
               <span className="text-brand">surpresa</span>.
             </h1>
@@ -96,7 +65,7 @@ export default function PricingPage() {
           <p className="mt-6 text-xs text-faint">
             Veículo ativo é o que esteve em operação no ciclo. Módulo não
             contratado aparece no menu em estado bloqueado, com convite para
-            conhecer — nunca com dado de exemplo dentro da operação.
+            conhecer, nunca com dado de exemplo dentro da operação.
           </p>
         </Container>
       </Section>
@@ -108,7 +77,7 @@ export default function PricingPage() {
           </h2>
 
           <dl className="border-b border-border">
-            {faq.map((item) => (
+            {FAQ.map((item) => (
               <div key={item.question} className="faq-row">
                 <dt className="editorial-term">{item.question}</dt>
                 <dd className="text-[14.5px] leading-relaxed text-body">

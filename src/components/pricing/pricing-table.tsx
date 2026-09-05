@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 
-import { CheckoutButton } from "@/components/pricing/checkout-button";
 import { PlanCard } from "@/components/pricing/plan-card";
-import { PLANS } from "@/lib/stripe/plans";
+import { ButtonLink } from "@/components/ui/button";
+import { PLANS } from "@/content/plans";
 import type { BillingInterval } from "@/types/billing";
 
 const intervals: { value: BillingInterval; label: string; note?: string }[] = [
@@ -45,7 +45,7 @@ export function PricingTable() {
 
       {/* Até `lg` os cartões ficam em coluna única: com três planos, duas
           colunas deixariam o terceiro órfão, e três colunas em 768px dão
-          226px de largura — estreito demais para preço, botão e lista.
+          226px de largura, estreito demais para preço, botão e lista.
           A coluna é centrada e limitada para o cartão não esticar. */}
       <ul className="mx-auto mt-10 grid max-w-md items-start gap-5 sm:mt-12 lg:max-w-none lg:grid-cols-3">
         {PLANS.map((plan) => (
@@ -54,12 +54,14 @@ export function PricingTable() {
               plan={plan}
               interval={interval}
               action={
-                <CheckoutButton
-                  planId={plan.id}
-                  interval={interval}
-                  label={plan.cta}
+                <ButtonLink
+                  href="/contato"
+                  size="lg"
                   variant={plan.highlighted ? "primary" : "secondary"}
-                />
+                  className="w-full"
+                >
+                  {plan.cta}
+                </ButtonLink>
               }
             />
           </li>

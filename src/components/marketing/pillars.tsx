@@ -15,7 +15,7 @@ export function Pillars() {
               Quatro pilares. Um único <span className="text-brand">hub</span>.
             </>
           }
-          description="Cada pilar existe para responder uma pergunta que hoje fica sem resposta na sua operação. Toque em um deles para ver o que muda — o que a plataforma passa a fazer sozinha, e o que deixa de depender da memória de alguém."
+          description="Cada pilar existe para responder uma pergunta que hoje fica sem resposta na sua operação. Toque em um deles para ver o que muda, o que a plataforma passa a fazer sozinha, e o que deixa de depender da memória de alguém."
         />
 
         <PillarsCapsules pillars={PILLARS} />
